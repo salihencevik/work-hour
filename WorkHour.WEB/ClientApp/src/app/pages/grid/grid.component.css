@@ -1,0 +1,260 @@
+.newButton {
+  background-color: #fff;
+  color: #5cad8d;
+  border: solid 1px #5cad8d;
+  margin: 3px !important;
+}
+
+  .newButton:hover {
+    background-color: #5cad8d;
+    color: #ffffff;
+  }
+
+.viewButton {
+  background-color: #fff;
+  color: #6587ca;
+  border: solid 1px #55627b;
+  margin: 3px !important;
+}
+
+  .viewButton:hover:enabled {
+    background-color: #6587ca;
+    color: #fff;
+  }
+
+.copyButton {
+  background-color: #fff;
+  color: #795548;
+  border: solid 1px #55627b;
+  margin: 3px !important;
+}
+
+  .copyButton:hover:enabled {
+    background-color: #795548;
+    color: #fff;
+  }
+
+.editButton {
+  background-color: #fff;
+  color: #3e444f;
+  border: solid 1px #3e444f;
+  margin: 3px !important;
+}
+
+  .editButton:hover:enabled {
+    background-color: #3e444f;
+    color: #fff;
+  }
+
+
+.deleteButton {
+  background-color: #fff;
+  color: #c74b4a;
+  border: solid 1px #c74b4a;
+  margin: 3px !important;
+}
+
+  .deleteButton:hover:enabled {
+    background-color: #c74b4a;
+    color: #fff;
+  }
+
+
+.exportButton {
+  background-color: #fff !important;
+  color: #428bca !important;
+  margin: 3px !important;
+  border: solid 1px #428bca;
+}
+
+  .exportButton:hover {
+    background-color: #428bca !important;
+    color: #fff !important;
+  }
+
+.btnFilterCreate {
+  background-color: #fff !important;
+  color: #428bca !important;
+  margin: 3px !important;
+  border: solid 1px #428bca;
+  border-radius: 0;
+}
+
+
+  .btnFilterCreate:hover {
+    background-color: #428bca !important;
+    color: #fff !important;
+  }
+
+.btnFilterList {
+  background-color: #fff !important;
+  border-radius: 2px 0 0 2px !important;
+  color: #5ba9c2 !important;
+  border: solid 1px #5ba9c2;
+}
+
+  .btnFilterList:hover {
+    background-color: #5ba9c2 !important;
+    color: #fff !important;
+  }
+
+.btnBulkOperation {
+  background-color: #fff;
+  color: #8D6E63;
+  border: solid 1px #8D6E63;
+  margin: 3px !important;
+}
+
+  .btnBulkOperation:hover {
+    background-color: #8D6E63;
+    color: #fff;
+  }
+
+.active-icon {
+  font-size: 18px !important;
+  color: green;
+}
+
+.passive-icon {
+  font-size: 18px !important;
+  color: red;
+}
+
+.createButton:enabled {
+  background-color: #fff;
+  color: #5cad8d;
+  border: solid 1px #5cad8d;
+  margin: 3px !important;
+}
+
+.createButton:hover:enabled {
+  background-color: #5cad8d;
+  color: #ffffff;
+}
+
+.taskButton {
+  background-color: #fff;
+  color: #5cad8d;
+  border: solid 1px #5cad8d;
+  margin: 3px !important;
+}
+
+  .taskButton:hover:enabled {
+    background-color: #5cad8d;
+    color: #fff;
+  }
+
+.gridContainer {
+  max-width: 100%;
+}
+
+.grid-container {
+  display: flex;
+}
+
+.addConfig {
+  background-color: #fff;
+  color: #5cad8d;
+  margin-top: 4px;
+}
+
+.saveConfig {
+  background-color: #fff;
+  color: #3e444f;
+}
+
+
+.deleteConfig {
+  background-color: #fff;
+  color: #c74b4a;
+}
+
+.bulkEdit:enabled {
+  background-color: #fff;
+  color: #313848;
+  border: solid 1px #4e339c;
+  margin: 3px !important;
+}
+
+.pdfButton:enabled {
+  background-color: #fff;
+  color: #333399;
+  border: solid 1px #5cad8d;
+  margin: 3px !important;
+}
+
+
+.bulkEdit:hover:enabled {
+  background-color: #313848;
+  color: #ffffff;
+}
+
+.download:enabled {
+  background-color: #fff;
+  color: #2b8200;
+  border: solid 1px #2b8200;
+  margin: 3px !important;
+}
+
+.download:hover:enabled {
+  background-color: #2b8200;
+  color: #ffffff;
+}
+
+.refreshButton:enabled {
+  background-color: #fff;
+  color: #2b8200;
+  border: solid 1px #2b8200;
+  margin: 3px !important;
+}
+
+.refreshButton:hover:enabled {
+  background-color: #2b8200;
+  color: #ffffff;
+}
+
+.myPendingActivityButton:enabled {
+  background-color: #ffffff;
+  color: #cd661d;
+  border: solid 1px #bbac00;
+  margin: 3px !important;
+}
+
+.myPendingActivityButton:hover:enabled {
+  background-color: #cd661d;
+  color: #ffffff;
+}
+
+.quickRecord:hover:enabled {
+  background-color: #778899;
+  color: #ffffff;
+}
+
+.quickRecord:enabled {
+  background-color: #fff;
+  color: #778899;
+  border: solid 1px #4e339c;
+  margin: 3px !important;
+}
+.float-btn {
+  width: 150px !important;
+  float: left;
+}
+.btn-div {
+    height:75px;
+}
+
+
+
+.ag-pagination {
+  float: right;
+  display: flex;
+  margin-top: 12px;
+  margin-right: 5px;
+  width: 55px;
+}
+
+
+.participation-color {
+  background-color: red !important;
+}

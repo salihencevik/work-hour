@@ -1,0 +1,5 @@
+
+<div *ngIf="mode == PageModes.List">
+  <app-grid [entityName]="'Personel'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Personel.Show'" (call)="run($event)"></app-grid>
+</div> 
+  
