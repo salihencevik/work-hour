@@ -67,4 +67,25 @@ export class LoginService {
     return this.loginInfo;
   }
 
+
+
+  setLogout() {
+    this.loginInfo = null;
+    localStorage.removeItem('auth');
+    this.router.navigate(['/session/signin']);
+  }
+
+  logout(): void {
+    //let params = new URLSearchParams();
+    //params.append('userId', this.loginInfo.id.toString());
+    //this.http.get('/api/Authentication/Logout', { params: params }).map(respose => respose.json())
+    //  .subscribe(data => {
+    //    if (data.ResponseType == 1 || data.ResponseType == 2) {
+          this.setLogout();
+      //  } else {
+      //  }
+      //},
+      //  error => console.log(error));
+  }
+
 }
