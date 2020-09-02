@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WorkHour.Data.Entity
 {
-    public partial class Menu
+    public partial class Menu 
     {
         public int Id { get; set; }
         public string Name { get; set; }

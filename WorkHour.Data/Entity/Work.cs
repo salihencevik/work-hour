@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WorkHour.Data.Entity
 {
-    public  class Work
+    public partial class Work
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,5 +14,7 @@ namespace WorkHour.Data.Entity
         public bool? Deleted { get; set; }
         public bool? Workconfirmation { get; set; }
         public string Explanation { get; set; }
+
+        public Personel Personel { get; set; }
     }
 }

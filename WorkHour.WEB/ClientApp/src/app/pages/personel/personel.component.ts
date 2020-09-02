@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { PageMode } from '../../Model/PageMode';
+import { GridComponent } from '../grid/grid.component';
 
 @Component({
   selector: 'app-personel',
   templateUrl: './personel.component.html',
   styleUrls: ['./personel.component.css']
 })
-export class PersonelComponent implements OnInit {
- 
+export class PersonelComponent implements OnInit, AfterViewInit {
+  @ViewChild(GridComponent) grid: GridComponent;
   constructor() { }
+  ngAfterViewInit(): void {
+    console.log(this.grid); 
+    }
 
 
   PageModes = PageMode;
@@ -29,5 +33,11 @@ export class PersonelComponent implements OnInit {
     if (this[name]) {
       this[name]();
     }
+  }
+  backToList() {
+    this.mode = PageMode.List;
+  }
+  save() {
+    console.log("Gitti");
   }
 }
