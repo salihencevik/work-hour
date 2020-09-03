@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace WorkHour.Core
 {
-    public interface IsDeletedEntity
+    public enum ResponseType : short
     {
-        bool? Deleted { get; set; }
+        Success = 1,
+        Logon = 2,
+        Error = 3,
+        Authorization = 4
     }
 }

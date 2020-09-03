@@ -13,7 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module'; 
 import { GridComponent } from './pages/grid/grid.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -23,7 +23,8 @@ import { GridComponent } from './pages/grid/grid.component';
     ComponentsModule,
     NgbModule,
     RouterModule,  
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule
   ],
   declarations: [
     AppComponent,

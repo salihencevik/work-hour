@@ -12,7 +12,7 @@ namespace WorkHour.DataAccess.DataAccess.Abstract
         IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null);
         void Add(TEntity entity);
         void Update(TEntity entity);
-        void Delete(TEntity entity);
+        void Delete(int id);
         void SaveChanges();
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkHour.Core;
 using WorkHour.DataAccess.DataAccess.Abstract;
 using WorkHour.WEB.Model;
 
@@ -11,7 +12,7 @@ namespace WorkHour.WEB.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class PersonelController : ControllerBase
+    public class PersonelController : Controller
     {
         internal readonly IUnitofWork _unit;
         public PersonelController(IUnitofWork unit)
@@ -49,6 +50,38 @@ namespace WorkHour.WEB.Controllers
                              Phone = r.Phone
                          }).ToList();
             return Ok(query);
+        }
+
+
+
+
+
+        [HttpPost("Delete")]
+        [Route("/Personel/Delete")]
+        public virtual ActionResult Delete([FromBody] int id)
+        {
+            return Execute(() =>
+            {
+                _unit.Personels.Delete(id);
+
+            });
+        }
+
+
+
+        protected ActionResult Execute(Action action)
+        {
+            try
+            {
+                action();
+
+                return Json(new WorkHourResponse(ResponseType.Success));
+            }
+            catch (Exception exp)
+            {
+
+                return Json(new WorkHourResponse(ResponseType.Error, exp.Message));
+            }
         }
     }
 }

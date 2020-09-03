@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ClipboardModule } from 'ngx-clipboard';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatDialogModule} from '@angular/material/dialog';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PersonelComponent } from '../../pages/personel/personel.component';
@@ -20,6 +20,7 @@ import { GridComponent } from '../../pages/grid/grid.component';
     FormsModule,
     HttpClientModule,
     NgbModule,
+    MatDialogModule,
     MatButtonModule,
     ClipboardModule,
     AgGridModule.withComponents([]), 
