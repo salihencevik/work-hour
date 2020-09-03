@@ -13,6 +13,8 @@ namespace WorkHour.Data.Entity
         public int Id { get; set; }
         public string Text { get; set; }
         public int ClaimGroupId { get; set; }
+
+        public ClaimGroup ClaimGroup { get; set; } 
         public ICollection<RoleClaim> RoleClaim { get; set; }
     }
 }
