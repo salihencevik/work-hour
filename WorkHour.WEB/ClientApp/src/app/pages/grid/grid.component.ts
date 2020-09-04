@@ -149,15 +149,14 @@ export class GridComponent implements OnInit {
     }
 
   }
-  createNew(item: any = null) {
-    debugger;
-    this.newItem = { Id: 0 };
-    if (item != null && item != undefined) {
-      let array = Object.getOwnPropertyNames(item);
-      for (var i = 0; i < array.length; i++) {
-        this.newItem[array[i]] = item[array[i]];
-      }
-    }
+  createNew(item: any = null) { 
+    this.newItem = { id: 0 };
+    //if (item != null && item != undefined) {
+    //  let array = Object.getOwnPropertyNames(item);
+    //  for (var i = 0; i < array.length; i++) {
+    //    this.newItem[array[i]] = item[array[i]];
+    //  }
+    //}
     this.createNewItem.emit();
     this.mode = PageMode.Create;
     this.modeChange.emit(this.mode);
@@ -237,16 +236,18 @@ export class GridComponent implements OnInit {
       this.edit();
     }
   }
-  edit() {
-    debugger;
+  edit() {  
     var row = this.selected[0];
     this.itemEdit(row.id);
   }
   itemEdit(id: number) {
+
+
     var url = '/' + this.entityName + '/GetItem' + "/" + id;
-    this.httpClient.get(url).subscribe((data: any) => {
-      this.newItem = data;
-    })
+    this.httpClient.get(url).subscribe((data: any) => { 
+      this.newItem = data.item;
+    });
+
     this.mode = PageMode.Update;
     this.changeDetectorRef.detectChanges();
     this.modeChange.emit(this.mode);

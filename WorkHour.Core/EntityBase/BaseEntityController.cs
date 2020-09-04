@@ -30,6 +30,15 @@ namespace WorkHour.core
             });
 
         }
+        [HttpGet("GetItem/{id}")]
+        public virtual ActionResult GetItem(int id)
+        {
+            return Execute(() =>
+            {
+                return GetModel(id);
+            });
+
+        }
 
 
 
@@ -49,6 +58,14 @@ namespace WorkHour.core
             });
         }
 
+        protected virtual TModel GetModel(int id)
+        {
+            return GetQuery().FirstOrDefault(x=>x.Id == id);
+
+        }
+
+
+
         [HttpPost]
         [Route("saveItem")]
         public virtual ActionResult SaveItem(TModel model)
@@ -57,7 +74,7 @@ namespace WorkHour.core
             {
                 if (model.Id == 0)
                 {
-
+                    _out.map
                 }
                 else
                 {
@@ -68,5 +85,6 @@ namespace WorkHour.core
 
 
         protected abstract IEnumerable<TSearchModel> GetSearchQuery();
+        protected abstract IEnumerable<TModel> GetQuery();
     }
 }

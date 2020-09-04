@@ -65,6 +65,7 @@ namespace WorkHour.WEB.Controllers
                     MenuItem = menuItem,
                     Token = token
                 };
+
                 return Ok(query);
             }
             else

@@ -20,6 +20,24 @@ namespace WorkHour.WEB.Controllers
         {
         }
 
+        protected override IEnumerable<MenuModel> GetQuery()
+        {
+            var query = (from r in _Unit.GetRepository<Menu>().GetAll()
+                         select new MenuModel()
+                         {
+                             Id = r.Id,
+                             Name = r.Name,
+                             Datatarget = r.Datatarget,
+                             icon = r.icon,
+                             MenuId = r.MenuId,
+                             Status = r.Status,
+                             ParentId = r.ParentId,
+                             Url = r.Url,
+
+                         });
+            return query;
+        }
+
         protected override IEnumerable<MenuModel> GetSearchQuery()
         {
             var query = (from r in _Unit.GetRepository<Menu>().GetAll()
