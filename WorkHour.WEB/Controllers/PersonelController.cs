@@ -47,7 +47,22 @@ namespace WorkHour.WEB.Controllers
                              Name = r.Name,
                              Id = r.Id,
                              Phone = r.Phone
-                         }).ToList();
+                         }).FirstOrDefault();
+            return Ok(query);
+        }
+        [HttpPost] 
+        public IActionResult SaveItem(int id)
+        {
+            var query = (from r in _unit.Personels.GetAll().Where(f => f.Deleted == false && f.Id == id)
+                         select new PersonelModel()
+                         {
+                             Adress = r.Adress,
+                             Email = r.Email,
+                             Mission = r.Mission,
+                             Name = r.Name,
+                             Id = r.Id,
+                             Phone = r.Phone
+                         }).FirstOrDefault();
             return Ok(query);
         }
     }

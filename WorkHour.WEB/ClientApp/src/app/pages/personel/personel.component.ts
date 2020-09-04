@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { PageMode } from '../../Model/PageMode';
 import { GridComponent } from '../grid/grid.component';
+import { HttpClient } from '@angular/common/http';
+import { SnackBarService } from '../../service/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-personel',
@@ -9,7 +11,7 @@ import { GridComponent } from '../grid/grid.component';
 })
 export class PersonelComponent implements OnInit, AfterViewInit {
   @ViewChild(GridComponent) grid: GridComponent;
-  constructor() { }
+  constructor(private httpClient: HttpClient, private snackBarService: SnackBarService) { }
   ngAfterViewInit(): void {
     console.log(this.grid); 
     }
@@ -38,6 +40,12 @@ export class PersonelComponent implements OnInit, AfterViewInit {
     this.mode = PageMode.List;
   }
   save() {
-    console.log("Gitti");
+    let url = "/Personel/SaveItem";
+    this.httpClient.post(url, this.grid.newItem).subscribe(data => {
+      if (data != null) {
+        this.mode = PageMode.List;
+        this.snackBarService.open("Ekleme İşlemi Başarılı")
+      }
+    });
   }
 }
