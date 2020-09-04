@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule} from '@angular/material/dialog';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PersonelComponent } from '../../pages/personel/personel.component';
@@ -26,6 +27,7 @@ import { GridComponent } from '../../pages/grid/grid.component';
     HttpClientModule,
     MatFormFieldModule,
     NgbModule,
+    MatDialogModule,
     ReactiveFormsModule,
     MatButtonModule,
     ClipboardModule,

@@ -71,6 +71,8 @@
     <Compile Include="EntityBase\IsActiveEntity.cs" />
     <Compile Include="EntityBase\IsDeletedEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResponseType.cs" />
+    <Compile Include="WorkHourResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

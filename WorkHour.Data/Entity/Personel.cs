@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WorkHour.Core;
 
 namespace WorkHour.Data.Entity
 {
-    public partial class Personel
+    public partial class Personel: IsDeletedEntity
     {
         public Personel()
         {
