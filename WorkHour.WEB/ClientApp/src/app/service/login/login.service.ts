@@ -29,9 +29,7 @@ export class LoginService {
         }
         this.personelClaimService.setClaims(x.claimText);
         this.menuService.setMenus(x.menus);
-        this.router.navigateByUrl(url);
-   
-        console.log(x);
+        this.router.navigateByUrl(url); 
       } 
     });
   }

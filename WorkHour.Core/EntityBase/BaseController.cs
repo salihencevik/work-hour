@@ -1,18 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using WorkHour.Core;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WorkHour.BusinessLayer.Core
+namespace WorkHour.Core
 {
-    public abstract class BaseController<TEntity, TModel, TSearchModel, TExportModel, TService, TContext> : Controller
-        where TEntity : BaseIdEntity, new()
-        where TModel : BaseIdEntity, new()
-        where TExportModel : BaseIdEntity, new()
+    public class BaseController: Controller
     {
-         
+        protected ActionResult Execute(Action action)
+        {
+            
+            try
+            {
+                action();
+                return Json(new WorkHourResponse(ResponseType.Success));
+            }
+            catch (Exception exp)
+            {
+                return Json(new WorkHourResponse(ResponseType.Error, exp.Message));
+            }
+            
+        }
+
+        protected ActionResult Execute<T>(Func<T> func)
+        {
+            try
+            {
+                T t = func();
+
+                return Json(new WorkHourResponse<T>(t, ResponseType.Success));
+            }
+            catch (Exception exp)
+            {
+                return Json(new WorkHourResponse(ResponseType.Error, exp.Message));
+            }
+        }
     }
 }

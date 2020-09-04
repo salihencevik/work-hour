@@ -1,4 +1,5 @@
-﻿using System;
+﻿using WorkHour.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,9 +11,9 @@ namespace WorkHour.DataAccess.DataAccess.Abstract
     {
         TEntity Get(Expression<Func<TEntity, bool>> filter);
         IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null);
-        void Add(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(int id);
+        DbOperationResult Add(TEntity entity);
+        DbOperationResult Update(TEntity entity);
+        DbOperationResult Delete(int id);
         void SaveChanges();
     }
 }

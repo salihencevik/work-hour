@@ -47,7 +47,7 @@ export class GridComponent implements OnInit {
   private columnDefs: any[];
   private toolbarItems: any[];
   dataSource;
-
+  dataSourceArray = [];
 
 
   constructor(
@@ -141,9 +141,8 @@ export class GridComponent implements OnInit {
       this.gridColumnApi = params.columnApi;
       this.columnDefs = this.columns;
       let url = "/" + this.entityName + "/" + "getItems";
-      this.httpClient.get(url).subscribe(data => {
-        this.dataSource = params.api.setRowData(data);
-        console.log(data);
+      this.httpClient.get(url).subscribe((data: any) => { 
+        this.dataSource = params.api.setRowData(data.item); 
       });
     } else {
       this.snackBarService.open("Yetkiniz bulunamadı --> " + this.Authority);

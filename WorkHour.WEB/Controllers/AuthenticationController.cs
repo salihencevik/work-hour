@@ -26,13 +26,13 @@ namespace WorkHour.WEB.Controllers
         public IActionResult Login(string username,string password)
         {
             password = Encrypt.EncryptSHA1(password);
-            var item = _unit.Personels.Get(i => i.UserName == username && i.Password == password && i.Deleted == false);
+            var item = _unit.GetRepository<Personel>().Get(i => i.UserName == username && i.Password == password && i.Deleted == false);
             if (item != null)
             {
-                var role = _unit.UserRoles.Get(i => i.PersonelId == item.Id);
-                var roleClaim = _unit.RoleClaims.GetAll().Where(i => i.RoleId == role.RoleId);
-                var claim = _unit.Claims.GetAll().ToList();
-                var menu = _unit.Menus.GetAll();
+                var role = _unit.GetRepository<UserRole>().Get(i => i.PersonelId == item.Id);
+                var roleClaim = _unit.GetRepository<RoleClaim>().GetAll().Where(i => i.RoleId == role.RoleId);
+                var claim = _unit.GetRepository<Claim>().GetAll().ToList();
+                var menu = _unit.GetRepository<Menu>().GetAll();
 
                
                 var ClaimText = new List<string>();

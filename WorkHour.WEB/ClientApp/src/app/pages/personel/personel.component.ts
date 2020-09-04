@@ -25,7 +25,7 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       { headerName: 'Adı', field: 'name' },
       { headerName: 'Email', field: 'email' },
       { headerName: 'Ünvan', field: 'mission' },
-      { headerName: 'Telefon', field: 'Phone' },
+      { headerName: 'Telefon', field: 'phone' },
       { headerName: 'Adres', field: 'adress' }
     ]; 
   }

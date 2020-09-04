@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkHour.BusinessLayer\WorkHour.BusinessLayer.csproj" />
     <ProjectReference Include="..\WorkHour.Core\WorkHour.Core.csproj" />
     <ProjectReference Include="..\WorkHour.Data\WorkHour.Data.csproj" />
   </ItemGroup>

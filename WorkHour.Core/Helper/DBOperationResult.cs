@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace RakamCrm.Data
+namespace WorkHour.Core
 {
     public class DbOperationResult
     {
