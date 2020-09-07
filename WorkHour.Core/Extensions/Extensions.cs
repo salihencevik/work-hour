@@ -9,30 +9,12 @@ namespace WorkHour.Core
     {
 
 
-        public static T CreateFrom<T>(this object item) where T : class, new()
+        public static T GetPropertyValues<T>(this object selfmodel) where T : class
         {
-            T t = new T();
-            item.FillObject(t);
-            return t;
-        }
-
-        public static object CreateFrom(this object item, Type destinationType)
-        {
-            var newItem = Activator.CreateInstance(destinationType);
-            item.FillObject(newItem);
-            return newItem;
-        }
-        public static void FillObject(this object from, object to, bool ignoreCase = false)
-        {
-
-        }
+            var obj = (T)Activator.CreateInstance(typeof(T));
 
 
-
-        public static T GetPropertyValues<T>(this object selfmodel, T targetmodel)
-        {
-
-            Type targetmodeltype = targetmodel.GetType();
+            Type targetmodeltype = obj.GetType();
             Type selfmodeltype = selfmodel.GetType();
 
             PropertyInfo[] targetprops = targetmodeltype.GetProperties();
@@ -44,17 +26,15 @@ namespace WorkHour.Core
                 {
                     if (selfitem.Name == targetitem.Name)
                     {
-                        var deneme = targetitem.GetValue(targetmodel, null);
-
                         var deneme2 = selfitem.GetValue(selfmodel, null);
 
-                        targetitem.SetValue(targetmodel, deneme2);
+                        targetitem.SetValue(obj, deneme2);
                     }
 
                 }
             }
 
-            return targetmodel;
+            return obj;
         }
 
     }
