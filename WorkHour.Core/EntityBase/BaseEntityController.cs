@@ -74,7 +74,7 @@ namespace WorkHour.core
             {
                 if (model.Id == 0)
                 {
-                    _out.map
+
                 }
                 else
                 {
