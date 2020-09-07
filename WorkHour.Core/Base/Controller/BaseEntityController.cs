@@ -71,14 +71,13 @@ namespace WorkHour.Core
         {
             return Execute(() =>
             {
-                TEntity entity = new TEntity();
                 if (model.Id == 0)
                 {
-                    _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>(entity));
+                    _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>());
                 }
                 else
                 {
-                    _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>(entity));
+                    _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>());
                 }
             });
         }
