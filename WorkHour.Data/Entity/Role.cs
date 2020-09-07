@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using WorkHour.Core;
 
 namespace WorkHour.Data.Entity
 {
-    public partial class Role
+    public partial class Role : BaseIdEntity
     {
         public Role()
         {

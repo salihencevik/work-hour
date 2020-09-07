@@ -9,3 +9,11 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.fullwidth {
+  /*width: 100% !important;*/
+  margin-right: 140px;
+  width: -moz-calc(100% - 140px);
+  width: -webkit-calc(100% - 140px);
+  width: -o-calc(100% - 140px);
+  width: calc(100% - 140px);
+}
