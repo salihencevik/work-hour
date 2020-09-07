@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkHour.Data.Base
+namespace WorkHour.Data
 {
     public abstract class BaseIdEntity
     {

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WorkHour.Core.Abstract;
-using WorkHour.Data.Base;
+using WorkHour.Core.Filter;
+using WorkHour.Data;
 
 namespace WorkHour.Core
 {

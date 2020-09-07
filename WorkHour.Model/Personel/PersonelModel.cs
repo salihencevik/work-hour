@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WorkHour.Core;
+using WorkHour.Data;
 
 namespace WorkHour.Model
 {
@@ -12,5 +12,6 @@ namespace WorkHour.Model
         public string Mission { get; set; }
         public string Phone { get; set; }
         public string Adress { get; set; }
+        public List<string> ClaimText { get; set; }
     }
 }
