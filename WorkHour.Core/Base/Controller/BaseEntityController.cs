@@ -21,6 +21,7 @@ namespace WorkHour.Core
         }
 
         [HttpGet("GetItems")]
+
         public virtual ActionResult GetItems(string parameters)
         {
             return Execute(() =>
@@ -60,7 +61,6 @@ namespace WorkHour.Core
         protected virtual TModel GetModel(int id)
         {
             return GetQuery().FirstOrDefault(x => x.Id == id);
-
         }
 
 
