@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using WorkHour.Core;
 
-namespace WorkHour.WEB.Model
+namespace WorkHour.Model
 {
     public class PersonelModel : BaseIdCreateEntity
     {

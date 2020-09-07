@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using WorkHour.Core;
 
-namespace WorkHour.WEB.Model
+namespace WorkHour.Model
 {
-    public class MenuModel: BaseIdCreateEntity
+    public class MenuModel : BaseIdCreateEntity
     {
         public string Name { get; set; }
         public string Status { get; set; }

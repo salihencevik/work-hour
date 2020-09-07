@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
     public partial class RoleClaim
     {

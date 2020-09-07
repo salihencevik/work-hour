@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace WorkHour.Core
 {
-    public class BaseController: Controller
+    public class BaseController : Controller
     {
         protected ActionResult Execute(Action action)
         {
-            
+
             try
             {
                 action();
@@ -17,7 +19,7 @@ namespace WorkHour.Core
             {
                 return Json(new WorkHourResponse(ResponseType.Error, exp.Message));
             }
-            
+
         }
 
         protected ActionResult Execute<T>(Func<T> func)

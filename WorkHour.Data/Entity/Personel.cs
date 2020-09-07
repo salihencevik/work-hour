@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using WorkHour.Core;
+using System.Text;
+using WorkHour.Data.Base;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
-    public partial class Personel: BaseIdEntity
+    public partial class Personel : BaseIdEntity
     {
         public Personel()
         {

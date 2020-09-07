@@ -1,10 +1,10 @@
-﻿//using SQLitePCL;
-using System; 
-using WorkHour.DataAccess.DataAccess.Abstract;
-using WorkHour.Data.Entity;
-using WorkHour.BusinessLayer.Concrete;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using WorkHour.Core.Abstract;
+using WorkHour.Data;
 
-namespace WorkHour.DataAccess.DataAccess.Concrete.EntityFramework
+namespace WorkHour.Core.Concrete
 {
     public class EfUnitofWork : IUnitofWork
     {
@@ -31,6 +31,8 @@ namespace WorkHour.DataAccess.DataAccess.Concrete.EntityFramework
         {
             return new EfGenericRepository<T>(_context);
         }
+
+
 
         public int SaveChanges()
         {

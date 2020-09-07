@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WorkHour.BusinessLayer;
-using WorkHour.Core;
-using WorkHour.Data.Entity;
+using System.Text;
+using WorkHour.Data;
+using WorkHour.Data.Base;
 
-namespace WorkHour.WEB.Model
+namespace WorkHour.Model
 {
     public class LoginModel : BaseIdEntity
-    { 
-        public string Name { get; set; } 
+    {
+        public string Name { get; set; }
         public List<string> ClaimText { get; set; }
         public string UserName { get; set; }
         public LoginResponseTypes LoginResponseType { get; set; }

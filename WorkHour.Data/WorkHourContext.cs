@@ -1,11 +1,12 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
     public partial class WorkHourContext : DbContext
-    { 
+    {
         public WorkHourContext(DbContextOptions<WorkHourContext> options) : base(options)
         {
         }
@@ -20,6 +21,6 @@ namespace WorkHour.Data.Entity
         public DbSet<Role> Role { get; set; }
         public DbSet<RoleClaim> RoleClaim { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
-        public DbSet<Work> Work { get; set; } 
+        public DbSet<Work> Work { get; set; }
     }
 }
