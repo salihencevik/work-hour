@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections.Generic; 
-namespace WorkHour.Data.Entity
+using System.Collections.Generic;
+using System.Text;
+
+namespace WorkHour.Data
 {
     public partial class Customer
     {
@@ -13,7 +15,7 @@ namespace WorkHour.Data.Entity
         public int Id { get; set; }
         public string CustomerName { get; set; }
         public string Phone { get; set; }
-        public string Adress { get; set; } 
+        public string Adress { get; set; }
         public string Email { get; set; }
         public bool? Deleted { get; set; }
 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using WorkHour.Core;
+using System.Text;
+using WorkHour.Data.Base;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
     public partial class Menu : BaseIdEntity
     {

@@ -2,17 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WorkHour.BusinessLayer.Concrete;
-using WorkHour.Core;
-using WorkHour.Data.Entity;
-using WorkHour.DataAccess.DataAccess.Abstract;
+using System.Text;
+using WorkHour.Core.Abstract;
+using WorkHour.Data.Base;
 
-namespace WorkHour.core
+namespace WorkHour.Core
 {
     public abstract class BaseEntityController<TEntity, TModel, TSearchModel, TContext> : BaseController
-        where TEntity : BaseIdEntity, new()
-        where TModel : BaseIdModel, new()
-        where TSearchModel : BaseIdModel, new()
+            where TEntity : BaseIdEntity, new()
+            where TModel : BaseIdModel, new()
+            where TSearchModel : BaseIdModel, new()
         //where TService : EfGenericRepository<TEntity>
     {
         protected IUnitofWork _Unit;
@@ -60,7 +59,7 @@ namespace WorkHour.core
 
         protected virtual TModel GetModel(int id)
         {
-            return GetQuery().FirstOrDefault(x=>x.Id == id);
+            return GetQuery().FirstOrDefault(x => x.Id == id);
 
         }
 
@@ -72,13 +71,14 @@ namespace WorkHour.core
         {
             return Execute(() =>
             {
+                TEntity entity = new TEntity();
                 if (model.Id == 0)
                 {
-                    _out.map
+                    _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>(entity));
                 }
                 else
                 {
-
+                    _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>(entity));
                 }
             });
         }

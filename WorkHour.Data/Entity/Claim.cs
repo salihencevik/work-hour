@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Text;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
     public partial class Claim
     {
@@ -14,7 +15,7 @@ namespace WorkHour.Data.Entity
         public string Text { get; set; }
         public int ClaimGroupId { get; set; }
 
-        public ClaimGroup ClaimGroup { get; set; } 
+        public ClaimGroup ClaimGroup { get; set; }
         public ICollection<RoleClaim> RoleClaim { get; set; }
     }
 }

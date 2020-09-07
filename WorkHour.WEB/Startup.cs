@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WorkHour.Data.Entity;
-using WorkHour.DataAccess.DataAccess.Abstract;
-using WorkHour.DataAccess.DataAccess.Concrete.EntityFramework;
+using WorkHour.Core.Abstract;
+using WorkHour.Core.Concrete;
+using WorkHour.Data;
 
 namespace WorkHour.WEB
 {

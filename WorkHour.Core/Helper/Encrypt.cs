@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace WorkHour.BusinessLayer.Helper
+namespace WorkHour.Core.Helper
 {
-   public class Encrypt
+    public class Encrypt
     {
         public static string GetMD5Hash(string input)
         {

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
     public partial class Activity
     {
         public int Id { get; set; }
         public string CreateUser { get; set; }
-        public int? PersonelId { get; set; } 
+        public int? PersonelId { get; set; }
         public string Expanation { get; set; }
         public DateTime? UpdateDate { get; set; }
         public int? UpdateUser { get; set; }
@@ -20,6 +21,6 @@ namespace WorkHour.Data.Entity
         public TimeSpan? Time { get; set; }
         public DateTime? EndDate { get; set; }
         public int StatusId { get; set; }
-        public int TotalTime { get; set; } 
+        public int TotalTime { get; set; }
     }
 }

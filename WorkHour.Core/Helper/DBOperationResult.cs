@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -58,7 +57,7 @@ namespace WorkHour.Core
         /// <param name="ex"></param>
         public DbOperationResult(Exception ex)
         {
-            Exception = ex; 
+            Exception = ex;
             IsSucceeded = false;
 
             var validException = ex as ValidationException;

@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using WorkHour.DataAccess.DataAccess.Abstract;
-using WorkHour.Data.Entity;
-using WorkHour.Core;
-using Microsoft.EntityFrameworkCore;
-//using WorkHour.Models;
+using System.Text;
+using WorkHour.Core.Abstract;
+using WorkHour.Data;
 
-namespace WorkHour.BusinessLayer.Concrete
+namespace WorkHour.Core.Concrete
 {
     public class EfGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

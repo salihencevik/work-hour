@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Text;
 
-namespace WorkHour.Data.Entity
+namespace WorkHour.Data
 {
     public partial class BusinessList
     {
@@ -36,15 +37,5 @@ namespace WorkHour.Data.Entity
         public Personel Personel { get; set; }
         public ProjectDescription ProjectDescription { get; set; }
         public ICollection<Activity> Activity { get; set; }
-        //[NotMapped]
-        //public string ProjectDescription { get; set; }
-        //[NotMapped]
-        //public string PersonelName { get; set; }
-        //[NotMapped]
-        //public int Start { get; set; }
-        //[NotMapped]
-        //public int Length { get; set; }
-        //[NotMapped]
-        //public string PersonelResponsible { get; set; }
     }
 }

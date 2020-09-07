@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace WorkHour.Core
+namespace WorkHour.Data.Base
 {
     public abstract class BaseIdEntity
     {

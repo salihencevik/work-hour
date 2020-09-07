@@ -1,11 +1,10 @@
-﻿using WorkHour.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace WorkHour.DataAccess.DataAccess.Abstract
+namespace WorkHour.Core.Abstract
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
