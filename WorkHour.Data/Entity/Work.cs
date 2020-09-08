@@ -12,7 +12,7 @@ namespace WorkHour.Data
         public DateTime? FinishTime { get; set; }
         public string Area { get; set; }
         public int? PersonelId { get; set; }
-        public bool? Deleted { get; set; }
+        public bool IsDeleted { get; set; }
         public bool? Workconfirmation { get; set; }
         public string Explanation { get; set; }
 

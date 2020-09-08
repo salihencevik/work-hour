@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkHour.Core;
 using WorkHour.Core.Abstract;
 using WorkHour.Core.Helper;
 using WorkHour.Data;
@@ -26,7 +27,7 @@ namespace WorkHour.WEB.Controllers
         public IActionResult Login(string username,string password)
         {
             password = Encrypt.EncryptSHA1(password);
-            var item = _unit.GetRepository<Personel>().Get(i => i.UserName == username && i.Password == password && i.Deleted == false);
+            var item = _unit.GetRepository<Personel>().Get(i => i.UserName == username && i.Password == password && i.IsDeleted == false);
             if (item != null)
             {
                 var role = _unit.GetRepository<UserRole>().Get(i => i.PersonelId == item.Id);
@@ -66,6 +67,8 @@ namespace WorkHour.WEB.Controllers
                     Token = token
                 };
 
+                SessionManager.LoginModel = query;
+
                 return Ok(query);
             }
             else
@@ -74,6 +77,7 @@ namespace WorkHour.WEB.Controllers
                 { 
                     LoginResponseType = LoginResponseTypes.ErrorPasswordOrUsername
                 };
+                SessionManager.LoginModel = query;
                 return Ok(query);
             }
         }

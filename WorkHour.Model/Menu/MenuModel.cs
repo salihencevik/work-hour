@@ -5,7 +5,7 @@ using WorkHour.Data;
 
 namespace WorkHour.Model
 {
-    public class MenuModel : BaseIdCreateEntity
+    public class MenuModel : BaseIdCreateUpdateEntity, BaseIdModel, IsDeletedEntity
     {
         public string Name { get; set; }
         public string Status { get; set; }
@@ -14,5 +14,6 @@ namespace WorkHour.Model
         public string icon { get; set; }
         public string Datatarget { get; set; }
         public string MenuId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace WorkHour.Data
         public string CreatorPersonel { get; set; }
         public DateTime? CreationDate { get; set; }
         public int? PersonelId { get; set; }
-        public bool? Deleted { get; set; }
+        public bool? IsDeleted { get; set; }
         public int? CustomerId { get; set; }
         public int? ProjectDescriptionId { get; set; }
         public string BusinessPriority { get; set; }

@@ -5,7 +5,7 @@ using WorkHour.Data;
 
 namespace WorkHour.Model
 {
-    public class LoginModel : BaseIdEntity
+    public class LoginModel : BaseIdCreateUpdateEntity, BaseIdModel, IsDeletedEntity
     {
         public string Name { get; set; }
         public List<string> ClaimText { get; set; }
@@ -13,6 +13,7 @@ namespace WorkHour.Model
         public LoginResponseTypes LoginResponseType { get; set; }
         public List<Menu> MenuItem { get; set; }
         public string Token { get; set; }
+        public bool IsDeleted { get; set; }
     }
     public enum LoginResponseTypes
     {

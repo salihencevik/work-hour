@@ -19,7 +19,7 @@ namespace WorkHour.WEB.Controllers
 
         protected override IEnumerable<PersonelModel> GetQuery()
         {
-            var query = (from r in _Unit.GetRepository<Personel>().GetAll().Where(f => f.Deleted == false)
+            var query = (from r in _Unit.GetRepository<Personel>().GetAll().Where(f => f.IsDeleted == false)
                          select new PersonelModel()
                          {
                              Adress = r.Adress,
@@ -34,7 +34,7 @@ namespace WorkHour.WEB.Controllers
 
         protected override IEnumerable<PersonelModel> GetSearchQuery()
         {
-            var query = (from r in _Unit.GetRepository<Personel>().GetAll().Where(f => f.Deleted == false)
+            var query = (from r in _Unit.GetRepository<Personel>().GetAll().Where(f => f.IsDeleted == false)
                          select new PersonelModel()
                          {
                              Adress = r.Adress,

@@ -3,5 +3,5 @@ import { PersonelComponent } from '../../pages/personel/personel.component';
  
 
 export const AdminLayoutRoutes: Routes = [
-  { path: 'Personel', component: PersonelComponent }
+  { path: 'personel', component: PersonelComponent } 
 ];

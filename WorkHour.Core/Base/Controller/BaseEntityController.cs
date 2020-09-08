@@ -10,7 +10,7 @@ using WorkHour.Data;
 namespace WorkHour.Core
 {
     public abstract class BaseEntityController<TEntity, TModel, TSearchModel, TContext> : BaseController
-            where TEntity : BaseIdEntity, new()
+            where TEntity : BaseIdCreateUpdateEntity, new()
             where TModel : BaseIdModel, new()
             where TSearchModel : BaseIdModel, new()
         //where TService : EfGenericRepository<TEntity>
@@ -22,6 +22,7 @@ namespace WorkHour.Core
         }
 
         [HttpGet("GetItems")]
+        [WorkHourFilter]
         public virtual ActionResult GetItems(string parameters)
         {
             return Execute(() =>
@@ -72,12 +73,26 @@ namespace WorkHour.Core
         {
             return Execute(() =>
             {
-                if (model.Id == 0)
+            if (model.Id == 0)
+            {
+                if (model is IBaseIdCreateEntity)
                 {
-                    _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>());
+                    ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
+                    ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
+
                 }
-                else
+                _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>());
+            }
+            else
+            {
+             
+                if (model is IBaseIdUpdateEntity)
                 {
+                        ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
+                        ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
+                        ((IBaseIdUpdateEntity)model).UpdateDate = DateTime.Now;
+                    ((IBaseIdUpdateEntity)model).UpdateUserId = SessionManager.LoginModel.Id;
+                }
                     _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>());
                 }
             });

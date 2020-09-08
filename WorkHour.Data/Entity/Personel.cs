@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkHour.Data
 {
-    public partial class Personel : BaseIdEntity
+    public partial class Personel : BaseIdCreateUpdateEntity, IsDeletedEntity
     {
         public Personel()
         {
@@ -14,7 +14,6 @@ namespace WorkHour.Data
             Work = new HashSet<Work>();
         }
 
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Mission { get; set; }
@@ -22,11 +21,11 @@ namespace WorkHour.Data
         public string Adress { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public bool? Deleted { get; set; }
 
         public ICollection<Activity> Activity { get; set; }
         public ICollection<BusinessList> BusinessList { get; set; }
         public ICollection<UserRole> UserRole { get; set; }
         public ICollection<Work> Work { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkHour.Data
 {
-    public partial class Menu : BaseIdEntity
+    public partial class Menu : BaseIdCreateUpdateEntity
     {
         public string Name { get; set; }
         public string Status { get; set; }

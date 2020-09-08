@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkHour.Data
 {
-    public abstract class BaseIdEntity
+    public abstract class BaseIdEntity 
     {
         public int Id { get; set; }
     }

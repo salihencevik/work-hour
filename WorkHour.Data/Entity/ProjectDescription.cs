@@ -15,7 +15,7 @@ namespace WorkHour.Data
         public int Id { get; set; }
         public string ProjectName { get; set; }
         public int? CustomerId { get; set; }
-        public bool? Deleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Customer Customer { get; set; }
         public ICollection<BusinessList> BusinessList { get; set; }

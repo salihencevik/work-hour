@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkHour.Data
 {
-    public partial class Customer
+    public partial class Customer: BaseIdCreateUpdateEntity, IsDeletedEntity
     {
         public Customer()
         {
@@ -17,9 +17,9 @@ namespace WorkHour.Data
         public string Phone { get; set; }
         public string Adress { get; set; }
         public string Email { get; set; }
-        public bool? Deleted { get; set; }
 
         public ICollection<BusinessList> BusinessList { get; set; }
         public ICollection<ProjectDescription> ProjectDescription { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

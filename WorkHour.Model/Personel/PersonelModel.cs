@@ -5,7 +5,7 @@ using WorkHour.Data;
 
 namespace WorkHour.Model
 {
-    public class PersonelModel : BaseIdCreateEntity
+    public class PersonelModel : BaseIdCreateUpdateEntity, BaseIdModel, IsDeletedEntity
     {
         public string Name { get; set; }
         public string Email { get; set; }
@@ -13,5 +13,6 @@ namespace WorkHour.Model
         public string Phone { get; set; }
         public string Adress { get; set; }
         public List<string> ClaimText { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

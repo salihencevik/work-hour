@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkHour.Core
+namespace WorkHour.Data
 {
-    public abstract class BaseIdUpdateEntity
+    public interface IBaseIdUpdateEntity
     {
         public int? UpdateUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
-
     }
 }

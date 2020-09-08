@@ -45,7 +45,7 @@ namespace WorkHour.Core.Concrete
                 var entity = GetEntityById(id);
                 if (entity is IsDeletedEntity)
                 {
-                    ((IsDeletedEntity)entity).Deleted = true;
+                    ((IsDeletedEntity)entity).IsDeleted = true;
                     Update(entity);
                 }
                 else
@@ -67,6 +67,7 @@ namespace WorkHour.Core.Concrete
 
         public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
+            
             return filter == null
                  ? _context.Set<TEntity>()
                  : _context.Set<TEntity>().Where(filter);

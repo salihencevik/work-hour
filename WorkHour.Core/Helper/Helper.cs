@@ -14,9 +14,9 @@ namespace WorkHour.Core.Helper
         /// <returns></returns>
         public static bool AuthorityControl(string _claimText)
         {
-            if (SessionManager.CurrentUser != null)
+            if (SessionManager.LoginModel != null)
             {
-                foreach (var item in SessionManager.CurrentUser.ClaimText)
+                foreach (var item in SessionManager.LoginModel.ClaimText)
                 {
                     if (item.Equals(_claimText))
                     {
@@ -38,7 +38,7 @@ namespace WorkHour.Core.Helper
                               .Select(s => s.ToString());
             foreach (var value in values)
             {
-                if (value.Contains(Controllername))
+                if (Controllername.Contains(value))
                 {
                     return value.ToString();
                 }
