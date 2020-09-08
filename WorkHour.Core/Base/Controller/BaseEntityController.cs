@@ -62,7 +62,6 @@ namespace WorkHour.Core
         protected virtual TModel GetModel(int id)
         {
             return GetQuery().FirstOrDefault(x => x.Id == id);
-
         }
 
 

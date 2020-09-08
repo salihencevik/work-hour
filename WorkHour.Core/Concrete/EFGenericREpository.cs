@@ -82,6 +82,7 @@ namespace WorkHour.Core.Concrete
         {
             return Execute(() =>
             {
+
                 _dbset.Update(entity);
                 SaveChanges();
             });

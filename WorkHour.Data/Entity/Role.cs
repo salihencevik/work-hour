@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using WorkHour.Data.Base;
 
 namespace WorkHour.Data
 {
-    public partial class Role
+    public partial class Role : BaseIdEntity
     {
         public Role()
         {

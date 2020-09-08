@@ -14,15 +14,10 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-.form-container{
-    display: flex;
-    flex-direction: column;
-  }
-  .form-container>div{
-    width:100% !important;
-  }
-  .form-container button{
-    width:fit-content;
-  }
 
 
+
+button.fullwidth {
+  margin-right: 0px;
+  width: 100% !important;
+}

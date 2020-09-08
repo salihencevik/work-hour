@@ -7,7 +7,7 @@
     <mat-card>
       <mat-card-content>
         <div class="tab-content">
-          <mat-card-content fxLayout="column">
+          <div class="container">
             <mat-form-field class="fullwidth">
               <input name="id" matInput placeholder="Id" disabled [(ngModel)]="grid.newItem.id">
             </mat-form-field>
@@ -15,8 +15,52 @@
             <mat-form-field class="fullwidth">
               <input matInput type="text" placeholder="Name" maxLength="50" name="name" required [(ngModel)]="grid.newItem.name">
             </mat-form-field>
-          </mat-card-content>
-        </div>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Email" maxLength="50" name="email" required [(ngModel)]="grid.newItem.email">
+            </mat-form-field>
+
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Mission" maxLength="50" name="mission" required [(ngModel)]="grid.newItem.mission">
+            </mat-form-field>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Phone" maxLength="50" name="phone" required [(ngModel)]="grid.newItem.phone">
+            </mat-form-field>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Adress" maxLength="50" name="adress" required [(ngModel)]="grid.newItem.adress">
+            </mat-form-field>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Username" maxLength="50" name="username" required [(ngModel)]="grid.newItem.userName">
+            </mat-form-field>
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Password" maxLength="50" name="password" [required]="passwordRequired" [(ngModel)]="grid.newItem.password">
+            </mat-form-field>
+          </div>
+        </div>  
+          <h3><strong class="contentDetailTitleText">Rol</strong></h3>
+          <mat-form-field class="fullwidth">
+            <input matInput #roleInput placeholder="Ara..." (input)="filterRoles(roleInput.value)" />
+          </mat-form-field>
+          <mat-card>
+            <mat-list>
+              <div *ngFor="let item of filteredRoles">
+                <mat-list-item>
+                  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%;">
+                    <div fxFlex>
+                      <mat-checkbox [name]="item.Id.toString() + 'role'" [(ngModel)]="item.Checked">
+                        {{item.Name}}
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </mat-list-item>
+              </div>
+            </mat-list>
+          </mat-card> 
+
 
         <button type="submit" [disabled]="!personelForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
         <button type="button" mat-raised-button (click)="backToList()" class="mr-2 btnDelete"> <mat-icon>cancel</mat-icon> Cancel</button>
