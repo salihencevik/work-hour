@@ -12,7 +12,9 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PersonelComponent } from '../../pages/personel/personel.component';
-import { AgGridModule } from 'ag-grid-angular'; 
+import { AgGridModule } from 'ag-grid-angular';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { GridComponent } from '../../pages/grid/grid.component';
 // import { ToastrModule } from 'ngx-toastr';
@@ -26,6 +28,7 @@ import { GridComponent } from '../../pages/grid/grid.component';
     MatInputModule,
     HttpClientModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     NgbModule,
     MatDialogModule,
     ReactiveFormsModule,

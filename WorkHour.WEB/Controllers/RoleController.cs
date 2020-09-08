@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using WorkHour.core;
-using WorkHour.Data.Entity;
-using WorkHour.DataAccess.DataAccess.Abstract;
+using Microsoft.AspNetCore.Mvc; 
+using WorkHour.Core;
+using WorkHour.Core.Abstract;
+using WorkHour.Data; 
 using WorkHour.Model;
 
 namespace WorkHour.WEB.Controllers

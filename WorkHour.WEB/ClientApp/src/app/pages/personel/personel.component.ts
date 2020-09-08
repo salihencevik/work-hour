@@ -16,15 +16,17 @@ export class PersonelComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.grid.modeChange.subscribe((m) => {
       this.modeChange(m);
+     
     });
     }
   filteredRoles: any;
   roles = [];
   PageModes = PageMode;
   mode = PageMode.List;
-  columns: any[]; 
-
-  ngOnInit(): void { 
+  columns: any[];
+  passwordRequired: boolean = true;
+  ngOnInit(): void {
+    this.roleService.getItems(); 
     this.columns = [
       { headerName: 'Id', field: 'id' },
       { headerName: 'Adı', field: 'name' },
@@ -32,10 +34,23 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       { headerName: 'Ünvan', field: 'mission' },
       { headerName: 'Telefon', field: 'phone' },
       { headerName: 'Adres', field: 'adress' }
-    ];
-  
+    ]; 
   }
 
+
+  modeChange(m) {
+    debugger;
+    this.loadRoles();
+    if (m == PageMode.Update) {
+      this.fillRoles(this.grid.newItem.roles)
+      this.reloadFilteredData();
+      this.passwordRequired = false;
+    }
+    if (m == PageMode.Create) {
+      this.reloadFilteredData();
+      this.passwordRequired = true;
+    }
+  }
 
   loadRoles() {
     debugger;
@@ -50,6 +65,7 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
   filterRoles(value) {
     debugger;
     if (!value) {
@@ -62,20 +78,34 @@ export class PersonelComponent implements OnInit, AfterViewInit {
   copyRoles() {
     this.filteredRoles = Object.assign([], this.roles);
   }
-  modeChange(m) {
-    if (m == PageMode.Create || m == PageMode.Update) {
-      this.loadRoles();
+
+  fillRoles(roleIds: any[]) {
+    debugger;
+    for (var i = 0; i < this.roles.length; i++) {
+      var id = this.roles[i].Id;
+      var index = roleIds.indexOf(id);
+      if (index != -1) {
+        this.roles[i].Checked = true;
+      }
     }
   }
-  run(name: string) {
-    if (this[name]) {
-      this[name]();
-    }
+
+  reloadFilteredData() {
+    this.copyRoles(); 
   }
+
   backToList() {
     this.mode = PageMode.List;
   }
   save() {
+    debugger;
+    var roleIds = [];
+    for (var i = 0; i < this.roles.length; i++) {
+      if (this.roles[i].Checked == true) {
+        roleIds.push(this.roles[i].Id);
+      }
+    }
+    this.grid.newItem.roles = roleIds;
     let url = "/Personel/SaveItem";
     this.httpClient.post(url, this.grid.newItem).subscribe(data => {
       if (data != null) {
@@ -84,4 +114,16 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+
+
+  run(name: string) {
+    if (this[name]) {
+      this[name]();
+    }
+  }
+
+
+
+
 }

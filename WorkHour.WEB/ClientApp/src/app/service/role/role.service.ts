@@ -23,7 +23,7 @@ export class RoleService {
     this.roles = [];
     this.loading = true;
     var url = '/Role/GetItems'; 
-    this.httpClient.get(url).subscribe((data: any) => {;
+    this.httpClient.get(url).subscribe((data : any) => {
       this.roles = data.item;
       this.loaded = true;
     }, () => {

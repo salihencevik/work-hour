@@ -17,6 +17,11 @@
             </mat-form-field>
 
             <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Email" maxLength="50" name="email" required [(ngModel)]="grid.newItem.email">
+            </mat-form-field>
+
+
+            <mat-form-field class="fullwidth">
               <input matInput type="text" placeholder="Mission" maxLength="50" name="mission" required [(ngModel)]="grid.newItem.mission">
             </mat-form-field>
 
@@ -29,16 +34,14 @@
             </mat-form-field>
 
             <mat-form-field class="fullwidth">
-              <input matInput type="text" placeholder="Username" maxLength="50" name="username" required [(ngModel)]="grid.newItem.username">
+              <input matInput type="text" placeholder="Username" maxLength="50" name="username" required [(ngModel)]="grid.newItem.userName">
             </mat-form-field>
             <mat-form-field class="fullwidth">
-              <input matInput type="text" placeholder="Password" maxLength="50" name="password" required [(ngModel)]="grid.newItem.password">
+              <input matInput type="text" placeholder="Password" maxLength="50" name="password" [required]="passwordRequired" [(ngModel)]="grid.newItem.password">
             </mat-form-field>
           </div>
-        </div>
-
-        <div #claim class="contentDetailTitle offset">
-          <h3><strong class="contentDetailTitleText">Yetki</strong></h3>
+        </div>  
+          <h3><strong class="contentDetailTitleText">Rol</strong></h3>
           <mat-form-field class="fullwidth">
             <input matInput #roleInput placeholder="Ara..." (input)="filterRoles(roleInput.value)" />
           </mat-form-field>
@@ -56,8 +59,7 @@
                 </mat-list-item>
               </div>
             </mat-list>
-          </mat-card>
-        </div>
+          </mat-card> 
 
 
         <button type="submit" [disabled]="!personelForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
