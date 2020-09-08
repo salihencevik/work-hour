@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkHour.Core\WorkHour.Core.csproj" />
     <ProjectReference Include="..\WorkHour.Data\WorkHour.Data.csproj" />
   </ItemGroup>
 

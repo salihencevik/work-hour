@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorkHour.Data\WorkHour.Data.csproj" />
+    <ProjectReference Include="..\WorkHour.Model\WorkHour.Model.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WorkHour.Core;
+using WorkHour.Data;
 
 namespace WorkHour.Model
 {
@@ -14,6 +14,5 @@ namespace WorkHour.Model
         public string Adress { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public List<int?> Roles { get; set; }
     }
 }

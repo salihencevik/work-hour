@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using WorkHour.Data;
-using WorkHour.Data.Base;
 
 namespace WorkHour.Model
 {
