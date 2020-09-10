@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using WorkHour.Data.Base;
+using System.Collections.Generic; 
 
 namespace WorkHour.Data
 {
@@ -11,8 +10,6 @@ namespace WorkHour.Data
             RoleClaim = new HashSet<RoleClaim>();
             UserRole = new HashSet<UserRole>();
         }
-
-        public int Id { get; set; }
         public string Name { get; set; }
 
         public ICollection<RoleClaim> RoleClaim { get; set; }

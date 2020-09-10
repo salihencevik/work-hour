@@ -8,5 +8,6 @@ namespace WorkHour.Data
     {
         public int CreateUserId { get; set; }
         public DateTime CreateDate { get; set; }
+        public int Id { get; set; }
     }
 }

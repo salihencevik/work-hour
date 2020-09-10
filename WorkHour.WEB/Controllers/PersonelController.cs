@@ -73,7 +73,7 @@ namespace WorkHour.WEB.Controllers
                         {
 
                             var item  = model.GetPropertyValues<Personel>();
-                            item.Deleted = false;
+                            item.IsDeleted = false;
                             item.Password = Encrypt.EncryptSHA1(item.Password);
                             bool query = CheckUserName(item);
                             if (!query)
@@ -116,7 +116,7 @@ namespace WorkHour.WEB.Controllers
                                 model.Password = Encrypt.EncryptSHA1(model.Password);
                             } 
                             var item = model.GetPropertyValues<Personel>();
-                            item.Deleted = false; 
+                            item.IsDeleted = false; 
                             bool query = CheckUserName(item);
                             if (!query)
                             {

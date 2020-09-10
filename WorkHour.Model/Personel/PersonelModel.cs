@@ -5,8 +5,9 @@ using WorkHour.Data;
 
 namespace WorkHour.Model
 {
-    public class PersonelModel : BaseIdCreateUpdateEntity, BaseIdModel, IsDeletedEntity
+    public class PersonelModel : BaseIdModel, IsDeletedEntity
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Mission { get; set; }
@@ -17,5 +18,9 @@ namespace WorkHour.Model
         public string UserName { get; set; }
         public string Password { get; set; }
         public List<int?> Roles { get; set; }
+        public int? UpdateUserId { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public int CreateUserId { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using WorkHour.Data;
 namespace WorkHour.Core
 {
     public abstract class BaseEntityController<TEntity, TModel, TSearchModel, TContext> : BaseController
-            where TEntity : BaseIdCreateUpdateEntity, new()
+            where TEntity : BaseIdEntity, new()
             where TModel : BaseIdModel, new()
             where TSearchModel : BaseIdModel, new()
         //where TService : EfGenericRepository<TEntity>
