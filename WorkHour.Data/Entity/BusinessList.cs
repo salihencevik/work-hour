@@ -11,16 +11,13 @@ namespace WorkHour.Data
             Activity = new HashSet<Activity>();
         }
 
-        public int Id { get; set; }
-        //[Required(ErrorMessage = "Bu alan boş Geçilemez!")]
+        public int Id { get; set; } 
         public string BusinessName { get; set; }
-        public int IsApprove { get; set; }
-        //[Required(ErrorMessage = "Bu alan boş Geçilemez!")]
+        public int IsApprove { get; set; } 
         public DateTime? Time { get; set; }
         public string Status { get; set; }
         public string Explanation { get; set; }
-        public string TaskExplanation { get; set; }
-        //[Required(ErrorMessage = "Bu alan boş Geçilemez!")]
+        public string TaskExplanation { get; set; } 
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string CreatorPersonel { get; set; }

@@ -115,12 +115,12 @@ namespace WorkHour.WEB.Controllers
                             {
                                 model.Password = Encrypt.EncryptSHA1(model.Password);
                             } 
-                            var item = model.GetPropertyValues<Personel>();
-                            item.IsDeleted = false; 
-                            bool query = CheckUserName(item);
+                            model.GetPropertyValues<Personel>(ref oldItem);
+                            oldItem.IsDeleted = false; 
+                            bool query = CheckUserName(oldItem);
                             if (!query)
                             {
-                                result = _Unit.GetRepository<Personel>().Update(item); 
+                                result = _Unit.GetRepository<Personel>().Update(oldItem); 
                                 if (result.IsSucceeded)
                                 {
                                     var oldRole = _Unit.GetRepository<UserRole>().GetAll(f => f.PersonelId == model.Id);
@@ -131,7 +131,7 @@ namespace WorkHour.WEB.Controllers
                                     foreach (var roles in model.Roles)
                                     {
                                         UserRole ur = new UserRole();
-                                        ur.PersonelId = item.Id;
+                                        ur.PersonelId = oldItem.Id;
                                         ur.RoleId = roles;
                                         _Unit.GetRepository<UserRole>().Add(ur);
                                     }

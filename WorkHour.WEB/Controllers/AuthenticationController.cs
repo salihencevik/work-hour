@@ -77,7 +77,6 @@ namespace WorkHour.WEB.Controllers
                 { 
                     LoginResponseType = LoginResponseTypes.ErrorPasswordOrUsername
                 };
-                SessionManager.LoginModel = query;
                 return Ok(query);
             }
         }

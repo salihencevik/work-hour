@@ -39,7 +39,7 @@ export class PersonelComponent implements OnInit, AfterViewInit {
 
 
   modeChange(m) {
-    debugger;
+    debugger; 
     this.loadRoles();
     if (m == PageMode.Update) {
       this.fillRoles(this.grid.newItem.roles)

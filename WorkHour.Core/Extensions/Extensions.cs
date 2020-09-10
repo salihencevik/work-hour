@@ -36,7 +36,7 @@ namespace WorkHour.Core
 
             return obj;
         }
-        public static T GetPropertyValues<T>(this object selfmodel,T Targetmodel) where T : class
+        public static void  GetPropertyValues<T>(this object selfmodel,ref T Targetmodel)where T : class
         {
       
             Type targetmodeltype = Targetmodel.GetType();
@@ -59,7 +59,6 @@ namespace WorkHour.Core
                 }
             }
 
-            return Targetmodel;
         }
 
     }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkHour.Data
 {
-    public partial class Activity:BaseIdCreateUpdateEntity , IsDeletedEntity
+    public partial class Activity
     {
         public int Id { get; set; }
         public string CreateUser { get; set; }
