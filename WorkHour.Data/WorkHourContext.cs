@@ -16,7 +16,7 @@ namespace WorkHour.Data
         public DbSet<Claim> Claim { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Menu> Menu { get; set; }
-        public DbSet<User> Personel { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<RoleClaim> RoleClaim { get; set; }

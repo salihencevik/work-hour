@@ -106,7 +106,7 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       }
     }
     this.grid.newItem.roles = roleIds;
-    let url = "/Personel/SaveItem";
+    let url = "/User/SaveItem";
     this.httpClient.post(url, this.grid.newItem).subscribe(data => {
       if (data != null) {
         this.mode = PageMode.List;

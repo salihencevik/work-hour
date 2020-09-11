@@ -48,11 +48,12 @@ namespace WorkHour.Core.Helper
 
         enum CRUDClaimEnum
         {
-            Get,
+            GetItems,
             Show,
             Delete,
             Insert,
-            Edit,
+            Update,
+            ExportToExcel
 
         }
 

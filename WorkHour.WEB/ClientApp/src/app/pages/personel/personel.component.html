@@ -1,5 +1,5 @@
  
-  <app-grid [hidden]="mode != PageModes.List" [entityName]="'Personel'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Personel.Show'" (call)="run($event)"></app-grid>
+  <app-grid [hidden]="mode != PageModes.List" [entityName]="'User'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Personel.Show'" (call)="run($event)"></app-grid>
  
 
 <div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
