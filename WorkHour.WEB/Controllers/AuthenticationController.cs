@@ -27,10 +27,10 @@ namespace WorkHour.WEB.Controllers
         public IActionResult Login(string username,string password)
         {
             password = Encrypt.EncryptSHA1(password);
-            var item = _unit.GetRepository<Personel>().Get(i => i.UserName == username && i.Password == password && i.IsDeleted == false);
+            var item = _unit.GetRepository<User>().Get(i => i.Username == username && i.Password == password && i.IsDeleted == false);
             if (item != null)
             {
-                var role = _unit.GetRepository<UserRole>().Get(i => i.PersonelId == item.Id);
+                var role = _unit.GetRepository<UserRole>().Get(i => i.UserId == item.Id);
                 var roleClaim = _unit.GetRepository<RoleClaim>().GetAll().Where(i => i.RoleId == role.RoleId);
                 var claim = _unit.GetRepository<Claim>().GetAll().ToList();
                 var menu = _unit.GetRepository<Menu>().GetAll();
@@ -59,7 +59,7 @@ namespace WorkHour.WEB.Controllers
                 var query = new LoginModel()
                 {
                     Name = item.Name,
-                    UserName = item.UserName,
+                    UserName = item.Username,
                     Id = item.Id,
                     ClaimText = ClaimText,
                     LoginResponseType = LoginResponseTypes.Success,

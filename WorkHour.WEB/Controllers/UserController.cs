@@ -13,16 +13,16 @@ namespace WorkHour.WEB.Controllers
     [Produces("application/json")]
     [Route("[controller]")]
     [ApiController]
-    public class PersonelController : BaseEntityController<Personel, PersonelModel, PersonelModel, IUnitofWork>
+    public class UserController : BaseEntityController<User, UserModel, UserModel, IUnitofWork>
     {
-        public PersonelController(IUnitofWork unit) : base(unit)
+        public UserController(IUnitofWork unit) : base(unit)
         {
-        } 
+        }
 
-        protected override IEnumerable<PersonelModel> GetSearchQuery()
+        protected override IEnumerable<UserModel> GetSearchQuery()
         {
-            var query = (from r in _Unit.GetRepository<Personel>().GetAll().Where(f => f.IsDeleted == false)
-                         select new PersonelModel()
+            var query = (from r in _Unit.GetRepository<User>().GetAll().Where(f => f.IsDeleted == false)
+                         select new UserModel()
                          {
                              Adress = r.Adress,
                              Email = r.Email,
@@ -37,18 +37,18 @@ namespace WorkHour.WEB.Controllers
         {
             return Execute(() =>
             {
-                var userResult = _Unit.GetRepository<Personel>().Get(f => f.Id == id);
-                var userModel = userResult.GetPropertyValues<PersonelModel>();
-                userModel.Roles = _Unit.GetRepository<UserRole>().GetAll(t => t.PersonelId == id).Select(t => t.RoleId).ToList();
-                userModel.Password = string.Empty; 
+                var userResult = _Unit.GetRepository<User>().Get(f => f.Id == id);
+                var userModel = userResult.GetPropertyValues<UserModel>();
+                userModel.Roles = _Unit.GetRepository<UserRole>().GetAll(t => t.UserId == id).Select(t => t.RoleId).ToList();
+                userModel.Password = string.Empty;
                 return userModel;
             });
         }
 
-        protected override IEnumerable<PersonelModel> GetQuery()
+        protected override IEnumerable<UserModel> GetQuery()
         {
-            var query = (from r in _Unit.GetRepository<Personel>().GetAll().Where(f => f.IsDeleted == false)
-                         select new PersonelModel()
+            var query = (from r in _Unit.GetRepository<User>().GetAll().Where(f => f.IsDeleted == false)
+                         select new UserModel()
                          {
                              Adress = r.Adress,
                              Email = r.Email,
@@ -58,34 +58,34 @@ namespace WorkHour.WEB.Controllers
                              Phone = r.Phone
                          }).ToList();
             return query;
-        } 
+        }
 
-        public override ActionResult SaveItem(PersonelModel model)
+        public override ActionResult SaveItem(UserModel model)
         {
             return Execute(() =>
             {
                 DbOperationResult result = null;
                 using (var transaction = _Unit.Context.Database.BeginTransaction())
-                {   
+                {
                     try
                     {
                         if (model.Id == 0)
                         {
 
-                            var item  = model.GetPropertyValues<Personel>();
+                            var item = model.GetPropertyValues<User>();
                             item.IsDeleted = false;
                             item.Password = Encrypt.EncryptSHA1(item.Password);
                             bool query = CheckUserName(item);
                             if (!query)
                             {
-                              result =  _Unit.GetRepository<Personel>().Add(item);
+                                result = _Unit.GetRepository<User>().Add(item);
 
                                 if (result.IsSucceeded)
                                 {
                                     foreach (var roles in model.Roles)
                                     {
                                         UserRole ur = new UserRole();
-                                        ur.PersonelId = item.Id;
+                                        ur.UserId = item.Id;
                                         ur.RoleId = roles;
                                         _Unit.GetRepository<UserRole>().Add(ur);
                                     }
@@ -94,36 +94,36 @@ namespace WorkHour.WEB.Controllers
                                 {
                                     transaction.Rollback();
                                 }
-                              
+
                             }
                             else
                             {
                                 throw new Exception("Bu isim daha önce kullanılmış");
                             }
-                         
+
                         }
                         else
                         {
-                            
-                            var oldItem  = _Unit.GetRepository<Personel>().Get(f => f.Id == model.Id); 
+
+                            var oldItem = _Unit.GetRepository<User>().Get(f => f.Id == model.Id);
                             if (String.IsNullOrEmpty(model.Password))
                             {
                                 model.Password = oldItem.Password;
-                                
+
                             }
                             else
                             {
                                 model.Password = Encrypt.EncryptSHA1(model.Password);
-                            } 
-                            model.GetPropertyValues<Personel>(ref oldItem);
-                            oldItem.IsDeleted = false; 
+                            }
+                            model.GetPropertyValues<User>(ref oldItem);
+                            oldItem.IsDeleted = false;
                             bool query = CheckUserName(oldItem);
                             if (!query)
                             {
-                                result = _Unit.GetRepository<Personel>().Update(oldItem); 
+                                result = _Unit.GetRepository<User>().Update(oldItem);
                                 if (result.IsSucceeded)
                                 {
-                                    var oldRole = _Unit.GetRepository<UserRole>().GetAll(f => f.PersonelId == model.Id);
+                                    var oldRole = _Unit.GetRepository<UserRole>().GetAll(f => f.UserId == model.Id);
                                     foreach (var old in oldRole)
                                     {
                                         _Unit.GetRepository<UserRole>().Delete(old.Id);
@@ -131,7 +131,7 @@ namespace WorkHour.WEB.Controllers
                                     foreach (var roles in model.Roles)
                                     {
                                         UserRole ur = new UserRole();
-                                        ur.PersonelId = oldItem.Id;
+                                        ur.UserId = oldItem.Id;
                                         ur.RoleId = roles;
                                         _Unit.GetRepository<UserRole>().Add(ur);
                                     }
@@ -140,9 +140,9 @@ namespace WorkHour.WEB.Controllers
                                 {
                                     transaction.Rollback();
                                 }
-                             
+
                             }
-                          
+
                         }
                         transaction.Commit();
                     }
@@ -158,9 +158,9 @@ namespace WorkHour.WEB.Controllers
         }
 
 
-        private bool CheckUserName(Personel item)
+        private bool CheckUserName(User item)
         {
-           return _Unit.GetRepository<Personel>().GetAll(f => f.Name == item.Name && f.Id != item.Id).Any();  
+            return _Unit.GetRepository<User>().GetAll(f => f.Name == item.Name && f.Id != item.Id).Any();
         }
     }
 }

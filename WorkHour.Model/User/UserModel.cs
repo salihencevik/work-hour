@@ -5,10 +5,11 @@ using WorkHour.Data;
 
 namespace WorkHour.Model
 {
-    public class PersonelModel : BaseIdModel, IsDeletedEntity
+    public class UserModel : BaseIdModel, IsDeletedEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Surname { get; set; }
         public string Email { get; set; }
         public string Mission { get; set; }
         public string Phone { get; set; }
