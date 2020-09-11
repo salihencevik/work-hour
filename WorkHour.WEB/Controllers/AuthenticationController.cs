@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WorkHour.Core;
 using WorkHour.Core.Abstract;
 using WorkHour.Core.Helper;
@@ -31,8 +32,9 @@ namespace WorkHour.WEB.Controllers
             var item = _unit.GetRepository<User>().Get(i => i.Username == username && i.Password == password && i.IsDeleted == false);
             if (item != null)
             {
-                var role = _unit.GetRepository<UserRole>().Get(i => i.UserId == item.Id);
-                var roleClaim = _unit.GetRepository<RoleClaim>().GetAll().Where(i => i.RoleId == role.RoleId);
+                var roles = _unit.GetRepository<UserRole>().GetAll(i => i.UserId == item.Id).Select(i=>i.RoleId).ToList();
+                var roleClaim = _unit.GetRepository<RoleClaim>().GetAll(i=>roles.Contains(i.RoleId)).Select(i=>i.ClaimId).Distinct().ToList();
+
                 var claim = _unit.GetRepository<Claim>().GetAll().ToList();
                 var menu = _unit.GetRepository<Menu>().GetAll();
 
@@ -42,7 +44,7 @@ namespace WorkHour.WEB.Controllers
 
                 foreach (var items in roleClaim)
                 {
-                    var q = claim.FirstOrDefault(b => b.Id == items.ClaimId).Text;
+                    var q = claim.FirstOrDefault(b => b.Id == items).Text;
                     ClaimText.Add(q);
                 }
 
@@ -54,7 +56,7 @@ namespace WorkHour.WEB.Controllers
                     }
                 }
 
-                string baseToken = string.Format("Personel.{0}", item.Id); 
+                string baseToken = string.Format("User.{0}", item.Id); 
                 var token = Encrypt.GetMD5Hash(baseToken);
 
                 var query = new LoginModel()
