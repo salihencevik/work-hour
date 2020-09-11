@@ -122,7 +122,6 @@ export class GridComponent implements OnInit {
   }
 
   run(name: string, toolbarMethod: boolean) {
-    debugger;
     if (!toolbarMethod) {
 
       this.call.emit(name);
@@ -135,13 +134,13 @@ export class GridComponent implements OnInit {
   }
 
   onGridReady(params) {
-    debugger;
     if (this.personelClaimService.checkClaim(this.Authority)) {
       this.gridApi = params.api;
       this.gridColumnApi = params.columnApi;
       this.columnDefs = this.columns;
       let url = "/" + this.entityName + "/" + "getItems";
-      this.httpClient.get(url).subscribe((data: any) => { 
+      this.httpClient.get(url).subscribe((data: any) => {
+     
         this.dataSource = params.api.setRowData(data.item); 
       });
     } else {
@@ -166,8 +165,6 @@ export class GridComponent implements OnInit {
     this.dialogService
       .confirm('EMİN MİSİNİZ', 'SİLMEK İSTİYORUM')
       .subscribe(res => {
-
-        debugger;
         if (res) {
           var body = row.id;
           this.httpClient.post('/' + this.entityName + '/Delete', body).subscribe((data) => {
@@ -201,7 +198,6 @@ export class GridComponent implements OnInit {
 
 
   onSelectionChanged() {
-    debugger;
     var selectedRows = this.gridApi.getSelectedRows();
     this.selected = selectedRows;
     this.selectCallback();

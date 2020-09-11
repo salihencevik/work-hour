@@ -81,5 +81,29 @@ namespace WorkHour.WEB.Controllers
                 return Ok(query);
             }
         }
+
+        [HttpGet]
+        [Route("CheckLogin")]
+         public IActionResult CheckLogin()
+        {
+            if (SessionManager.LoginModel != null)
+            {
+                var query = new LoginModel()
+                {
+                    LoginResponseType = LoginResponseTypes.Success
+                };
+                return Ok(query);
+            }
+            else
+            {
+                var query = new LoginModel()
+                {
+                    LoginResponseType = LoginResponseTypes.Error
+                };
+                return Ok(query);
+            }
+         
+         
+        }
     }
 }

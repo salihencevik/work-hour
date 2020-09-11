@@ -75,6 +75,8 @@ namespace WorkHour.WEB.Controllers
                             var item = model.GetPropertyValues<User>();
                             item.IsDeleted = false;
                             item.Password = Encrypt.EncryptSHA1(item.Password);
+                            item.CreateUserId = SessionManager.LoginModel.Id;
+                            item.CreateDate = DateTime.Now;
                             bool query = CheckUserName(item);
                             if (!query)
                             {

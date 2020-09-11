@@ -14,6 +14,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient, private router: Router, private personelClaimService: PersonelClaimService, private menuService: MenuService) { }
   private apiUrl: string = "https://localhost:44391/Authentication/";
   public loginInfo: LoginInfo;
+  result: boolean = false;
   returnUrl: string;
   Login(username: string, password: string) {
     debugger;
@@ -50,16 +51,48 @@ export class LoginService {
     var subject = new Subject<boolean>();
     let str = localStorage.getItem('auth');
     if (str != null && str != "") {
+      let api = this.apiUrl + "CheckLogin";
+      this.httpClient.get(api).subscribe((x: any) => {
+        console.log(x);
+        if (x.loginResponseType == 4) {
+          this.setLogout();
+        } 
+      });
       var bytes = CryptoJS.AES.decrypt(str, 'secret key 123');
       this.loginInfo = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       this.personelClaimService.setClaims(this.loginInfo.claims);
-      this.menuService.setMenus(this.loginInfo.menu);
-      return true;
+      this.menuService.setMenus(this.loginInfo.menu);   
+      return true
     }
     else {
       return false;
     }
   }
+
+  //checkLogin(): Observable<boolean> {
+  //  var subject = new Subject<boolean>();
+  //  let str = localStorage.getItem('auth');
+  //  if (str != null && str != "") {
+  //    let api = this.apiUrl + "CheckLogin";
+  //    this.httpClient.get(api).subscribe((x: any) => {
+  //      debugger;
+  //      if (x.loginResponseType != 4) {
+
+  //        var bytes = CryptoJS.AES.decrypt(str, 'secret key 123');
+  //        this.loginInfo = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  //        this.personelClaimService.setClaims(this.loginInfo.claims);
+  //        this.menuService.setMenus(this.loginInfo.menu);
+  //        return true
+  //      }
+  //      else {
+  //        return false
+  //      }
+  //    });
+
+  //  } else {
+  //    return new Observable<false>();
+  //  }
+  //}
 
   getLoginInfo() {
     return this.loginInfo;
@@ -72,18 +105,6 @@ export class LoginService {
     localStorage.removeItem('auth');
     this.router.navigate(['/session/signin']);
   }
-
-  logout(): void {
-    //let params = new URLSearchParams();
-    //params.append('userId', this.loginInfo.id.toString());
-    //this.http.get('/api/Authentication/Logout', { params: params }).map(respose => respose.json())
-    //  .subscribe(data => {
-    //    if (data.ResponseType == 1 || data.ResponseType == 2) {
-          this.setLogout();
-      //  } else {
-      //  }
-      //},
-      //  error => console.log(error));
-  }
+   
 
 }

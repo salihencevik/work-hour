@@ -111,6 +111,7 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       if (data != null) {
         this.mode = PageMode.List;
         this.snackBarService.open("Ekleme İşlemi Başarılı")
+        
       }
     });
   }

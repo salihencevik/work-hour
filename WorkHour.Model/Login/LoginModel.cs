@@ -20,5 +20,6 @@ namespace WorkHour.Model
         Success = 1,
         ErrorPasswordOrUsername = 2,
         ChangePasswordFirstLogin = 3,
+        Error
     }
 }
