@@ -26,6 +26,7 @@ namespace WorkHour.WEB.Controllers
         [Route("Login/{username}/{password}")]
         public IActionResult Login(string username,string password)
         {
+
             password = Encrypt.EncryptSHA1(password);
             var item = _unit.GetRepository<User>().Get(i => i.Username == username && i.Password == password && i.IsDeleted == false);
             if (item != null)
