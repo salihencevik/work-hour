@@ -18,7 +18,7 @@ namespace WorkHour.Model
         public bool IsDeleted { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public List<int?> Roles { get; set; }
+        public List<int?> Roles { get; set; } 
         public int? UpdateUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
         public int CreateUserId { get; set; }

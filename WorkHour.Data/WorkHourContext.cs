@@ -21,6 +21,6 @@ namespace WorkHour.Data
         public DbSet<Role> Role { get; set; }
         public DbSet<RoleClaim> RoleClaim { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
-        public DbSet<Work> Work { get; set; }
+        public DbSet<Shift> Shift { get; set; }
     }
 }

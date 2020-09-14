@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module'; 
 import { GridComponent } from './pages/grid/grid.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ShiftComponent } from './pages/shift/shift.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { MatDialogModule } from '@angular/material/dialog';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,  
+    AuthLayoutComponent,
+    ShiftComponent,  
   ],
   providers: [],
   bootstrap: [AppComponent]

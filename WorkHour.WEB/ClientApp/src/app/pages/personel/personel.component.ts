@@ -25,6 +25,9 @@ export class PersonelComponent implements OnInit, AfterViewInit {
   mode = PageMode.List;
   columns: any[];
   passwordRequired: boolean = true;
+
+
+
   ngOnInit(): void {
     this.roleService.getItems(); 
     this.columns = [
