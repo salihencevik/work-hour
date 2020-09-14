@@ -29,7 +29,11 @@ namespace WorkHour.WEB.Controllers
                              Mission = r.Mission,
                              Name = r.Name,
                              Id = r.Id,
-                             Phone = r.Phone
+                             Phone = r.Phone,
+                             CreateUserId =r.CreateUserId,
+                             CreateDate = r.CreateDate,
+                             UpdateUserId = r.UpdateUserId,
+                             UpdateDate = r.UpdateDate
                          }).ToList();
             return query;
         }
@@ -55,7 +59,11 @@ namespace WorkHour.WEB.Controllers
                              Mission = r.Mission,
                              Name = r.Name,
                              Id = r.Id,
-                             Phone = r.Phone
+                             Phone = r.Phone,
+                             CreateUserId = r.CreateUserId,
+                             CreateDate = r.CreateDate,
+                             UpdateUserId = r.UpdateUserId,
+                             UpdateDate = r.UpdateDate
                          }).ToList();
             return query;
         }

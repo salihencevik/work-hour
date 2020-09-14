@@ -10,17 +10,19 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { AgGridModule } from 'ag-grid-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module'; 
+import { AppRoutingModule } from './app.routing'; 
 import { GridComponent } from './pages/grid/grid.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ShiftComponent } from './pages/shift/shift.component';
+import { ComponentsModule } from './shared/components/components.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    SharedModule,
     ComponentsModule,
     NgbModule,
     RouterModule,  
@@ -30,8 +32,7 @@ import { ShiftComponent } from './pages/shift/shift.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
-    ShiftComponent,  
+    AuthLayoutComponent, 
   ],
   providers: [],
   bootstrap: [AppComponent]

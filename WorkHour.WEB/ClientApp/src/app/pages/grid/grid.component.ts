@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { PageMode } from '../../Model/PageMode';
-import { HttpClient } from '@angular/common/http';
-import { PersonelClaimService } from '../../service/personel-claim/personel-claim.service';
-import { SnackBarService } from '../../service/snack-bar/snack-bar.service';
-import { DialogService } from '../../service/dialog-service/dialog.service';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core'; 
+import { HttpClient } from '@angular/common/http'; 
+import { PageMode } from '../../shared/Model/PageMode';
+import { DialogService } from '../../shared/service/dialog-service/dialog.service';
+import { PersonelClaimService } from '../../shared/service/personel-claim/personel-claim.service';
+import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
+import { LongDateFormatterComponent } from '../../shared/formatter/longDateFormatter';
+import { UsernameFormatterComponent } from '../../shared/formatter/usernameFormatter';
 
 @Component({
   selector: 'app-grid',
@@ -27,7 +29,7 @@ export class GridComponent implements OnInit {
   selected: any[] = [];
   @Input() serverSidePaging = true;
   @Output() modeChange = new EventEmitter();
-
+  frameworkComponents
   rowId: number;
   rows = [];
   private gridApi;
@@ -57,6 +59,7 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createFrameworkComponent();
     this.toolbarItems = [];
     if (this.createButtonVisible) {
       this.createButton = {
@@ -132,7 +135,12 @@ export class GridComponent implements OnInit {
       }
     }
   }
-
+  createFrameworkComponent() {
+    this.frameworkComponents = {
+      longDateFormatterComponent: LongDateFormatterComponent,
+      userNameFormatterComponent: UsernameFormatterComponent
+    }
+  }
   onGridReady(params) {
     if (this.personelClaimService.checkClaim(this.Authority)) {
       this.gridApi = params.api;

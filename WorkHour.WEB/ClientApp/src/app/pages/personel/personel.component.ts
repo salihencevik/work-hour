@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { PageMode } from '../../Model/PageMode';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'; 
 import { GridComponent } from '../grid/grid.component';
-import { HttpClient } from '@angular/common/http';
-import { SnackBarService } from '../../service/snack-bar/snack-bar.service';
-import { RoleService } from '../../service/role/role.service';
+import { HttpClient } from '@angular/common/http'; 
+import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
+import { RoleService } from '../../shared/service/role/role.service';
+import { PageMode } from '../../shared/Model/PageMode';
 
 @Component({
   selector: 'app-personel',
@@ -36,7 +36,11 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       { headerName: 'Email', field: 'email' },
       { headerName: 'Ünvan', field: 'mission' },
       { headerName: 'Telefon', field: 'phone' },
-      { headerName: 'Adres', field: 'adress' }
+      { headerName: 'Adres', field: 'adress' },
+      { headerName: 'Oluşturan Kullanıcı', field: 'createUserId', cellRenderer: 'userNameFormatterComponent' },
+      { headerName: 'Oluşturulma Tarihi', field: 'createDate', cellRenderer: 'longDateFormatterComponent' },
+      { headerName: 'Güncelleyen Kullanıcı', field: 'updateUserId', cellRenderer: 'userNameFormatterComponent'},
+      { headerName: 'Güncellenme Tarihi', field: 'updateDate', cellRenderer: 'longDateFormatterComponent' }
     ]; 
   }
 

@@ -2,43 +2,24 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { ClipboardModule } from 'ngx-clipboard';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule} from '@angular/material/dialog';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PersonelComponent } from '../../pages/personel/personel.component';
-import { AgGridModule } from 'ag-grid-angular';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
-
-import { GridComponent } from '../../pages/grid/grid.component';
-// import { ToastrModule } from 'ngx-toastr';
+import { PagesModule } from '../../pages/pages.module';
 
 @NgModule({
   imports: [
     CommonModule, 
     RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    MatCardModule,
-    MatInputModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    NgbModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    ClipboardModule,
-    AgGridModule.withComponents([]), 
+    FormsModule, 
+    HttpClientModule, 
+    NgbModule, 
+    ReactiveFormsModule, 
+    PagesModule,
+    ClipboardModule, 
   ],
   declarations: [
-    PersonelComponent,
-    GridComponent
+ 
   ]
 })
 

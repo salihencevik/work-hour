@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SnackBarService } from '../../service/snack-bar/snack-bar.service';
-import { LoginService } from '../../service/login/login.service';
-import { PersonelClaimService } from '../../service/personel-claim/personel-claim.service'; 
+import { Component, OnInit, OnDestroy } from '@angular/core'; 
+import { LoginService } from '../../shared/service/login/login.service';
+import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

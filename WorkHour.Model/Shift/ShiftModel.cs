@@ -10,10 +10,10 @@ namespace WorkHour.Model
         public int Id { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
-        public string Area { get; set; }
-        public int? UserId { get; set; }
+        public int Area { get; set; }
+        public int UserId { get; set; }
         public bool IsDeleted { get; set; }
-        public bool? WorkConfirmation { get; set; }
+        public bool WorkConfirmation { get; set; }
         public string Explanation { get; set; }
         public int? UpdateUserId { get; set; }
         public DateTime? UpdateDate { get; set; }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { PageMode } from '../../Model/PageMode';
+import { Component, OnInit } from '@angular/core'; 
+import { PageMode } from '../../shared/Model/PageMode';
 
 @Component({
   selector: 'app-shift',
