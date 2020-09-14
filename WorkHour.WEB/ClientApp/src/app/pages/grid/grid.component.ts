@@ -28,7 +28,10 @@ export class GridComponent implements OnInit {
   @Input() enableRowDobuleClick = true;
   selected: any[] = [];
   @Input() serverSidePaging = true;
+  @Input() customHeight: any;
+  @Input() childView: boolean = false;
   @Output() modeChange = new EventEmitter();
+  defaultColDef;
   frameworkComponents
   rowId: number;
   rows = [];
@@ -54,11 +57,25 @@ export class GridComponent implements OnInit {
 
   constructor(
     private dialogService: DialogService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
+    this.defaultColDef = {
+      resizable: true,
+      sortable: true,
+      filter: true
+    };
+
     this.rowSelection = "single";
     this.rowModelType = "infinite";
   }
 
   ngOnInit(): void {
+    if (!this.customHeight) {
+      if (this.childView) {
+        this.customHeight = "100%";
+      }
+      else {
+        this.customHeight = "calc(100vh - 155px)";
+      }
+    }
     this.createFrameworkComponent();
     this.toolbarItems = [];
     if (this.createButtonVisible) {
@@ -145,6 +162,7 @@ export class GridComponent implements OnInit {
     if (this.personelClaimService.checkClaim(this.Authority)) {
       this.gridApi = params.api;
       this.gridColumnApi = params.columnApi;
+      this.gridApi.sizeColumnsToFit();
       this.columnDefs = this.columns;
       let url = "/" + this.entityName + "/" + "getItems";
       this.httpClient.get(url).subscribe((data: any) => {

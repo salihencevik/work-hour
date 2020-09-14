@@ -12,7 +12,6 @@ export class AuthenticationGuard implements CanActivate {
 
 
   canActivate(next: ActivatedRouteSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    debugger;
     let str = localStorage.getItem('auth');
     if (str != null && str != "") {
       var obs = this.loginService.checkLogin();

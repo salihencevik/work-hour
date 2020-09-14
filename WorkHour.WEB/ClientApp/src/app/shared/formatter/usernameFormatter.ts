@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'; 
+import { Component } from '@angular/core';
 import { UserService } from '../service/user/user.service';
 
 
@@ -14,20 +14,19 @@ export class UsernameFormatterComponent {
   users: any[] = [];
 
   constructor(private userService: UserService) {
-   
+
 
     this.users = this.userService.getItems();
 
   }
 
   getUserName(id: number) {
-    debugger;
     var user = this.users.find(t => t.id == id);
     if (user == null) {
       return '';
     }
 
-    return user.name;
+    return user.name + ' ' + user.surname;
   }
 
   agInit(params: any): void {

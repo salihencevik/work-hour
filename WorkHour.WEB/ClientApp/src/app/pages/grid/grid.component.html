@@ -1,19 +1,20 @@
 
-  <div class="p-3 position-relative btn-div">
-    <div *ngFor="let item of toolbarItems" class="inline-block float-btn  mr-3">
-      <button *ngIf="checkClaim(item.claimText)" class="rkm-margin mat-raised-button float-btn {{item.css}}" mat-raised-button [disabled]="item.disabled" (click)="run(item.method, item.toolbarMethod)">
-        <!--<mat-icon>{{ item.icon }}</mat-icon>-->
-        {{ item.text}}
-      </button>
-    </div>
+<div class="p-3 position-relative btn-div">
+  <div *ngFor="let item of toolbarItems" class="inline-block float-btn  mr-3">
+    <button *ngIf="checkClaim(item.claimText)" class="rkm-margin mat-raised-button float-btn {{item.css}}" mat-raised-button [disabled]="item.disabled" (click)="run(item.method, item.toolbarMethod)">
+      <!--<mat-icon>{{ item.icon }}</mat-icon>-->
+      {{ item.text}}
+    </button>
   </div>
-<ag-grid-angular style="width: 100%; height: 100vh;"
+</div>
+<ag-grid-angular [style.height]="customHeight" style="width: 100%;"
                  class="ag-theme-alpine"
+                 [columnDefs]="columnDefs"
+                 [defaultColDef]="defaultColDef"
                  [rowData]="rowData"
                  (gridReady)="onGridReady($event)"
                  [frameworkComponents]="frameworkComponents"
                  [rowSelection]="rowSelection"
                  (selectionChanged)="onSelectionChanged($event)"
-                 (rowDoubleClicked)="rowDoubleClicked($event)"
-                 [columnDefs]="columnDefs">
+                 (rowDoubleClicked)="rowDoubleClicked($event)">
 </ag-grid-angular>

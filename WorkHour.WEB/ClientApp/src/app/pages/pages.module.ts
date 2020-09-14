@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ShiftComponent } from './shift/shift.component';
   declarations: [
     PersonelComponent,
     GridComponent,
-    ShiftComponent
+    ShiftComponent,
+    CustomerComponent
   ]
 })
 

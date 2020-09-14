@@ -1,0 +1,41 @@
+
+<app-grid [hidden]="mode != PageModes.List" [entityName]="'Customer'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Customer.Show'" (call)="run($event)"></app-grid>
+
+<div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
+  <form #customerForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="tab-content">
+          <div class="container">
+            <mat-form-field class="fullwidth">
+              <input name="id" matInput placeholder="Id" disabled [(ngModel)]="grid.newItem.id">
+            </mat-form-field>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Firma Adı" maxLength="50" name="name" required [(ngModel)]="grid.newItem.customerName">
+            </mat-form-field>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="E-mail" maxLength="50" name="email" required [(ngModel)]="grid.newItem.email">
+            </mat-form-field>
+
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Telefon" maxLength="50" name="mission" required [(ngModel)]="grid.newItem.phone">
+            </mat-form-field>
+
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Adres" maxLength="50" name="adress" required [(ngModel)]="grid.newItem.address">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="!customerForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
+        <button type="button" mat-raised-button (click)="backToList()" class="mr-2 btnDelete"> <mat-icon>cancel</mat-icon> Cancel</button>
+
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+
