@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
 import { MatSelectModule } from '@angular/material/select';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     PersonelComponent,
     GridComponent,
-    ShiftComponent
+    ShiftComponent,
+    CustomerComponent
   ]
 })
 

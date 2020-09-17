@@ -34,8 +34,12 @@ export class GridComponent implements OnInit {
   @Input() enableRowDobuleClick = true;
   selected: any[] = [];
   @Input() serverSidePaging = true;
+  @Input() customHeight: any;
+  @Input() childView: boolean = false;
   @Output() modeChange = new EventEmitter();
   frameworkComponents 
+  defaultColDef;
+  frameworkComponents
   rowId: number;
   rows = [];
   @Output() onGridReadyEvent = new EventEmitter();
@@ -70,7 +74,13 @@ export class GridComponent implements OnInit {
   infiniteInitialRowCount;
   maxBlocksInCache; 
   constructor(
-    private dialogService: DialogService, private httpClient: HttpClient, private rakamhttpService: WorkHourHttpService, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService, private http: Http, ) {
+    private dialogService: DialogService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
+    this.defaultColDef = {
+      resizable: true,
+      sortable: true,
+      filter: true
+    };
+
     this.rowSelection = "single";
     this.rowModelType = "infinite";
     this.columnDefs = [];
@@ -82,6 +92,14 @@ export class GridComponent implements OnInit {
   }
   private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
   ngOnInit(): void {
+    if (!this.customHeight) {
+      if (this.childView) {
+        this.customHeight = "100%";
+      }
+      else {
+        this.customHeight = "calc(100vh - 155px)";
+      }
+    }
     this.createFrameworkComponent();
     this.toolbarItems = [];
     if (this.createButtonVisible) {

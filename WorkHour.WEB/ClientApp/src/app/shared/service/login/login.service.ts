@@ -17,7 +17,6 @@ export class LoginService {
   result: boolean = false;
   returnUrl: string;
   Login(username: string, password: string) {
-    debugger;
   
     let api = this.apiUrl + "Login" + "/" + username + "/" + password;
     return this.httpClient.get(api).subscribe((x : any) => {
