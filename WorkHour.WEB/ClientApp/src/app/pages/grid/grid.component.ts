@@ -38,8 +38,7 @@ export class GridComponent implements OnInit {
   @Input() childView: boolean = false;
   @Output() modeChange = new EventEmitter();
   frameworkComponents 
-  defaultColDef;
-  frameworkComponents
+  defaultColDef; 
   rowId: number;
   rows = [];
   @Output() onGridReadyEvent = new EventEmitter();
@@ -74,7 +73,7 @@ export class GridComponent implements OnInit {
   infiniteInitialRowCount;
   maxBlocksInCache; 
   constructor(
-    private dialogService: DialogService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
+    private dialogService: DialogService, private rakamhttpService: WorkHourHttpService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
     this.defaultColDef = {
       resizable: true,
       sortable: true,
