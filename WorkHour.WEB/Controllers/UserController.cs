@@ -69,7 +69,7 @@ namespace WorkHour.WEB.Controllers
             return query;
         }
 
-        public override ActionResult SaveItem(UserModel model)
+        public override ActionResult SaveItem([FromBody] UserModel model)
         {
             return Execute(() =>
             {
@@ -93,6 +93,7 @@ namespace WorkHour.WEB.Controllers
 
                                 if (result.IsSucceeded)
                                 {
+
                                     foreach (var roles in model.Roles)
                                     {
                                         UserRole ur = new UserRole();
@@ -109,7 +110,7 @@ namespace WorkHour.WEB.Controllers
                             }
                             else
                             {
-                                throw new Exception("Bu isim daha önce kullanılmış");
+                                throw new Exception("Bu kullanıcı adı kullanılıyor");
                             }
 
                         }
@@ -157,10 +158,10 @@ namespace WorkHour.WEB.Controllers
                         }
                         transaction.Commit();
                     }
-                    catch (System.Exception)
+                    catch (System.Exception ex)
                     {
                         transaction.Rollback();
-                        new Exception();
+                        throw new Exception(ex.Message);
 
                     }
                     return model;

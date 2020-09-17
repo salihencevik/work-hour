@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
 import { RoleService } from '../../shared/service/role/role.service';
 import { PageMode } from '../../shared/Model/PageMode';
+import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 
 @Component({
   selector: 'app-personel',
@@ -12,7 +13,7 @@ import { PageMode } from '../../shared/Model/PageMode';
 })
 export class PersonelComponent implements OnInit, AfterViewInit {
   @ViewChild(GridComponent) grid: GridComponent;
-  constructor(private httpClient: HttpClient, private snackBarService: SnackBarService, private roleService: RoleService) { }
+  constructor(private httpClient: HttpClient, private rakamHttpService: WorkHourHttpService, private snackBarService: SnackBarService, private roleService: RoleService) { }
   ngAfterViewInit(): void {
     this.grid.modeChange.subscribe((m) => {
       this.modeChange(m);
@@ -101,6 +102,7 @@ export class PersonelComponent implements OnInit, AfterViewInit {
     this.mode = PageMode.List;
   }
   save() {
+    debugger;
     var roleIds = [];
     for (var i = 0; i < this.roles.length; i++) {
       if (this.roles[i].Checked == true) {
@@ -108,14 +110,18 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       }
     }
     this.grid.newItem.roles = roleIds;
-    let url = "/User/SaveItem";
-    this.httpClient.post(url, this.grid.newItem).subscribe(data => {
-      if (data != null) {
-        this.mode = PageMode.List;
-        this.snackBarService.open("Ekleme İşlemi Başarılı")
-        
+    var body = this.grid.newItem;
+    this.rakamHttpService.httpPost('/User/SaveItem', body, null, (data) => {
+      if (data.Item != null) {
+        if (this.mode == PageMode.Create) {
+          this.mode = PageMode.List;
+        }
+        else {
+          this.mode = PageMode.List;
+
+        }
       }
-    });
+    }, null); 
   }
 
 

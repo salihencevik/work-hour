@@ -12,14 +12,13 @@ namespace WorkHour.WEB.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]")]
-    [ApiController]
     public class CustomerController : BaseEntityController<Customer, CustomerModel, CustomerModel, IUnitofWork>
     {
         public CustomerController(IUnitofWork unit) : base(unit)
         {
         }
 
-        protected override IEnumerable<CustomerModel> GetQuery()
+        protected override IQueryable<CustomerModel> GetQuery()
         {
             var customers = _Unit.GetRepository<Customer>().GetAll().Where(x => x.IsDeleted == false);
             var query = (from c in customers
@@ -35,11 +34,11 @@ namespace WorkHour.WEB.Controllers
                              CreateUserId = c.CreateUserId,
                              UpdateDate = c.UpdateDate,
                              UpdateUserId = c.UpdateUserId
-                         }).ToList();
+                         });
             return query;
         }
 
-        protected override IEnumerable<CustomerModel> GetSearchQuery()
+        protected override IQueryable<CustomerModel> GetSearchQuery()
         {
             var customers = _Unit.GetRepository<Customer>().GetAll().Where(x => x.IsDeleted == false);
             var query = (from c in customers

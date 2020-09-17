@@ -9,7 +9,5 @@ namespace WorkHour.Core.Helper
         public List<T> Items { get; set; }
 
         public int Count { get; set; }
-
-        public List<GridTotalItem> TotalItems { get; set; }
     }
 }

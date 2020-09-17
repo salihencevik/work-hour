@@ -56,10 +56,11 @@ export class WorkHourHttpService {
             headers.append('Content-Type', 'application/json');
         } 
         this.http
-            .post(url, body, { headers: headers }) 
+          .post(url, body, { headers: headers })
+          .map(response => response.json())
             .subscribe(
-                (data : any) => {  
-                if (data.ResponseType == 1) {
+              (data: any) => {
+                if (data.responseType == 1) {
                     if (successFunc != null) {
                       successFunc(data);
                       if (successMessage) {
@@ -67,11 +68,12 @@ export class WorkHourHttpService {
                       }
                     }
                 }
-                else if (data.ResponseType == 2) {
+                else if (data.responseType == 2) {
                   this.loginService.setLogout();
                 }
-                else if (data.ResponseType == 3 || data.ResponseType == 4) {
-                    this.snackBar.open(data.Message);
+                else if (data.responseType == 3 || data.type == 4) {
+            
+                    this.snackBar.open(data.message);
                     if (errorFunc != null) {
                         errorFunc(data);
                     }

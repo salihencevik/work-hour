@@ -77,7 +77,7 @@ namespace WorkHour.Core
 
         [HttpPost]
         [Route("saveItem")]
-        public virtual ActionResult SaveItem(TModel model)
+        public virtual ActionResult SaveItem([FromBody] TModel model)
         {
             return Execute(() =>
             {
