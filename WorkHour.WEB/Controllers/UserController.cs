@@ -172,7 +172,7 @@ namespace WorkHour.WEB.Controllers
 
         private bool CheckUserName(User item)
         {
-            return _Unit.GetRepository<User>().GetAll(f => f.Name == item.Name && f.Id != item.Id).Any();
+            return _Unit.GetRepository<User>().GetAll(f => f.Username == item.Username && f.Id != item.Id).Any();
         }
     }
 }
