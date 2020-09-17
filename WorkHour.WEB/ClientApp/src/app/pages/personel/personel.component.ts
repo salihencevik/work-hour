@@ -109,12 +109,19 @@ export class PersonelComponent implements OnInit, AfterViewInit {
         roleIds.push(this.roles[i].Id);
       }
     }
+    if (roleIds.length == 0) {
+      this.snackBarService.open("Kullanıcının rolü boş geçilemez");
+      return;
+    }
     this.grid.newItem.roles = roleIds;
     var body = this.grid.newItem;
     this.rakamHttpService.httpPost('/User/SaveItem', body, null, (data) => {
-      if (data.Item != null) {
+      debugger;
+      if (data.item != null) {
         if (this.mode == PageMode.Create) {
+          this.grid.addItem(data.item); 
           this.mode = PageMode.List;
+
         }
         else {
           this.mode = PageMode.List;

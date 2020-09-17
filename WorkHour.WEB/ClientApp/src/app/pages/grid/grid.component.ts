@@ -323,9 +323,7 @@ export class GridComponent implements OnInit {
 
             if (index != -1) {
               this.rows.splice(index, 1);
-
             }
-
             this.gridApi.updateRowData({ remove: [this.getSelectedItem()] });
             this.selected[0] = this.rows[0];
 
@@ -388,9 +386,24 @@ export class GridComponent implements OnInit {
       this.newItem = data.item;
       this.mode = PageMode.Update;
       this.changeDetectorRef.detectChanges();
+      
       this.modeChange.emit(this.mode);
     }); 
    
+  } 
+  addItem(item) {
+    debugger;
+    this.rows.push(item);
+    this.page.count = this.rows.length;
+    this.loadRows(this.rows);
+  }
+  loadRows(items) {
+    this.page.count = items.length;
+    this.rows = items;
+
+    if (this.callbackApi) {
+      this.callbackApi.successCallback(this.rows, this.rows.length);
+    }
   }
   //delete(id: number) {
   //  //if (id != undefined) {
