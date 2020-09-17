@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RakamCrm.Web.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WorkHour.Core.Abstract;
 using WorkHour.Core.Filter;
+using WorkHour.Core.Helper;
 using WorkHour.Data;
 
 namespace WorkHour.Core
@@ -22,12 +24,16 @@ namespace WorkHour.Core
         }
 
         [HttpGet("GetItems")]
-        [WorkHourFilter]
-        public virtual ActionResult GetItems(string parameters)
+        [WorkHourFilter] 
+        public virtual ActionResult GetItems(PageQuery pageQuery, string parameters)
         {
             return Execute(() =>
             {
-                return GetSearchQuery();
+                var query = GetSearchQuery();
+
+                var source = query.PagedList(pageQuery);
+
+                return SearchItemsLoaded(source);
             });
 
         }
@@ -40,7 +46,10 @@ namespace WorkHour.Core
             });
 
         }
-
+        public virtual WorkHourDataSource<TSearchModel> SearchItemsLoaded(WorkHourDataSource<TSearchModel> source)
+        {
+            return source;
+        }
 
 
         [HttpPost("Delete")]
@@ -98,7 +107,7 @@ namespace WorkHour.Core
         }
 
 
-        protected abstract IEnumerable<TSearchModel> GetSearchQuery();
-        protected abstract IEnumerable<TModel> GetQuery();
+        protected abstract IQueryable<TSearchModel> GetSearchQuery();
+        protected abstract IQueryable<TModel> GetQuery();
     }
 }

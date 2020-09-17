@@ -13,14 +13,13 @@ namespace WorkHour.WEB.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]")]
-    [ApiController]
     public class ShiftController : BaseEntityController<Shift, ShiftModel, ShiftModel, IUnitofWork>
     {
         public ShiftController(IUnitofWork unit) : base(unit)
         {
 
         }
-        protected override IEnumerable<ShiftModel> GetQuery()
+        protected override IQueryable<ShiftModel> GetQuery()
         {
             var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
                          select new ShiftModel()
@@ -36,11 +35,11 @@ namespace WorkHour.WEB.Controllers
                              UpdateUserId = r.UpdateUserId,
                              UserId = r.UserId,
                              WorkConfirmation = r.WorkConfirmation
-                         }).ToList();
+                         });
             return query;
         }
 
-        protected override IEnumerable<ShiftModel> GetSearchQuery()
+        protected override IQueryable<ShiftModel> GetSearchQuery()
         {
             var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
                          select new ShiftModel()
@@ -56,7 +55,7 @@ namespace WorkHour.WEB.Controllers
                              UpdateUserId = r.UpdateUserId,
                              UserId = r.UserId,
                              WorkConfirmation = r.WorkConfirmation
-                         }).ToList();
+                         });
             return query;
         }
     }

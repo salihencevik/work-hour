@@ -12,44 +12,13 @@ namespace WorkHour.WEB.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]")]
-    [ApiController]
     public class UserController : BaseEntityController<User, UserModel, UserModel, IUnitofWork>
     {
         public UserController(IUnitofWork unit) : base(unit)
         {
         }
 
-        protected override IEnumerable<UserModel> GetSearchQuery()
-        {
-            var query = (from r in _Unit.GetRepository<User>().GetAll().Where(f => f.IsDeleted == false)
-                         select new UserModel()
-                         {
-                             Adress = r.Adress,
-                             Email = r.Email,
-                             Mission = r.Mission,
-                             Name = r.Name,
-                             Id = r.Id,
-                             Phone = r.Phone,
-                             CreateUserId =r.CreateUserId,
-                             CreateDate = r.CreateDate,
-                             UpdateUserId = r.UpdateUserId,
-                             UpdateDate = r.UpdateDate
-                         }).ToList();
-            return query;
-        }
-        public override ActionResult GetItem(int id)
-        {
-            return Execute(() =>
-            {
-                var userResult = _Unit.GetRepository<User>().Get(f => f.Id == id);
-                var userModel = userResult.GetPropertyValues<UserModel>();
-                userModel.Roles = _Unit.GetRepository<UserRole>().GetAll(t => t.UserId == id).Select(t => t.RoleId).ToList();
-                userModel.Password = string.Empty;
-                return userModel;
-            });
-        }
-
-        protected override IEnumerable<UserModel> GetQuery()
+        protected override IQueryable<UserModel> GetSearchQuery()
         {
             var query = (from r in _Unit.GetRepository<User>().GetAll().Where(f => f.IsDeleted == false)
                          select new UserModel()
@@ -64,7 +33,37 @@ namespace WorkHour.WEB.Controllers
                              CreateDate = r.CreateDate,
                              UpdateUserId = r.UpdateUserId,
                              UpdateDate = r.UpdateDate
-                         }).ToList();
+                         });
+            return query;
+        }
+        public override ActionResult GetItem(int id)
+        {
+            return Execute(() =>
+            {
+                var userResult = _Unit.GetRepository<User>().Get(f => f.Id == id);
+                var userModel = userResult.GetPropertyValues<UserModel>();
+                userModel.Roles = _Unit.GetRepository<UserRole>().GetAll(t => t.UserId == id).Select(t => t.RoleId).ToList();
+                userModel.Password = string.Empty;
+                return userModel;
+            });
+        }
+
+        protected override IQueryable<UserModel> GetQuery()
+        {
+            var query = (from r in _Unit.GetRepository<User>().GetAll().Where(f => f.IsDeleted == false)
+                         select new UserModel()
+                         {
+                             Adress = r.Adress,
+                             Email = r.Email,
+                             Mission = r.Mission,
+                             Name = r.Name,
+                             Id = r.Id,
+                             Phone = r.Phone,
+                             CreateUserId = r.CreateUserId,
+                             CreateDate = r.CreateDate,
+                             UpdateUserId = r.UpdateUserId,
+                             UpdateDate = r.UpdateDate
+                         });
             return query;
         }
 

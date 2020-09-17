@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { Injectable } from '@angular/core'; 
 import { HttpClient } from '@angular/common/http';
+import { URLSearchParams } from '@angular/http';
+import { WorkHourHttpService } from '../http/workHourHttp';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class UserService {
   loading = false;
   loaded = false;
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: WorkHourHttpService) { 
   }
 
   getItems() {
@@ -21,12 +22,13 @@ export class UserService {
   }
 
   loadItems() {
-    this.users = [];
     this.loading = true;
     var url = '/User/GetItems';
-    this.httpClient.get(url).subscribe((data: any) => {
-      console.log(data);
-      this.users = data.item;
+    var params = new URLSearchParams();
+    params.set('pageNumber', '0');
+    params.set('pageSize', '0');
+    this.httpClient.httpGet(url, params, null, (data) => { 
+      this.users = data.item.items;
       this.loaded = true;
     }, () => {
       this.loading = false;

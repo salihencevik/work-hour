@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ShiftComponent } from './pages/shift/shift.component';
 import { ComponentsModule } from './shared/components/components.module';
 import { SharedModule } from './shared/shared.module';
+import { Http, HttpModule } from '@angular/http';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     HttpClientModule,
     SharedModule,
+    HttpModule,
     ComponentsModule,
     NgbModule,
     RouterModule,  

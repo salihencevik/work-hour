@@ -26,7 +26,13 @@ namespace WorkHour.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            //services.AddCors(o => o.AddPolicy("FormPolicy", builder =>
+            //{
+            //    builder.AllowAnyOrigin()
+            //           .AllowAnyMethod()
+            //           .AllowAnyHeader()
+            //           .AllowCredentials();
+            //}));
             services.AddMvc();
             services.AddMemoryCache();
 

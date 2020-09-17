@@ -34,6 +34,16 @@ export class LoginService {
       } 
     });
   }
+
+  public getAuthContext() {
+    if (this.loginInfo == null) {
+      return null;
+    }
+    else {
+      return { UserId: this.loginInfo.id, Token: this.loginInfo.token };
+    }
+  }
+
   public setLoginInfo(data) {
     if (data.loginResponseType == 1) {
       this.loginInfo = new LoginInfo();

@@ -13,31 +13,30 @@ namespace WorkHour.WEB.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]")]
-    [ApiController]
     public class RoleController : BaseEntityController<Role, RoleModel, RoleModel, IUnitofWork>
     {
         public RoleController(IUnitofWork unit) : base(unit)
         {
         }
-        protected override IEnumerable<RoleModel> GetQuery()
+        protected override IQueryable<RoleModel> GetQuery()
         {
             var query = (from r in _Unit.GetRepository<Role>().GetAll()
                          select new RoleModel()
-                         { 
+                         {
                              Name = r.Name,
-                             Id = r.Id, 
-                         }).ToList();
+                             Id = r.Id,
+                         });
             return query;
         }
 
-        protected override IEnumerable<RoleModel> GetSearchQuery()
+        protected override IQueryable<RoleModel> GetSearchQuery()
         {
             var query = (from r in _Unit.GetRepository<Role>().GetAll()
                          select new RoleModel()
-                         { 
+                         {
                              Name = r.Name,
-                             Id = r.Id, 
-                         }).ToList();
+                             Id = r.Id,
+                         });
             return query;
         }
     }

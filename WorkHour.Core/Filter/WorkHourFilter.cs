@@ -38,7 +38,7 @@ namespace WorkHour.Core.Filter
                 
                 if (!Helper.Helper.AuthorityControl(descriptor.ControllerName +"."+ Helper.Helper.ControllerGetClaimtext(descriptor.ActionName)))
                 {
-                    context.Result = new JsonResult(new WorkHourResponse(ResponseType.Authorization, $"Access denied --> {claimText}"));
+                    context.Result = new JsonResult(new WorkHourResponse(ResponseType.Authorization, $"Access denied -->  " + descriptor.ControllerName + "." + Helper.Helper.ControllerGetClaimtext(descriptor.ActionName)));
                 }
                 
 

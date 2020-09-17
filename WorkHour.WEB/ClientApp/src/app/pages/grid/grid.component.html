@@ -6,14 +6,31 @@
         {{ item.text}}
       </button>
     </div>
+    <div class="inline-block ag-pagination">
+      <mat-select (selectionChange)="onPageCountChanged($event)" value={{page.limit.toString()}} id="page-size">
+        <mat-option value="10">10</mat-option>
+        <mat-option value="25">25</mat-option>
+        <mat-option value="50">50</mat-option>
+        <mat-option value="100">100</mat-option>
+        <mat-option value="250">250</mat-option>
+        <mat-option value="500">500</mat-option>
+        <mat-option value="750">750</mat-option>
+        <mat-option value="1000">1000</mat-option>
+      </mat-select>
+    </div>
   </div>
-<ag-grid-angular style="width: 100%; height: 100vh;"
-                 class="ag-theme-alpine"
-                 [rowData]="rowData"
-                 (gridReady)="onGridReady($event)"
-                 [frameworkComponents]="frameworkComponents"
-                 [rowSelection]="rowSelection"
-                 (selectionChanged)="onSelectionChanged($event)"
-                 (rowDoubleClicked)="rowDoubleClicked($event)"
-                 [columnDefs]="columnDefs">
-</ag-grid-angular>
+  <ag-grid-angular style="width: 100%; height: 84vh;"
+                   class="ag-theme-alpine"
+                   (gridReady)="onGridReady($event)"
+                   [pagination]="true"
+                   [cacheBlockSize]="page.limit"
+                   [cacheOverflowSize]="2"
+                   [maxBlocksInCache]="1"
+                   [rowModelType]="rowModelType"
+                   [paginationPageSize]="paginationPageSize"
+                   [frameworkComponents]="frameworkComponents"
+                   [rowSelection]="rowSelection"
+                   (selectionChanged)="onSelectionChanged($event)"
+                   (rowDoubleClicked)="rowDoubleClicked($event)"
+                   [columnDefs]="columnDefs">
+  </ag-grid-angular>

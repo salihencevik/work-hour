@@ -1,12 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core'; 
-import { HttpClient } from '@angular/common/http'; 
-import { PageMode } from '../../shared/Model/PageMode';
+import { HttpClient, HttpParams } from '@angular/common/http'; 
+import { PageMode, PropertyType } from '../../shared/Model/PageMode';
 import { DialogService } from '../../shared/service/dialog-service/dialog.service';
 import { PersonelClaimService } from '../../shared/service/personel-claim/personel-claim.service';
 import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
 import { LongDateFormatterComponent } from '../../shared/formatter/longDateFormatter';
 import { UsernameFormatterComponent } from '../../shared/formatter/usernameFormatter';
-
+import { IGetRowsParams, ColDef } from 'ag-grid-community';
+import { Headers, Http } from '@angular/http';
+import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
+import { URLSearchParams } from '@angular/http';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -14,13 +17,16 @@ import { UsernameFormatterComponent } from '../../shared/formatter/usernameForma
 })
 export class GridComponent implements OnInit {
   @Input() entityName: string;
+  hdr: any = undefined;
   @Input() columns: any[];
   @Input() mode: PageMode;
   @Input() Authority: string;
   @Input() createButtonVisible = true;
+  @Input() useSizeColumnsToFit = true;
   @Input() copyButtonVisible = false;
   @Input() viewButtonVisible = true;
   @Input() editButtonVisible = true;
+  columnDefs: ColDef[];
   @Input() deleteButtonVisible = true;
   @Output() selectedChanged: EventEmitter<any> = new EventEmitter();
   @Output() createNewItem = new EventEmitter();
@@ -29,9 +35,10 @@ export class GridComponent implements OnInit {
   selected: any[] = [];
   @Input() serverSidePaging = true;
   @Output() modeChange = new EventEmitter();
-  frameworkComponents
+  frameworkComponents 
   rowId: number;
   rows = [];
+  @Output() onGridReadyEvent = new EventEmitter();
   private gridApi;
   deleteButton: any;
   copyButton: any;
@@ -40,24 +47,40 @@ export class GridComponent implements OnInit {
   createButton: any;
   dateFormat: string;
   longDateFormat: string;
+  callbackApi;
   public newItem: any;
   public updateData: any;
   private gridColumnApi;
   private rowSelection;
   private rowModelType;
-  private rowData: [];
-  private columnDefs: any[];
+  private rowData: []; 
   private toolbarItems: any[];
   dataSource;
   dataSourceArray = [];
-
-
+    page = {
+    limit: 25,
+    count: 0,
+    offset: 0,
+    orderBy: '',
+    orderDir: 'desc'
+  };
+  paginationPageSize;
+  cacheOverflowSize;
+  maxConcurrentDatasourceRequests;
+  infiniteInitialRowCount;
+  maxBlocksInCache; 
   constructor(
-    private dialogService: DialogService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
+    private dialogService: DialogService, private httpClient: HttpClient, private rakamhttpService: WorkHourHttpService, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService, private http: Http, ) {
     this.rowSelection = "single";
     this.rowModelType = "infinite";
+    this.columnDefs = [];
+    this.paginationPageSize = this.page.limit;
+    this.cacheOverflowSize = 0;
+    this.maxConcurrentDatasourceRequests = 1;
+    this.infiniteInitialRowCount = this.page.limit;
+    this.maxBlocksInCache = 1;
   }
-
+  private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
   ngOnInit(): void {
     this.createFrameworkComponent();
     this.toolbarItems = [];
@@ -122,8 +145,54 @@ export class GridComponent implements OnInit {
       };
       this.toolbarItems.push(this.deleteButton);
     }
+    this.createColumns(this.columns);
   }
+  createColumns(columns: any[]) {
+    if (!columns) {
+      console.log("GridComponent => Not found columns");
+      return;
+    }
+    for (var i = 0; i < columns.length; i++) {
+      var column = columns[i];
+      //propType verilmezse gridde filtre penceresi acilmaz
+      this.propertyTypeList.set(column.prop, column.propType);
+      if (column.name == "Id") {
+        this.columnDefs.push({
+          headerName: column.headerName,
+          field: column.field != undefined ? column.field : column.prop,
+          cellRenderer: column.cellRenderer,
+          width: column.width != undefined ? column.width : 200,
+          sort: column.sort != undefined ? column.sort : 'desc', 
+          cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
+        });
+      }
+      else {
+        this.columnDefs.push({
+          headerName: column.headerName,
+          field: column.field != undefined ? column.field : column.prop,
+          cellRenderer: column.cellRenderer,
+          width: column.width != undefined ? column.width : 200,
+          sort: column.sort != undefined ? column.sort : '',
+          cellRendererParams: column.cellRendererParams != undefined ? column.cellRendererParams : null, 
+          cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
+        });
 
+      }
+    }
+  }
+  getGridFilterTemplate(propType: PropertyType): any {
+    switch (propType) {
+      case PropertyType.Number: {
+        return "agNumberColumnFilter";
+      }
+      case PropertyType.Text: {
+        return true;
+      }
+      default:
+        break;
+    }
+    return null;
+  }
   run(name: string, toolbarMethod: boolean) {
     if (!toolbarMethod) {
 
@@ -141,21 +210,71 @@ export class GridComponent implements OnInit {
       userNameFormatterComponent: UsernameFormatterComponent
     }
   }
+
+
   onGridReady(params) {
-    if (this.personelClaimService.checkClaim(this.Authority)) {
-      this.gridApi = params.api;
-      this.gridColumnApi = params.columnApi;
-      this.columnDefs = this.columns;
-      let url = "/" + this.entityName + "/" + "getItems";
-      this.httpClient.get(url).subscribe((data: any) => {
-     
-        this.dataSource = params.api.setRowData(data.item); 
-      });
-    } else {
-      this.snackBarService.open("Yetkiniz bulunamadı --> " + this.Authority);
+    this.gridApi = params.api;
+    if (this.useSizeColumnsToFit == true) {
+      this.gridApi.sizeColumnsToFit();
+    }
+    this.gridColumnApi = params.columnApi;
+    if (this.serverSidePaging) {
+      let that = this;
+      var dataSource = {
+        rowCount: null,
+        
+        getRows: function (params) {
+          that.callbackApi = params;
+          that.reloadAgGrid(params);
+        }
+      };
+      params.api.setDatasource(dataSource);
     }
 
+    this.onGridReadyEvent.emit();
   }
+
+  reloadAgGrid(params: IGetRowsParams) {
+    this.page.offset = params.startRow / this.page.limit;
+    if (params.sortModel && params.sortModel.length > 0) {
+      this.page.orderDir = params.sortModel[0].sort;
+      this.page.orderBy = params.sortModel[0].colId;
+    } else {
+      this.page.orderBy = null;
+      this.page.orderDir = null;
+    }
+    this.reloadTable();
+  }
+
+  reloadTable() {
+    var params = new URLSearchParams();
+    params.set('orderColumn', this.page.orderBy);
+    params.set('orderDir', this.page.orderDir);
+    params.set('pageNumber', this.page.offset.toString());
+    params.set('pageSize', this.page.limit.toString()); 
+    let url = "/" + this.entityName + "/" + "getItems";
+    this.rakamhttpService.httpGet(url, params, null, (data) => {
+      this.selected = []; 
+      this.page.count = data.item.count;
+      this.rows = data.item.items;
+      this.callbackApi.successCallback(this.rows, this.page.count); 
+    }, null);
+  }
+  //onGridReady(params) {
+  //  if (this.personelClaimService.checkClaim(this.Authority)) {
+  //    this.gridApi = params.api;
+  //    this.gridColumnApi = params.columnApi;
+  //    this.columnDefs = this.columns;
+  //    let url = "/" + this.entityName + "/" + "getItems";
+  //    this.httpClient.get(url).subscribe((data: any) => {
+     
+  //      this.dataSource = params.api.setRowData(data.item); 
+  //    });
+  //  } else {
+  //    this.snackBarService.open("Yetkiniz bulunamadı --> " + this.Authority);
+  //  }
+   
+  //}
   createNew(item: any = null) { 
     this.newItem = { id: 0 }; 
     this.createNewItem.emit();
@@ -167,6 +286,12 @@ export class GridComponent implements OnInit {
   }
 
 
+  onPageCountChanged(param) {
+    var val = Number(param.value);
+    this.gridApi.gridOptionsWrapper.setProperty('cacheBlockSize', val);
+    this.page.limit = val;
+    this.gridApi.paginationSetPageSize(val);  
+  }
 
   delete() {
     var row = this.selected[0];
@@ -242,8 +367,7 @@ export class GridComponent implements OnInit {
 
 
     var url = '/' + this.entityName + '/GetItem' + "/" + id;
-    this.httpClient.get(url).subscribe((data: any) => {
-      console.log(data);
+    this.httpClient.get(url).subscribe((data: any) => { 
       this.newItem = data.item;
       this.mode = PageMode.Update;
       this.changeDetectorRef.detectChanges();

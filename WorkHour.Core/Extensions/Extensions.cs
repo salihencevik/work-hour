@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using WorkHour.Core.Helper;
 
 namespace WorkHour.Core
 {
@@ -60,6 +62,23 @@ namespace WorkHour.Core
             }
 
         }
+        public static WorkHourDataSource<T> PagedList<T>(this IQueryable<T> items,PageQuery query)
+        {
+            WorkHourDataSource<T> source = new WorkHourDataSource<T>();
 
+            source.Count = items.Count();
+
+            int page = query.pageNumber + 1;
+
+            if (query.pageSize > 0)
+            {
+                source.Items = items.Skip((page - 1) * query.pageSize).Take(query.pageSize).ToList();
+            }
+            else
+            {
+                source.Items = items.ToList();
+            }
+            return source;
+        }
     }
 }

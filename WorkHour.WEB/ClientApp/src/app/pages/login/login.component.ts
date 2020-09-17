@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
   } 
 
   Login(e) {
-    debugger;
     var username = e.target.elements[0].value;
     var password = e.target.elements[1].value; 
     if (username != null && password != null) { 

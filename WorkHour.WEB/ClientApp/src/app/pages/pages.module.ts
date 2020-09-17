@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -20,8 +21,9 @@ import { ShiftComponent } from './shift/shift.component';
     HttpClientModule,
     MatCardModule,
     MatInputModule,
-    MatFormFieldModule,
-    MatCheckboxModule, 
+    MatFormFieldModule, 
+    MatCheckboxModule,
+    MatSelectModule,
     MatDialogModule,
     ReactiveFormsModule,
     MatButtonModule,

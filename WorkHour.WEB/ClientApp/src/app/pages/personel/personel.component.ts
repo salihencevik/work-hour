@@ -39,14 +39,13 @@ export class PersonelComponent implements OnInit, AfterViewInit {
       { headerName: 'Adres', field: 'adress' },
       { headerName: 'Oluşturan Kullanıcı', field: 'createUserId', cellRenderer: 'userNameFormatterComponent' },
       { headerName: 'Oluşturulma Tarihi', field: 'createDate', cellRenderer: 'longDateFormatterComponent' },
-      { headerName: 'Güncelleyen Kullanıcı', field: 'updateUserId', cellRenderer: 'userNameFormatterComponent'},
+      { headerName: 'Güncelleyen Kullanıcı', field: 'updateUserId', cellRenderer: 'userNameFormatterComponent' },
       { headerName: 'Güncellenme Tarihi', field: 'updateDate', cellRenderer: 'longDateFormatterComponent' }
-    ]; 
+    ];
   }
 
 
   modeChange(m) {
-    debugger; 
     this.loadRoles();
     if (m == PageMode.Update) {
       this.fillRoles(this.grid.newItem.roles)
@@ -60,7 +59,6 @@ export class PersonelComponent implements OnInit, AfterViewInit {
   }
 
   loadRoles() {
-    debugger;
     this.roles.splice(0, this.roles.length);
 
     var roleItems = this.roleService.getItems(); 
@@ -74,7 +72,6 @@ export class PersonelComponent implements OnInit, AfterViewInit {
   }
 
   filterRoles(value) {
-    debugger;
     if (!value) {
       this.copyRoles();
     }
@@ -87,7 +84,6 @@ export class PersonelComponent implements OnInit, AfterViewInit {
   }
 
   fillRoles(roleIds: any[]) {
-    debugger;
     for (var i = 0; i < this.roles.length; i++) {
       var id = this.roles[i].Id;
       var index = roleIds.indexOf(id);
@@ -105,7 +101,6 @@ export class PersonelComponent implements OnInit, AfterViewInit {
     this.mode = PageMode.List;
   }
   save() {
-    debugger;
     var roleIds = [];
     for (var i = 0; i < this.roles.length; i++) {
       if (this.roles[i].Checked == true) {

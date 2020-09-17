@@ -20,8 +20,7 @@ export class UsernameFormatterComponent {
 
   }
 
-  getUserName(id: number) {
-    debugger;
+  getUserName(id: number) { 
     var user = this.users.find(t => t.id == id);
     if (user == null) {
       return '';
