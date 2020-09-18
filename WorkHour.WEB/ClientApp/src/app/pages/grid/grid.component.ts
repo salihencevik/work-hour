@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core'; 
-import { HttpClient, HttpParams } from '@angular/common/http'; 
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageMode, PropertyType } from '../../shared/Model/PageMode';
 import { DialogService } from '../../shared/service/dialog-service/dialog.service';
 import { PersonelClaimService } from '../../shared/service/personel-claim/personel-claim.service';
@@ -10,6 +10,8 @@ import { IGetRowsParams, ColDef } from 'ag-grid-community';
 import { Headers, Http } from '@angular/http';
 import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 import { URLSearchParams } from '@angular/http';
+import { CheckFormatterComponent } from '../../shared/formatter/checkFormatter';
+import { CustomerNameFormatterComponent } from '../../shared/formatter/customerNameFormatter';
 import { AreaTypeFormatterComponent } from '../../shared/formatter/areaTypeFormatter';
 @Component({
   selector: 'app-grid',
@@ -38,8 +40,8 @@ export class GridComponent implements OnInit {
   @Input() customHeight: any;
   @Input() childView: boolean = false;
   @Output() modeChange = new EventEmitter();
-  frameworkComponents 
-  defaultColDef; 
+  frameworkComponents
+  defaultColDef;
   rowId: number;
   rows = [];
   @Output() onGridReadyEvent = new EventEmitter();
@@ -57,11 +59,11 @@ export class GridComponent implements OnInit {
   private gridColumnApi;
   private rowSelection;
   private rowModelType;
-  private rowData: []; 
+  private rowData: [];
   private toolbarItems: any[];
   dataSource;
   dataSourceArray = [];
-    page = {
+  page = {
     limit: 25,
     count: 0,
     offset: 0,
@@ -72,7 +74,7 @@ export class GridComponent implements OnInit {
   cacheOverflowSize;
   maxConcurrentDatasourceRequests;
   infiniteInitialRowCount;
-  maxBlocksInCache; 
+  maxBlocksInCache;
   constructor(
     private dialogService: DialogService, private rakamhttpService: WorkHourHttpService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
     this.defaultColDef = {
@@ -180,7 +182,7 @@ export class GridComponent implements OnInit {
           field: column.field != undefined ? column.field : column.prop,
           cellRenderer: column.cellRenderer,
           width: column.width != undefined ? column.width : 200,
-          sort: column.sort != undefined ? column.sort : 'desc', 
+          sort: column.sort != undefined ? column.sort : 'desc',
           cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
         });
       }
@@ -191,7 +193,7 @@ export class GridComponent implements OnInit {
           cellRenderer: column.cellRenderer,
           width: column.width != undefined ? column.width : 200,
           sort: column.sort != undefined ? column.sort : '',
-          cellRendererParams: column.cellRendererParams != undefined ? column.cellRendererParams : null, 
+          cellRendererParams: column.cellRendererParams != undefined ? column.cellRendererParams : null,
           cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
         });
 
@@ -227,6 +229,9 @@ export class GridComponent implements OnInit {
       longDateFormatterComponent: LongDateFormatterComponent,
       userNameFormatterComponent: UsernameFormatterComponent,
       areaTypeFormatterComponent: AreaTypeFormatterComponent
+      userNameFormatterComponent: UsernameFormatterComponent,
+      checkFormatterComponent: CheckFormatterComponent,
+      customerNameFormatterComponent: CustomerNameFormatterComponent
     }
   }
 
@@ -241,7 +246,7 @@ export class GridComponent implements OnInit {
       let that = this;
       var dataSource = {
         rowCount: null,
-        
+
         getRows: function (params) {
           that.callbackApi = params;
           that.reloadAgGrid(params);
@@ -270,13 +275,13 @@ export class GridComponent implements OnInit {
     params.set('orderColumn', this.page.orderBy);
     params.set('orderDir', this.page.orderDir);
     params.set('pageNumber', this.page.offset.toString());
-    params.set('pageSize', this.page.limit.toString()); 
-    let url = "/" + this.entityName + "/" + "getItems";
+    params.set('pageSize', this.page.limit.toString());
+    let url = "/" + this.entityName + "/" + "GetItems";
     this.rakamhttpService.httpGet(url, params, null, (data) => {
-      this.selected = []; 
+      this.selected = [];
       this.page.count = data.item.count;
       this.rows = data.item.items;
-      this.callbackApi.successCallback(this.rows, this.page.count); 
+      this.callbackApi.successCallback(this.rows, this.page.count);
     }, null);
   }
   //onGridReady(params) {
@@ -286,16 +291,16 @@ export class GridComponent implements OnInit {
   //    this.columnDefs = this.columns;
   //    let url = "/" + this.entityName + "/" + "getItems";
   //    this.httpClient.get(url).subscribe((data: any) => {
-     
+
   //      this.dataSource = params.api.setRowData(data.item); 
   //    });
   //  } else {
   //    this.snackBarService.open("Yetkiniz bulunamadı --> " + this.Authority);
   //  }
-   
+
   //}
-  createNew(item: any = null) { 
-    this.newItem = { id: 0 }; 
+  createNew(item: any = null) {
+    this.newItem = { id: 0 };
     this.createNewItem.emit();
     this.mode = PageMode.Create;
     this.modeChange.emit(this.mode);
@@ -309,7 +314,7 @@ export class GridComponent implements OnInit {
     var val = Number(param.value);
     this.gridApi.gridOptionsWrapper.setProperty('cacheBlockSize', val);
     this.page.limit = val;
-    this.gridApi.paginationSetPageSize(val);  
+    this.gridApi.paginationSetPageSize(val);
   }
 
   delete() {
@@ -376,7 +381,7 @@ export class GridComponent implements OnInit {
       this.edit();
     }
   }
-  edit() {  
+  edit() {
     var row = this.selected[0];
     this.itemEdit(row.id);
   }
@@ -384,15 +389,15 @@ export class GridComponent implements OnInit {
 
 
     var url = '/' + this.entityName + '/GetItem' + "/" + id;
-    this.httpClient.get(url).subscribe((data: any) => { 
+    this.httpClient.get(url).subscribe((data: any) => {
       this.newItem = data.item;
       this.mode = PageMode.Update;
       this.changeDetectorRef.detectChanges();
-      
+
       this.modeChange.emit(this.mode);
-    }); 
-   
-  } 
+    });
+
+  }
   addItem(item) {
     debugger;
     this.rows.push(item);

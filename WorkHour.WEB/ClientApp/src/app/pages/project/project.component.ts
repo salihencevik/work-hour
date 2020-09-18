@@ -1,30 +1,42 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PageMode } from '../../shared/Model/PageMode';
 import { GridComponent } from '../grid/grid.component';
-import { HttpClient } from '@angular/common/http';
-import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
+import { PageMode } from '../../shared/Model/PageMode';
 import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
+import { SnackBarService } from '../../shared/service/snack-bar/snack-bar.service';
+import { CustomerService } from '../../shared/service/customer/customer.service';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.css']
+  selector: 'app-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css']
 })
-export class CustomerComponent implements OnInit {
+export class ProjectComponent implements OnInit {
   @ViewChild(GridComponent) grid: GridComponent;
   PageModes = PageMode;
   mode = PageMode.List;
   columns: any[];
 
-  constructor(private rakamHttpService: WorkHourHttpService, private snackBarService: SnackBarService) { }
+  customers = [];
+
+  constructor(private rakamHttpService: WorkHourHttpService,
+    private snackBarService: SnackBarService,
+    private customerService: CustomerService
+  ) { }
 
   ngOnInit(): void {
+    debugger;
+    this.customers = this.customerService.getItems();
+
+    //this.customers = [
+    //  { id: 1, name: 'A Projesi' },
+    //  { id: 2, name: 'B Projesi' },
+    //  { id: 3, name: 'C Projesi' }
+    //];
+
     this.columns = [
       { headerName: 'Id', field: 'id' },
-      { headerName: 'Müşteri Adı', field: 'customerName' },
-      { headerName: 'Telefon', field: 'phone' },
-      { headerName: 'Adres', field: 'address' },
-      { headerName: 'E-mail', field: 'email' },
+      { headerName: 'Proje Adı', field: 'name' },
+      { headerName: 'Müşteri', field: 'customerId', cellRenderer: 'customerNameFormatterComponent' },
       { headerName: 'Silindi Mi?', field: 'isDeleted', cellRenderer: 'checkFormatterComponent' },
       { headerName: 'Oluşturan Kullanıcı', field: 'createUserId', cellRenderer: 'userNameFormatterComponent' },
       { headerName: 'Oluşturulma Tarihi', field: 'createDate', cellRenderer: 'longDateFormatterComponent' },
@@ -43,8 +55,8 @@ export class CustomerComponent implements OnInit {
   }
 
   save() {
-    let url = "/Customer/SaveItem";
     var body = this.grid.newItem;
+    let url = "/Project/SaveItem";
     this.rakamHttpService.httpPost(url, body, null, (data) => {
       if (data.item != null) {
         if (this.mode == PageMode.Create) {

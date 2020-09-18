@@ -57,5 +57,13 @@ namespace WorkHour.WEB.Controllers
                          });
             return query;
         }
+        public override ActionResult SaveItem([FromBody] CustomerModel model)
+        {
+            return Execute(() =>
+            {
+                base.SaveItem(model);
+                return model;
+            });
+        }
     }
 }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { GridComponent } from './grid/grid.component';
-import { PersonelComponent } from './personel/personel.component'; 
+import { PersonelComponent } from './personel/personel.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,25 +13,29 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
 import { MatSelectModule } from '@angular/material/select';
-import { CustomerComponent } from './customer/customer.component'; 
+import { CustomerComponent } from './customer/customer.component';
+import { ProjectComponent } from './project/project.component';
+import { ComponentsModule } from '../shared/components/components.module';
 
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { NgxMaskModule } from 'ngx-mask';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 @NgModule({
   imports: [
-    CommonModule,  
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     HttpClientModule,
     MatCardModule, 
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule,
     MatDialogModule,
     ReactiveFormsModule,
     MatNativeDateModule,
     MatButtonModule,
+    AgGridModule.withComponents([]),
+    ComponentsModule
     MatDatepickerModule, 
     AgGridModule.withComponents([]),
     NgxMaskModule.forRoot(),
@@ -46,6 +50,9 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatDatepickerModule, 
     { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' }
   ],
+    CustomerComponent,
+    ProjectComponent
+  ]
 })
 
 export class PagesModule { }

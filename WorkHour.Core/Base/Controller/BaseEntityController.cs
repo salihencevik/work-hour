@@ -24,7 +24,7 @@ namespace WorkHour.Core
         }
 
         [HttpGet("GetItems")]
-        [WorkHourFilter] 
+        [WorkHourFilter]
         public virtual ActionResult GetItems(PageQuery pageQuery, string parameters)
         {
             return Execute(() =>
@@ -79,28 +79,29 @@ namespace WorkHour.Core
         [Route("saveItem")]
         public virtual ActionResult SaveItem([FromBody] TModel model)
         {
+           
             return Execute(() =>
             {
-            if (model.Id == 0)
-            {
-                if (model is IBaseIdCreateEntity)
+                if (model.Id == 0)
                 {
-                    ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
-                    ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
+                    if (model is IBaseIdCreateEntity)
+                    {
+                        ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
+                        ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
 
+                    }
+                    _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>());
                 }
-                _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>());
-            }
-            else
-            {
-             
-                if (model is IBaseIdUpdateEntity)
+                else
                 {
+
+                    if (model is IBaseIdUpdateEntity)
+                    {
                         ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
                         ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
                         ((IBaseIdUpdateEntity)model).UpdateDate = DateTime.Now;
-                    ((IBaseIdUpdateEntity)model).UpdateUserId = SessionManager.LoginModel.Id;
-                }
+                        ((IBaseIdUpdateEntity)model).UpdateUserId = SessionManager.LoginModel.Id;
+                    }
                     _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>());
                 }
             });
