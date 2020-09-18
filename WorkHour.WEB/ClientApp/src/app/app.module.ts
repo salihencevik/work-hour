@@ -29,7 +29,8 @@ import { Http, HttpModule } from '@angular/http';
     NgbModule,
     RouterModule,  
     AppRoutingModule,
-    MatDialogModule
+    MatDialogModule,
+    ComponentsModule
   ],
   declarations: [
     AppComponent,

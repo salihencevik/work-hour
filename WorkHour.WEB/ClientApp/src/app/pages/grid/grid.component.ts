@@ -11,6 +11,7 @@ import { Headers, Http } from '@angular/http';
 import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 import { URLSearchParams } from '@angular/http';
 import { CheckFormatterComponent } from '../../shared/formatter/checkFormatter';
+import { CustomerNameFormatterComponent } from '../../shared/formatter/customerNameFormatter';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -226,7 +227,8 @@ export class GridComponent implements OnInit {
     this.frameworkComponents = {
       longDateFormatterComponent: LongDateFormatterComponent,
       userNameFormatterComponent: UsernameFormatterComponent,
-      checkFormatterComponent: CheckFormatterComponent
+      checkFormatterComponent: CheckFormatterComponent,
+      customerNameFormatterComponent: CustomerNameFormatterComponent
     }
   }
 
@@ -271,7 +273,7 @@ export class GridComponent implements OnInit {
     params.set('orderDir', this.page.orderDir);
     params.set('pageNumber', this.page.offset.toString());
     params.set('pageSize', this.page.limit.toString());
-    let url = "/" + this.entityName + "/" + "getItems";
+    let url = "/" + this.entityName + "/" + "GetItems";
     this.rakamhttpService.httpGet(url, params, null, (data) => {
       this.selected = [];
       this.page.count = data.item.count;

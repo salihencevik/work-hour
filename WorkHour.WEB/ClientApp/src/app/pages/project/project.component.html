@@ -1,0 +1,36 @@
+<app-grid [hidden]="mode != PageModes.List" [entityName]="'Project'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Project.Show'" (call)="run($event)"></app-grid>
+
+<div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
+  <form #projectForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="tab-content">
+          <div class="container">
+            <mat-form-field class="fullwidth">
+              <input name="id" matInput placeholder="Id" disabled [(ngModel)]="grid.newItem.id">
+            </mat-form-field>
+
+            <mat-form-field class="fullwidth">
+              <input matInput type="text" placeholder="Proje Adı" maxLength="50" name="name" required [(ngModel)]="grid.newItem.name">
+            </mat-form-field>
+
+            <!--<app-work-hour-select [(ngModel)]="grid.newItem.customerId" name="customerId" [placeholder]="'Müşteri'" [options]="customers" [required]="true" [disabled]="false" #customerIdInput="ngModel"></app-work-hour-select>-->
+
+            <mat-form-field class="fullwidth">
+              <mat-label>Müşteri</mat-label>
+              <mat-select [(ngModel)]="grid.newItem.customerId" required [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let item of customers" [value]="item.id">{{item.customerName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+
+        <button type="submit" [disabled]="!projectForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
+        <button type="button" mat-raised-button (click)="backToList()" class="mr-2 btnDelete"> <mat-icon>cancel</mat-icon> Cancel</button>
+
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
