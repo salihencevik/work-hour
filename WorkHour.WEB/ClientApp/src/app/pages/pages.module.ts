@@ -14,8 +14,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CustomerComponent } from './customer/customer.component';
-import { ProjectComponent } from './project/project.component';
 import { ComponentsModule } from '../shared/components/components.module';
+import { ProjectComponent } from './project/project.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { ComponentsModule } from '../shared/components/components.module';
     ReactiveFormsModule,
     MatButtonModule,
     AgGridModule.withComponents([]),
-    ComponentsModule
+    ComponentsModule,
+    TranslateModule
   ],
   declarations: [
     PersonelComponent,

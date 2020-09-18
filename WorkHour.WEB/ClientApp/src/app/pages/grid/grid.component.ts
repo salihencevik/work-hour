@@ -12,6 +12,8 @@ import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 import { URLSearchParams } from '@angular/http';
 import { CheckFormatterComponent } from '../../shared/formatter/checkFormatter';
 import { CustomerNameFormatterComponent } from '../../shared/formatter/customerNameFormatter';
+import { TranslateService } from '@ngx-translate/core';
+import GridTraslator from './grid-translator';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -74,8 +76,15 @@ export class GridComponent implements OnInit {
   maxConcurrentDatasourceRequests;
   infiniteInitialRowCount;
   maxBlocksInCache;
+  gridLocaleText = {};
   constructor(
-    private dialogService: DialogService, private rakamhttpService: WorkHourHttpService, private httpClient: HttpClient, private changeDetectorRef: ChangeDetectorRef, private personelClaimService: PersonelClaimService, private snackBarService: SnackBarService) {
+    private dialogService: DialogService,
+    private rakamhttpService: WorkHourHttpService,
+    private httpClient: HttpClient,
+    private changeDetectorRef: ChangeDetectorRef,
+    private personelClaimService: PersonelClaimService,
+    private snackBarService: SnackBarService,
+    private translate: TranslateService) {
     this.defaultColDef = {
       resizable: true,
       sortable: true,
@@ -102,11 +111,22 @@ export class GridComponent implements OnInit {
       }
     }
     this.createFrameworkComponent();
+
+    this.initToolbarItems();
+
+    this.createColumns(this.columns);
+  }
+
+  setGridLocaleText() {
+    this.gridLocaleText = GridTraslator.GetTranslatedText(this.translate);
+  }
+
+  initToolbarItems() {
     this.toolbarItems = [];
     if (this.createButtonVisible) {
       this.createButton = {
         text: 'CREATE_NEW',
-        //icon: 'add_circle',
+        icon: 'add_circle',
         method: "createNew",
         toolbarMethod: true,
         claimText: this.entityName + '.Insert',
@@ -118,7 +138,6 @@ export class GridComponent implements OnInit {
 
       this.toolbarItems.push(this.createButton);
     }
-
 
     if (this.viewButtonVisible) {
       this.viewButton = {
@@ -164,8 +183,18 @@ export class GridComponent implements OnInit {
       };
       this.toolbarItems.push(this.deleteButton);
     }
-    this.createColumns(this.columns);
+
+    this.toolbarItems.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+      if (a.order < b.order) {
+        return -1;
+      }
+      return 0;
+    });
   }
+
   createColumns(columns: any[]) {
     if (!columns) {
       console.log("GridComponent => Not found columns");
