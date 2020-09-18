@@ -4,6 +4,7 @@ import { SnackBarService } from '../snack-bar/snack-bar.service';
 import { LoginService } from '../login/login.service'; 
 import { URLSearchParams, ResponseContentType } from '@angular/http';  
 import 'rxjs/add/operator/map';
+import { Observable } from "rxjs/Observable";
 @Injectable({
   providedIn: 'root'
 })
@@ -17,9 +18,9 @@ export class WorkHourHttpService {
     }
 
   httpGet(url: string, params: URLSearchParams, headers: Headers, successFunc: Function, errorFunc: Function, successMessage = true) {
-        if (params == null) {
-            params = new URLSearchParams();
-        }
+    if (params == null) {
+      params = new URLSearchParams();
+    }
     if (headers == null) {
       headers = new Headers();
     }
@@ -35,8 +36,20 @@ export class WorkHourHttpService {
       .map(response => response.json())
             .subscribe(
               data => {
-                console.log(data);
-                successFunc(data);
+                debugger;
+                if (data.responseType == 1) {
+                  successFunc(data);
+                }
+                else if (data.responseType == 2) {
+                  this.loginService.setLogout();
+                }
+                else if (data.responseType == 3 || data.type == 4) {
+
+                  this.snackBar.open(data.message);
+                  if (errorFunc != null) {
+                    errorFunc(data);
+                  }
+                }
             },
               error => console.log(error));
     console.log("Error") 

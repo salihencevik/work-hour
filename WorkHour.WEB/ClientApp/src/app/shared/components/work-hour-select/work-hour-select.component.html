@@ -1,4 +1,25 @@
-<!--<mat-form-field class="fullwidth" *ngIf="!multiSelect" floatLabel="always">
+<mat-form-field class="fullwidth" *ngIf="!multiSelect" floatLabel="always">
+  <mat-label>{{placeholder}}</mat-label>
+  <mat-select [(ngModel)]="data"
+              (selectionChange)="onChangeSelection($event)"
+              disableOptionCentering
+              [required]="required"
+              [disabled]="disabled"
+              (openedChange)="openedChange($event)"
+              placeholder="{{emptyItemText}}">
+
+
+
+    <mat-option *ngIf="emptyItem">{{emptyItemText }}</mat-option>
+
+    <mat-option *ngIf="addAllOption" [value]="-1">{{ allOptionText }}</mat-option>
+
+    <mat-option *ngFor="let option of options"
+                [value]="option.id">{{ option.name }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field class="fullwidth" *ngIf="multiSelect" floatLabel="always">
   <mat-label>{{ placeholder }}</mat-label>
   <mat-select [(ngModel)]="data"
               (selectionChange)="onChangeSelection($event)"
@@ -6,7 +27,10 @@
               [required]="required"
               [disabled]="disabled"
               (openedChange)="openedChange($event)"
-              placeholder="{{ emptyItemText }}">
+              placeholder="{{emptyItemText }}"
+              multiple>
+
+
 
     <mat-option *ngIf="emptyItem">{{ emptyItemText }}</mat-option>
 
@@ -15,12 +39,5 @@
     <mat-option *ngFor="let option of options"
                 [value]="option.id">{{ option.name }}</mat-option>
   </mat-select>
-</mat-form-field>-->
+</mat-form-field>
 
-<!--<mat-form-field class="fullwidth">
-  <mat-label>Müşteri</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let option of options"
-                [value]="option.id">{{ option.name }}</mat-option>
-  </mat-select>
-</mat-form-field>-->

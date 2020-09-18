@@ -1,44 +1,77 @@
-import { Component, OnInit, EventEmitter, Input, Output, forwardRef } from '@angular/core';
-import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  Injector,
+  forwardRef
+} from '@angular/core';
+import {
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor
+} from '@angular/forms';
 
-export const APP_SELECT_VALUE_ACCESSOR: any = {
+
+import * as _ from 'lodash'; 
+
+export const APP_SELECT_SEARCH_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => WorkHourSelectComponent),
   multi: true
 };
 
 @Component({
-  selector: 'app-work-hour-select',
+  selector: 'work-hour-select',
   templateUrl: './work-hour-select.component.html',
-  providers: [APP_SELECT_VALUE_ACCESSOR]
+  providers: [APP_SELECT_SEARCH_VALUE_ACCESSOR]
 })
-export class WorkHourSelectComponent implements OnInit, ControlValueAccessor {
+export class WorkHourSelectComponent
+  implements OnInit, ControlValueAccessor {
   data: any;
   onChange: (value: any) => void;
   filterCtrl: FormControl = new FormControl();
   filteredOptions: any[];
 
-  @Input() placeholder: string;
+  @Input()
+  placeholder: string;
 
-  @Input() showAllOption: boolean = false;
+  @Input()
+  showAllOption: boolean = false;
 
-  @Input() required: boolean = false;
+  @Input()
+  required: boolean = false;
 
-  @Input() disabled: boolean = false;
+  @Input()
+  disabled: boolean = false;
 
-  @Input() cName: any;
 
-  @Input() multiSelect: boolean = false;
+  @Input()
+  cName: any;
 
-  @Input() addAllOption: boolean = false;
+  @Input()
+  multiSelect: boolean = false;
 
-  @Input() allOptionText: string = 'ALL';
 
-  @Input() emptyItem: boolean = true;
+  @Input()
+  addAllOption: boolean = false;
 
-  @Input() emptyItemText: string = "PLEASE-SELECT";
 
-  @Input() options: any[];
+  @Input()
+  allOptionText: string = 'ALL';
+
+  @Input()
+  emptyItem: boolean = true;
+
+  @Input()
+  emptyItemText: string = "Lütfen Seçiniz.";
+
+
+
+  @Input()
+  options: any[];
+
 
   @Output() onSelectionChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -47,7 +80,7 @@ export class WorkHourSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    
+
   }
 
   onChangeSelection($event: any) {
@@ -63,6 +96,7 @@ export class WorkHourSelectComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  // Begin - ControlValueAccessor implementation
   writeValue(obj: any): void {
     this.data = obj;
   }
@@ -75,5 +109,11 @@ export class WorkHourSelectComponent implements OnInit, ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     // todo;
   }
+  // End - ControlValueAccessor implementation
 
+  // todo : delete these
+  // @Input() ngModelData: any;
+  // @Output() ngModelDataChange: EventEmitter<any> = new EventEmitter<any>();
 }
+
+

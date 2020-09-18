@@ -32,7 +32,7 @@ export class GridComponent implements OnInit {
   columnDefs: ColDef[];
   @Input() deleteButtonVisible = true;
   @Output() selectedChanged: EventEmitter<any> = new EventEmitter();
-  @Output() createNewItem = new EventEmitter();
+  @Output() createNewItem = new EventEmitter(); 
   @Output() call: EventEmitter<any> = new EventEmitter();
   @Input() enableRowDobuleClick = true;
   selected: any[] = [];
@@ -228,8 +228,7 @@ export class GridComponent implements OnInit {
     this.frameworkComponents = {
       longDateFormatterComponent: LongDateFormatterComponent,
       userNameFormatterComponent: UsernameFormatterComponent,
-      areaTypeFormatterComponent: AreaTypeFormatterComponent
-      userNameFormatterComponent: UsernameFormatterComponent,
+      areaTypeFormatterComponent: AreaTypeFormatterComponent,
       checkFormatterComponent: CheckFormatterComponent,
       customerNameFormatterComponent: CustomerNameFormatterComponent
     }
@@ -278,27 +277,18 @@ export class GridComponent implements OnInit {
     params.set('pageSize', this.page.limit.toString());
     let url = "/" + this.entityName + "/" + "GetItems";
     this.rakamhttpService.httpGet(url, params, null, (data) => {
-      this.selected = [];
-      this.page.count = data.item.count;
-      this.rows = data.item.items;
-      this.callbackApi.successCallback(this.rows, this.page.count);
+      console.log(data);
+      if (data.responseType == 3) {
+        this.snackBarService.open(data.message);
+      }
+      else {
+        this.selected = [];
+        this.page.count = data.item.count;
+        this.rows = data.item.items;
+        this.callbackApi.successCallback(this.rows, this.page.count);
+      } 
     }, null);
   }
-  //onGridReady(params) {
-  //  if (this.personelClaimService.checkClaim(this.Authority)) {
-  //    this.gridApi = params.api;
-  //    this.gridColumnApi = params.columnApi;
-  //    this.columnDefs = this.columns;
-  //    let url = "/" + this.entityName + "/" + "getItems";
-  //    this.httpClient.get(url).subscribe((data: any) => {
-
-  //      this.dataSource = params.api.setRowData(data.item); 
-  //    });
-  //  } else {
-  //    this.snackBarService.open("Yetkiniz bulunamadı --> " + this.Authority);
-  //  }
-
-  //}
   createNew(item: any = null) {
     this.newItem = { id: 0 };
     this.createNewItem.emit();
@@ -386,16 +376,16 @@ export class GridComponent implements OnInit {
     this.itemEdit(row.id);
   }
   itemEdit(id: number) {
-
-
+    var params = new URLSearchParams();
+    params.append('id', id.toString()); 
     var url = '/' + this.entityName + '/GetItem' + "/" + id;
-    this.httpClient.get(url).subscribe((data: any) => {
+    this.rakamhttpService.httpGet(url, params, null, (data) => {
       this.newItem = data.item;
       this.mode = PageMode.Update;
       this.changeDetectorRef.detectChanges();
 
       this.modeChange.emit(this.mode);
-    });
+    },null);
 
   }
   addItem(item) {

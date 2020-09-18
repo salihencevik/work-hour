@@ -21,40 +21,27 @@ namespace WorkHour.WEB.Controllers
         }
         protected override IQueryable<ShiftModel> GetQuery()
         {
-            var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
-                         select new ShiftModel()
-                         {
-                             Area = r.Area,
-                             CreateDate = r.CreateDate,
-                             CreateUserId = r.CreateUserId,
-                             Explanation = r.Explanation,
-                             FinishTime = r.FinishTime,
-                             Id = r.Id,
-                             StartTime = r.StartTime,
-                             UpdateDate = r.UpdateDate,
-                             UpdateUserId = r.UpdateUserId,
-                             UserId = r.UserId,
-                             WorkConfirmation = r.WorkConfirmation
-                         });
-            return query;
+          return  GetSearchQuery();
         }
 
         protected override IQueryable<ShiftModel> GetSearchQuery()
-        {
+        { 
             var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
                          select new ShiftModel()
                          {
-                             Area = r.Area,
+                             Id = r.Id,
+                             UserId = r.UserId,
+                             WorkConfirmation = r.WorkConfirmation,
+                             Area = r.Area, 
+                             Explanation = r.Explanation,
+                             StartTime = r.StartTime.ToString(),
+                             FinishTime =r.FinishTime.ToString(),
+                             FinishDate = r.FinishDate,
+                             StartDate = r.StartDate,
                              CreateDate = r.CreateDate,
                              CreateUserId = r.CreateUserId,
-                             Explanation = r.Explanation,
-                             FinishTime = r.FinishTime,
-                             Id = r.Id,
-                             StartTime = r.StartTime,
                              UpdateDate = r.UpdateDate,
-                             UpdateUserId = r.UpdateUserId,
-                             UserId = r.UserId,
-                             WorkConfirmation = r.WorkConfirmation
+                             UpdateUserId = r.UpdateUserId
                          });
             return query;
         }
@@ -62,8 +49,6 @@ namespace WorkHour.WEB.Controllers
         {
             return Execute(() =>
             {
-                model.StartTime = model.StartDate.Value.Add(model.StartTimer);
-                model.FinishTime = model.FinishDate.Value.Add(model.FinishTimer);
                 model.UserId = model.UserId == 0 ? SessionManager.LoginModel.Id : model.UserId; 
                 var item = model.GetPropertyValues<Shift>();
                 return model;

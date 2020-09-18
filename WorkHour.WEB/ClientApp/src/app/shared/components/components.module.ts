@@ -24,13 +24,11 @@ import { MatInputModule } from '@angular/material/input';
   declarations: [
     NavbarComponent,
     SidebarComponent,
-    ConfirmDialogComponent,
-    WorkHourSelectComponent,
+    ConfirmDialogComponent, 
   ],
   exports: [
     NavbarComponent,
-    SidebarComponent,
-    WorkHourSelectComponent
+    SidebarComponent, 
   ]
 })
 export class ComponentsModule { }

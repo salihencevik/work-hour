@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComponentsModule } from './components/components.module';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LongDateFormatterComponent } from './formatter/longDateFormatter';
 import { UsernameFormatterComponent } from './formatter/usernameFormatter';
@@ -17,25 +16,21 @@ import { CheckFormatterComponent } from './formatter/checkFormatter';
   declarations: [
     LongDateFormatterComponent,
     UsernameFormatterComponent,
-    AreaTypeFormatterComponent
-    UsernameFormatterComponent,
-    CheckFormatterComponent
+    AreaTypeFormatterComponent,
+    CheckFormatterComponent,
   ],
   exports: [
     LongDateFormatterComponent,
     UsernameFormatterComponent,
+    AreaTypeFormatterComponent,
     CheckFormatterComponent
-    UsernameFormatterComponent,
-    AreaTypeFormatterComponent
   ],
   entryComponents: [
+    AreaTypeFormatterComponent,
     UsernameFormatterComponent,
     LongDateFormatterComponent,
     CheckFormatterComponent
   ],
-    LongDateFormatterComponent,
-    AreaTypeFormatterComponent
-  ],  
 })
 
 export class SharedModule { }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLSearchParams } from '@angular/http';
 import { WorkHourHttpService } from '../http/workHourHttp';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class UserService {
     return this.users;
   }
 
-  loadItems() {
+  loadItems(){
     this.loading = true;
     var url = '/User/GetItems';
     var params = new URLSearchParams();

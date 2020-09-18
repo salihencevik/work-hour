@@ -20,6 +20,7 @@ import { ComponentsModule } from '../shared/components/components.module';
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { NgxMaskModule } from 'ngx-mask';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { WorkHourSelectComponent } from '../shared/components/work-hour-select/work-hour-select.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -35,23 +36,21 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatNativeDateModule,
     MatButtonModule,
     AgGridModule.withComponents([]),
-    ComponentsModule
+    ComponentsModule,
     MatDatepickerModule, 
-    AgGridModule.withComponents([]),
     NgxMaskModule.forRoot(),
   ],
   declarations: [
     PersonelComponent,
     GridComponent,
     ShiftComponent,
-    CustomerComponent
+    CustomerComponent,
+    ProjectComponent,
+    WorkHourSelectComponent
   ],
   providers: [
     MatDatepickerModule, 
     { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' }
-  ],
-    CustomerComponent,
-    ProjectComponent
   ]
 })
 

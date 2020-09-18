@@ -9,7 +9,9 @@ import { UserService } from '../../shared/service/user/user.service';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private userService: UserService) { }
+  constructor(private dialog: MatDialog, private userService: UserService) {
+    this.userService.getItems();
+  }
 
   ngOnInit() {
     

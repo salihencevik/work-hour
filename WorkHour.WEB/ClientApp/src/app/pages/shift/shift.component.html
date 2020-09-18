@@ -8,6 +8,7 @@
             <mat-form-field class="fullwidth">
               <input name="id" matInput placeholder="Id" disabled [(ngModel)]="grid.newItem.id">
             </mat-form-field>
+            <work-hour-select [(ngModel)]="grid.newItem.userId" name="userId" [placeholder]="'Personel'" [options]="user" [required]="true" #userInput="ngModel"></work-hour-select>
             <div class="row">
               <div class="col-md-6">
                 <mat-form-field class="fullwidth">
@@ -25,16 +26,26 @@
             <div class="row">
               <div class="col-md-6">
                 <mat-form-field class="fullwidth">
-                  <input matInput [matDatepicker]="date2" [(ngModel)]="grid.newItem.endDate" placeholder="Mesai Bitiş Tarihi" name="endDate" required>
+                  <input matInput [matDatepicker]="date2" [(ngModel)]="grid.newItem.finishDate" placeholder="Mesai Bitiş Tarihi" name="endDate" required>
                   <mat-datepicker-toggle matSuffix [for]="date2"></mat-datepicker-toggle>
                   <mat-datepicker #date2></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-md-6">
                 <mat-form-field class="fullwidth">
-                  <input matInput mask="Hh:m0" minlength="4" placeholder="Mesai Bitiş Saati" required [(ngModel)]="grid.newItem.endTime" name="endTime">
+                  <input matInput mask="Hh:m0" minlength="4" placeholder="Mesai Bitiş Saati" required [(ngModel)]="grid.newItem.finishTime" name="endTime">
                 </mat-form-field>
               </div>
+            </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <work-hour-select [(ngModel)]="grid.newItem.area" name="area" [placeholder]="'Çalışma Yeri'" [options]="area" [required]="true" #userInput="ngModel"></work-hour-select>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="fullwidth"> 
+                    <textarea matInput placeholder="Açıklama" name="explanation" [(ngModel)]="grid.newItem.explanation"></textarea>
+                  </mat-form-field>
+                </div>
             </div>
             <button type="submit" [disabled]="!shiftForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
             <button type="button" mat-raised-button (click)="backToList()" class="mr-2 btnDelete"> <mat-icon>cancel</mat-icon> Cancel</button>
