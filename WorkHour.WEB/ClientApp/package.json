@@ -25,6 +25,8 @@
     "@angular/platform-browser-dynamic": "9.0.5",
     "@angular/router": "9.0.5",
     "@ng-bootstrap/ng-bootstrap": "6.0.0",
+    "@ngx-translate/core": "^12.1.2",
+    "@ngx-translate/http-loader": "^5.0.0",
     "ag-grid-angular": "^23.2.1",
     "ag-grid-community": "^23.2.1",
     "bootstrap": "4.1.3",

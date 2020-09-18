@@ -14,7 +14,6 @@ export class CustomerService {
   }
 
   getItems() {
-    debugger;
     if (!this.loading && !this.loaded) {
       this.loadItems();
     }

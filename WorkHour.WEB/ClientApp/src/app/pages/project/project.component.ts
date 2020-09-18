@@ -24,7 +24,6 @@ export class ProjectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
     this.customers = this.customerService.getItems();
 
     //this.customers = [

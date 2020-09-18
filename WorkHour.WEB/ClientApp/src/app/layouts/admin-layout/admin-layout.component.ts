@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../../shared/service/user/user.service';
+import { CustomerService } from '../../shared/service/customer/customer.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -9,11 +10,14 @@ import { UserService } from '../../shared/service/user/user.service';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private userService: UserService) {
-    this.userService.getItems();
-  }
+  constructor(
+    private dialog: MatDialog,
+    private userService: UserService,
+    private customerService: CustomerService
+  ) { }
 
   ngOnInit() {
-    
-  } 
+    this.userService.getItems();
+    this.customerService.getItems();
+  }
 }

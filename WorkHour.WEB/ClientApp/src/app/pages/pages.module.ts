@@ -14,8 +14,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CustomerComponent } from './customer/customer.component';
-import { ProjectComponent } from './project/project.component';
 import { ComponentsModule } from '../shared/components/components.module';
+import { ProjectComponent } from './project/project.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { NgxMaskModule } from 'ngx-mask';
@@ -36,6 +37,8 @@ import { WorkHourSelectComponent } from '../shared/components/work-hour-select/w
     MatNativeDateModule,
     MatButtonModule,
     AgGridModule.withComponents([]),
+    ComponentsModule,
+    TranslateModule
     ComponentsModule,
     MatDatepickerModule, 
     NgxMaskModule.forRoot(),
