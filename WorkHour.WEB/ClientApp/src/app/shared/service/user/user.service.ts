@@ -25,9 +25,9 @@ export class UserService {
     this.loading = true;
     var url = '/User/GetItems';
     var params = new URLSearchParams();
-    params.set('pageNumber', '0');
     params.set('pageSize', '0');
-    this.httpClient.httpGet(url, params, null, (data) => { 
+    this.httpClient.httpGet(url, params, null, (data) => {
+      debugger;
       this.users = data.item.items;
       this.loaded = true;
     }, () => {

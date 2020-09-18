@@ -10,6 +10,7 @@ import { IGetRowsParams, ColDef } from 'ag-grid-community';
 import { Headers, Http } from '@angular/http';
 import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 import { URLSearchParams } from '@angular/http';
+import { AreaTypeFormatterComponent } from '../../shared/formatter/areaTypeFormatter';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -224,7 +225,8 @@ export class GridComponent implements OnInit {
   createFrameworkComponent() {
     this.frameworkComponents = {
       longDateFormatterComponent: LongDateFormatterComponent,
-      userNameFormatterComponent: UsernameFormatterComponent
+      userNameFormatterComponent: UsernameFormatterComponent,
+      areaTypeFormatterComponent: AreaTypeFormatterComponent
     }
   }
 

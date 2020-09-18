@@ -12,6 +12,6 @@ export class AdminLayoutComponent implements OnInit {
   constructor(private dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getItems();
+    
   } 
 }

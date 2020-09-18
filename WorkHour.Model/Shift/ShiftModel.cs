@@ -8,8 +8,12 @@ namespace WorkHour.Model
     public class ShiftModel : BaseIdModel, IsDeletedEntity
     {
         public int Id { get; set; }
-        public DateTime? StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? FinishDate { get; set; }
+        public TimeSpan StartTimer { get; set; }
+        public TimeSpan FinishTimer { get; set; }
         public int Area { get; set; }
         public int UserId { get; set; }
         public bool IsDeleted { get; set; }

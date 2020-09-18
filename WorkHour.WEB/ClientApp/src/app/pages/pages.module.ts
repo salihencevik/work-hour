@@ -13,29 +13,39 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
 import { MatSelectModule } from '@angular/material/select';
-import { CustomerComponent } from './customer/customer.component';
+import { CustomerComponent } from './customer/customer.component'; 
 
+import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { NgxMaskModule } from 'ngx-mask';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 @NgModule({
   imports: [
     CommonModule,  
     FormsModule, 
     HttpClientModule,
-    MatCardModule,
+    MatCardModule, 
     MatInputModule,
     MatFormFieldModule, 
     MatCheckboxModule,
     MatSelectModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
     MatButtonModule,
-    AgGridModule.withComponents([])
+    MatDatepickerModule, 
+    AgGridModule.withComponents([]),
+    NgxMaskModule.forRoot(),
   ],
   declarations: [
     PersonelComponent,
     GridComponent,
     ShiftComponent,
     CustomerComponent
-  ]
+  ],
+  providers: [
+    MatDatepickerModule, 
+    { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' }
+  ],
 })
 
 export class PagesModule { }

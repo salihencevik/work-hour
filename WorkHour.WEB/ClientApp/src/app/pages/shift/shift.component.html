@@ -1,1 +1,48 @@
-<app-grid [hidden]="mode != PageModes.List" [entityName]="'Shift'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid> 
+<app-grid [hidden]="mode != PageModes.List" [entityName]="'Shift'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid>
+<div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
+  <form #shiftForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div class="tab-content">
+          <div class="container">
+            <mat-form-field class="fullwidth">
+              <input name="id" matInput placeholder="Id" disabled [(ngModel)]="grid.newItem.id">
+            </mat-form-field>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="fullwidth">
+                  <input matInput [matDatepicker]="date" [(ngModel)]="grid.newItem.startDate" placeholder="Mesai Başlangıç Tarihi" name="startDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                  <mat-datepicker #date></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="fullwidth">
+                  <input matInput mask="Hh:m0" minlength="4" placeholder="Mesai Başlangıç Saati" required [(ngModel)]="grid.newItem.startTime" name="startTime">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="fullwidth">
+                  <input matInput [matDatepicker]="date2" [(ngModel)]="grid.newItem.endDate" placeholder="Mesai Bitiş Tarihi" name="endDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="date2"></mat-datepicker-toggle>
+                  <mat-datepicker #date2></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="fullwidth">
+                  <input matInput mask="Hh:m0" minlength="4" placeholder="Mesai Bitiş Saati" required [(ngModel)]="grid.newItem.endTime" name="endTime">
+                </mat-form-field>
+              </div>
+            </div>
+            <button type="submit" [disabled]="!shiftForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
+            <button type="button" mat-raised-button (click)="backToList()" class="mr-2 btnDelete"> <mat-icon>cancel</mat-icon> Cancel</button>
+          </div>
+        </div>
+       
+
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

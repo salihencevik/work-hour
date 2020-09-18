@@ -58,5 +58,17 @@ namespace WorkHour.WEB.Controllers
                          });
             return query;
         }
+        public override ActionResult SaveItem([FromBody] ShiftModel model)
+        {
+            return Execute(() =>
+            {
+                model.StartTime = model.StartDate.Value.Add(model.StartTimer);
+                model.FinishTime = model.FinishDate.Value.Add(model.FinishTimer);
+                model.UserId = model.UserId == 0 ? SessionManager.LoginModel.Id : model.UserId; 
+                var item = model.GetPropertyValues<Shift>();
+                return model;
+            }); 
+        }
     }
+   
 }

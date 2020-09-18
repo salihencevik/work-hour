@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
-import { ComponentsModule } from './components/components.module';
+import { FormsModule } from '@angular/forms';  
 import { HttpClientModule } from '@angular/common/http';
 import { LongDateFormatterComponent } from './formatter/longDateFormatter';
 import { UsernameFormatterComponent } from './formatter/usernameFormatter';
+import { AreaTypeFormatterComponent } from './formatter/areaTypeFormatter';
 
 @NgModule({
   imports: [
@@ -14,15 +14,18 @@ import { UsernameFormatterComponent } from './formatter/usernameFormatter';
   ],
   declarations: [
     LongDateFormatterComponent,
-    UsernameFormatterComponent
+    UsernameFormatterComponent,
+    AreaTypeFormatterComponent
   ],
   exports: [
     LongDateFormatterComponent,
-    UsernameFormatterComponent
+    UsernameFormatterComponent,
+    AreaTypeFormatterComponent
   ],
   entryComponents: [
     UsernameFormatterComponent,
-    LongDateFormatterComponent
+    LongDateFormatterComponent,
+    AreaTypeFormatterComponent
   ],  
 })
 
