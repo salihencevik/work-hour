@@ -30,9 +30,9 @@ export class ShiftComponent implements OnInit, AfterViewInit {
       { headerName: 'Id', field: 'id' },
       { headerName: 'Personel Adı', field: 'userId', cellRenderer: 'userNameFormatterComponent' },
       { headerName: 'Mesai Başlangıç Tarihi', field: 'startDate', cellRenderer: 'longDateFormatterComponent' },
-      { headerName: 'Mesai Başlangıç Saati', field: 'startTime'},
+      { headerName: 'Mesai Başlangıç Saati', field: 'startTimeText'},
       { headerName: 'Mesai Bitiş Tarihi', field: 'finishDate', cellRenderer: 'longDateFormatterComponent' },
-      { headerName: 'Mesai Bitiş Saati', field: 'finishTime' },
+      { headerName: 'Mesai Bitiş Saati', field: 'finishTimeText' },
       { headerName: 'Çalışma Yeri', field: 'area', cellRenderer: 'areaTypeFormatterComponent' },
       { headerName: 'Açıklama', field: 'explanation' },
       { headerName: 'Oluşturan Kullanıcı', field: 'createUserId', cellRenderer: 'userNameFormatterComponent' },
@@ -47,8 +47,10 @@ export class ShiftComponent implements OnInit, AfterViewInit {
   save() {
     debugger;
     var body = this.grid.newItem;
-    var query = this.grid.newItem.startTime;
-    this.grid.newItem.startTime = query.splice(3, ":");
+    var time1 = this.grid.newItem.startTimeText;
+    var time2 = this.grid.newItem.finishTimeText;
+    this.grid.newItem.startTimeText = [time1.slice(0, 2), ":", time1.slice(2)].join('');
+    this.grid.newItem.finishTimeText = [time2.slice(0, 2), ":", time2.slice(2)].join('');
     this.rakamHttpService.httpPost('/Shift/SaveItem', body, null, (data) => {
       debugger;
       if (data.item != null) {

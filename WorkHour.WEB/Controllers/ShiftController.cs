@@ -34,8 +34,8 @@ namespace WorkHour.WEB.Controllers
                              WorkConfirmation = r.WorkConfirmation,
                              Area = r.Area, 
                              Explanation = r.Explanation,
-                             StartTime = r.StartTime.ToString(),
-                             FinishTime =r.FinishTime.ToString(),
+                             StartTimeText = r.StartTime.ToString(),
+                             FinishTimeText =r.FinishTime.ToString(),
                              FinishDate = r.FinishDate,
                              StartDate = r.StartDate,
                              CreateDate = r.CreateDate,
@@ -49,10 +49,36 @@ namespace WorkHour.WEB.Controllers
         {
             return Execute(() =>
             {
-                model.UserId = model.UserId == 0 ? SessionManager.LoginModel.Id : model.UserId; 
-                var item = model.GetPropertyValues<Shift>();
-                return model;
-            }); 
+                model.StartTime = TimeSpan.Parse(model.StartTimeText);
+                model.FinishTime = TimeSpan.Parse(model.FinishTimeText);
+                if (model.Id == 0)
+                {
+                    model.UserId = model.UserId == 0 ? SessionManager.LoginModel.Id : model.UserId; 
+                    var item = model.GetPropertyValues<Shift>();
+                    item.CreateUserId = SessionManager.LoginModel.Id;
+                    item.CreateDate = DateTime.Now;
+                    var result = _Unit.GetRepository<Shift>().Add(item);
+                    if (!result.IsSucceeded)
+                    {
+                        throw new Exception("Yeni mesai girişi başarısız.");
+                    }
+                    return model;
+                }
+                else
+                {
+                    var oldItem = _Unit.GetRepository<Shift>().Get(f => f.Id == model.Id);
+                    oldItem.UpdateUserId = SessionManager.LoginModel.Id;
+                    oldItem.UpdateDate = DateTime.Now;
+                    model.GetPropertyValues<Shift>(ref oldItem); 
+                    var result = _Unit.GetRepository<Shift>().Update(oldItem);
+                    if (!result.IsSucceeded)
+                    {
+                        throw new Exception("Güncelleme işlemi başarısız.");
+
+                    }
+                    return model;
+                }
+            });
         }
     }
    

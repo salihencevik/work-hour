@@ -14,7 +14,7 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     debugger;
     let loginInfo = this.loginService.getLoginInfo();
-     if (loginInfo != null && loginInfo.id > 0) {
+    if (loginInfo != undefined && loginInfo.id > 0) {
       var obs = this.loginService.checkLogin();
       return obs;
     }

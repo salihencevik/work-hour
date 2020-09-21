@@ -27,7 +27,7 @@ export class GridComponent implements OnInit {
   @Input() mode: PageMode;
   @Input() Authority: string;
   @Input() createButtonVisible = true;
-  @Input() useSizeColumnsToFit = true;
+  @Input() useSizeColumnsToFit = false;
   @Input() copyButtonVisible = false;
   @Input() viewButtonVisible = true;
   @Input() editButtonVisible = true;
@@ -63,6 +63,7 @@ export class GridComponent implements OnInit {
   private rowModelType;
   private rowData: [];
   private toolbarItems: any[];
+  private getRowStyle;
   dataSource;
   dataSourceArray = [];
   page = {
@@ -98,8 +99,13 @@ export class GridComponent implements OnInit {
     this.paginationPageSize = this.page.limit;
     this.cacheOverflowSize = 0;
     this.maxConcurrentDatasourceRequests = 1;
-    this.infiniteInitialRowCount = this.page.limit;
+    this.infiniteInitialRowCount = this.page.limit; 
     this.maxBlocksInCache = 1;
+    this.getRowStyle = function (params) {
+      if (params.node.rowPinned) {
+        return { 'font-weight': 'bold' };
+      }
+    };
   }
   private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
   ngOnInit(): void {
@@ -295,10 +301,13 @@ export class GridComponent implements OnInit {
       this.page.orderBy = null;
       this.page.orderDir = null;
     }
+       
+    //this.gridApi.columnController.columnDefs.find(x => x.field == "Id") 
     this.reloadTable();
   }
 
   reloadTable() {
+    this.clearRows();
     var params = new URLSearchParams();
     params.set('orderColumn', this.page.orderBy);
     params.set('orderDir', this.page.orderDir);
@@ -309,7 +318,7 @@ export class GridComponent implements OnInit {
       console.log(data);
       if (data.responseType == 3) {
         this.snackBarService.open(data.message);
-      }
+      } 
       else {
         this.selected = [];
         this.page.count = data.item.count;
@@ -328,10 +337,14 @@ export class GridComponent implements OnInit {
     return claimText == undefined || claimText == null || claimText == '' || this.personelClaimService.checkClaim(claimText);
   }
 
-
+  clearRows() {
+    this.rows.splice(0, this.rows.length);
+    this.gridApi.deselectAll();
+    this.checkButtonsDisable();
+  }
   onPageCountChanged(param) {
+    debugger;
     var val = Number(param.value);
-    this.gridApi.gridOptionsWrapper.setProperty('cacheBlockSize', val);
     this.page.limit = val;
     this.gridApi.paginationSetPageSize(val);
   }
@@ -417,8 +430,7 @@ export class GridComponent implements OnInit {
     },null);
 
   }
-  addItem(item) {
-    debugger;
+  addItem(item) {   
     this.rows.push(item);
     this.page.count = this.rows.length;
     this.loadRows(this.rows);

@@ -9,9 +9,11 @@ namespace WorkHour.Model
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
-        public string StartTime { get; set; }
+        public string StartTimeText { get; set; }
+        public TimeSpan StartTime { get; set; }
         public DateTime FinishDate { get; set; }
-        public string FinishTime { get; set; }
+        public string FinishTimeText { get; set; }
+        public TimeSpan FinishTime { get; set; }
         public int Area { get; set; }
         public int UserId { get; set; }
         public bool IsDeleted { get; set; }
