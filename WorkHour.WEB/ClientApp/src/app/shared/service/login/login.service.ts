@@ -6,18 +6,23 @@ import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MenuService } from '../menu/menu.service';
 import { LoginInfo } from '../../Model/login-info';
+import { UserService } from '../user/user.service';
+import { RoleService } from '../role/role.service';
+import { CustomerService } from '../customer/customer.service';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private httpClient: HttpClient, private router: Router, private personelClaimService: PersonelClaimService, private menuService: MenuService) { }
+  constructor(private httpClient: HttpClient,
+    private router: Router,
+    private personelClaimService: PersonelClaimService,
+    private menuService: MenuService) { }
   private apiUrl: string = "https://localhost:44391/Authentication/";
   public loginInfo: LoginInfo;
   result: boolean = false;
   returnUrl: string;
   Login(username: string, password: string) {
-  
     let api = this.apiUrl + "Login" + "/" + username + "/" + password;
     return this.httpClient.get(api).subscribe((x : any) => {
       if (x.loginResponseType == 1) {
@@ -25,11 +30,13 @@ export class LoginService {
         var url = this.returnUrl;
         this.returnUrl = null;
         if (url == null || url == undefined || url == '') {
-          url = '/';
+          url = '/Dashboard';
         }
+      
         this.personelClaimService.setClaims(x.claimText);
         this.menuService.setMenus(x.menus);
-        this.router.navigateByUrl(url); 
+        this.router.navigateByUrl(url);
+
       } 
     });
   }

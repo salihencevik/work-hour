@@ -13,6 +13,7 @@ namespace WorkHour.Core
         public short pageNumber { get; set; }
 
         public short pageSize { get; set; }
+        public List<QueryParameter> Parameters { get; set; }
 
     }
      

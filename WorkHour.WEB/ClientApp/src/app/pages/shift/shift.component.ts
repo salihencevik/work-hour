@@ -24,7 +24,7 @@ export class ShiftComponent implements OnInit, AfterViewInit {
     this.area = [
       { id: AreaType.Ofis, name: "Ofis" },
       { id: AreaType.Ev, name: "Ev" },
-      ];
+    ];
     this.user = this.userService.getItems();
     this.columns = [
       { headerName: 'Id', field: 'id' },
@@ -47,6 +47,8 @@ export class ShiftComponent implements OnInit, AfterViewInit {
   save() {
     debugger;
     var body = this.grid.newItem;
+    var query = this.grid.newItem.startTime;
+    this.grid.newItem.startTime = query.splice(3, ":");
     this.rakamHttpService.httpPost('/Shift/SaveItem', body, null, (data) => {
       debugger;
       if (data.item != null) {

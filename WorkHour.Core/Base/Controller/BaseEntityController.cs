@@ -70,8 +70,18 @@ namespace WorkHour.Core
 
         protected virtual TModel GetModel(int id)
         {
-            var query = GetQuery().FirstOrDefault();
-            return query;
+            var query = GetQuery();
+            var pageQuery = new PageQuery();
+            pageQuery.Parameters = new List<QueryParameter>();
+            pageQuery.Parameters.Add(new QueryParameter()
+            {
+                ColumnName = "Id",
+                ConditionType = ConditionType.Equal,
+                Value = id.ToString()
+            });
+            var source = query.PagedList(pageQuery);
+            var item = source.Items.FirstOrDefault(f=>f.Id == id);
+            return item;
         }
 
 

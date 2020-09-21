@@ -80,5 +80,10 @@ namespace WorkHour.Core
             }
             return source;
         }
+
+        //public static IQueryable<T> ApplyParameters<T>(this IQueryable<T> items, PageQuery query, IQueryManager manager)
+        //{
+
+        //}
     }
 }

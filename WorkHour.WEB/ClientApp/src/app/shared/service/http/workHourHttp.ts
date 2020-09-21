@@ -36,7 +36,6 @@ export class WorkHourHttpService {
       .map(response => response.json())
             .subscribe(
               data => {
-                debugger;
                 if (data.responseType == 1) {
                   successFunc(data);
                 }

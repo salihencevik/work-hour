@@ -11,13 +11,8 @@ import { CustomerService } from '../../shared/service/customer/customer.service'
 export class AdminLayoutComponent implements OnInit {
 
   constructor(
-    private dialog: MatDialog,
-    private userService: UserService,
-    private customerService: CustomerService
   ) { }
 
-  ngOnInit() {
-    this.userService.getItems();
-    this.customerService.getItems();
+  ngOnInit() { 
   }
 }
