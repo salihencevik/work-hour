@@ -80,7 +80,7 @@ namespace WorkHour.Core
                 Value = id.ToString()
             });
             var source = query.PagedList(pageQuery);
-            var item = source.Items.FirstOrDefault(f=>f.Id == id);
+            var item = source.Items.FirstOrDefault(f => f.Id == id);
             return item;
         }
 
@@ -90,29 +90,17 @@ namespace WorkHour.Core
         [Route("saveItem")]
         public virtual ActionResult SaveItem([FromBody] TModel model)
         {
-           
+
             return Execute(() =>
             {
                 if (model.Id == 0)
                 {
-                    if (model is IBaseIdCreateEntity)
-                    {
-                        ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
-                        ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
-
-                    }
+                    BaseCreateUpdateReflections<TModel>.CreateEntity(ref model);
                     _Unit.GetRepository<TEntity>().Add(model.GetPropertyValues<TEntity>());
                 }
                 else
                 {
-
-                    if (model is IBaseIdUpdateEntity)
-                    {
-                        ((IBaseIdCreateEntity)model).CreateDate = DateTime.Now;
-                        ((IBaseIdCreateEntity)model).CreateUserId = SessionManager.LoginModel.Id;
-                        ((IBaseIdUpdateEntity)model).UpdateDate = DateTime.Now;
-                        ((IBaseIdUpdateEntity)model).UpdateUserId = SessionManager.LoginModel.Id;
-                    }
+                    BaseCreateUpdateReflections<TModel>.UpdateEntity(ref model);
                     _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>());
                 }
             });
