@@ -52,6 +52,7 @@ export class GridComponent implements OnInit {
   copyButton: any;
   viewButton: any;
   editButton: any;
+  rowBuffer;
   createButton: any;
   dateFormat: string;
   longDateFormat: string;
@@ -92,20 +93,15 @@ export class GridComponent implements OnInit {
       sortable: true,
       filter: true
     };
-
+    this.columnDefs = [];
+    this.rowBuffer = 0;
     this.rowSelection = "single";
     this.rowModelType = "infinite";
-    this.columnDefs = [];
     this.paginationPageSize = this.page.limit;
     this.cacheOverflowSize = 0;
     this.maxConcurrentDatasourceRequests = 1;
-    this.infiniteInitialRowCount = this.page.limit; 
-    this.maxBlocksInCache = 1;
-    this.getRowStyle = function (params) {
-      if (params.node.rowPinned) {
-        return { 'font-weight': 'bold' };
-      }
-    };
+    this.infiniteInitialRowCount = this.page.limit;
+    this.maxBlocksInCache = 1;     
   }
   private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
   ngOnInit(): void {
@@ -345,8 +341,21 @@ export class GridComponent implements OnInit {
   onPageCountChanged(param) {
     debugger;
     var val = Number(param.value);
+    this.gridApi.gridOptionsWrapper.setProperty('cacheBlockSize', Number(val));
+    this.gridApi.infiniteRowModel.resetCache();
+
+    //this.gridApi.infinitePageRowModel.resetCache();
     this.page.limit = val;
     this.gridApi.paginationSetPageSize(val);
+  }
+  setRowStyle(params) {
+
+    //if (params.api.entityName == 'ParticipationInstallmentItem') { 
+    //  if (params.data.DateOfPayment > params.data.DueDate || params.data.ClosedAmount < params.data.Amount) {
+    //    return { 'background-color': 'red', 'color' : 'white' }
+    //  }
+    //}
+    return null;
   }
 
   delete() {

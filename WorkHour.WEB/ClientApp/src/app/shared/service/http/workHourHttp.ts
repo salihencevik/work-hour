@@ -50,8 +50,7 @@ export class WorkHourHttpService {
                   }
                 }
             },
-              error => console.log(error));
-    console.log("Error") 
+              error => console.log(error)); 
     }
 
 

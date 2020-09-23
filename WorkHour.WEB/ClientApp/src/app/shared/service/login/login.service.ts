@@ -17,7 +17,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient,
     private router: Router,
     private personelClaimService: PersonelClaimService,
-    private menuService: MenuService) { }
+    private menuService: MenuService) { this.loadLoginInfo(); }
   private apiUrl: string = "https://localhost:44391/Authentication/";
   public loginInfo: LoginInfo;
   result: boolean = false;
@@ -32,7 +32,6 @@ export class LoginService {
         if (url == null || url == undefined || url == '') {
           url = '/Dashboard';
         }
-      
         this.personelClaimService.setClaims(x.claimText);
         this.menuService.setMenus(x.menus);
         this.router.navigateByUrl(url);
@@ -121,6 +120,12 @@ export class LoginService {
     localStorage.removeItem('auth');
     this.router.navigate(['/session/signin']);
   }
-   
+  loadLoginInfo() {
+    let str = localStorage.getItem('auth');
+    if (str != null && str != "") {
+      var bytes = CryptoJS.AES.decrypt(str, 'secret key 123');
+      this.loginInfo = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    }
+  }
 
-}
+} 
