@@ -27,7 +27,7 @@ export class GridComponent implements OnInit {
   @Input() mode: PageMode;
   @Input() Authority: string;
   @Input() createButtonVisible = true;
-  @Input() useSizeColumnsToFit = false;
+  @Input() useSizeColumnsToFit = true;
   @Input() copyButtonVisible = false;
   @Input() viewButtonVisible = true;
   @Input() editButtonVisible = true;
@@ -37,6 +37,7 @@ export class GridComponent implements OnInit {
   @Output() createNewItem = new EventEmitter(); 
   @Output() call: EventEmitter<any> = new EventEmitter();
   @Input() enableRowDobuleClick = true;
+  @Input() refreshListButtonVisible = true;
   selected: any[] = [];
   @Input() serverSidePaging = true;
   @Input() customHeight: any;
@@ -439,6 +440,14 @@ export class GridComponent implements OnInit {
     },null);
 
   }
+  onClick() {
+    this.gridApi.paginationGoToFirstPage(); 
+  }
+
+  onFilterList() {
+    this.onClick();
+  }
+
   addItem(item) {   
     this.rows.push(item);
     this.page.count = this.rows.length;

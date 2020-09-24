@@ -53,18 +53,29 @@ namespace WorkHour.Core
 
 
         [HttpPost("Delete")]
+        [WorkHourFilter]
         public virtual ActionResult Delete([FromBody] int id)
         {
             return Execute(() =>
             {
-                var result = _Unit.GetRepository<TEntity>().Delete(id);
-
-                if (!result.IsSucceeded)
+                var item = _Unit.GetRepository<TEntity>().Get(f => f.Id == id);
+                if (item is IsDeletedEntity)
                 {
-                    throw new Exception(result.Message);
+                    BaseCreateUpdateReflections<TEntity>.DeletedEntity(ref item);
+                   var result = _Unit.GetRepository<TEntity>().Update(item);
+                    if (!result.IsSucceeded)
+                    {
+                        throw new Exception(result.Exception.Message);
+                    }
                 }
-
-
+                else
+                {
+                    var result = _Unit.GetRepository<TEntity>().Delete(id);
+                    if (!result.IsSucceeded)
+                    {
+                        throw new Exception(result.Exception.Message);
+                    }
+                }
             });
         }
 
