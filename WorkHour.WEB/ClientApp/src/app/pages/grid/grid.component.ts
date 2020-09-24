@@ -363,24 +363,24 @@ export class GridComponent implements OnInit {
     var row = this.selected[0];
     this.dialogService
       .confirm('EMİN MİSİNİZ', 'SİLMEK İSTİYORUM')
-      .subscribe(res => {
+      .subscribe(res => { 
         if (res) {
           var body = row.id;
-          this.httpClient.post('/' + this.entityName + '/Delete', body).subscribe((data) => {
-            debugger;
-            var index = this.rows.findIndex(t => t.id == row.id);
+          this.rakamhttpService.httpPost(this.entityName + '/Delete', body, null, (data) => {
+            var index = this.rows.findIndex(t => t.id == row.id); 
             if (index != -1) {
               this.rows.splice(index, 1);
+
               if (this.serverSidePaging) {
                 this.loadRows(this.rows);
               }
               else {
                 this.gridApi.updateRowData({ remove: [this.getSelectedItem()] });
               }
-            } 
-            this.selected[0] = this.rows[0];
+            }
 
-          });
+            this.selected[0] = this.rows[0];
+          }, null);
         }
 
 

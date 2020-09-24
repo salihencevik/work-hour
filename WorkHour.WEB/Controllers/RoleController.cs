@@ -82,12 +82,19 @@ namespace WorkHour.WEB.Controllers
                 {
                     try
                     {
+                        var userRole = _Unit.GetRepository<UserRole>().GetAll(f => f.RoleId == id).ToList();
+                        if (userRole.Count > 0)
+                           throw new Exception("Bu rol bir kullanıcı tarafından kullanıldığı için silinemez");
+
                         var roleClaim = _Unit.GetRepository<RoleClaim>().GetAll(f => f.RoleId == id).ToList();
-                        foreach (var item in roleClaim)
+                        if (roleClaim.Count > 0)
                         {
-                           var controlls = _Unit.GetRepository<RoleClaim>().Delete(item.Id);
-                            if (!controlls.IsSucceeded)
-                                transaction.Rollback();
+                            foreach (var item in roleClaim)
+                            {
+                                var controlls = _Unit.GetRepository<RoleClaim>().Delete(item.Id);
+                                if (!controlls.IsSucceeded)
+                                    transaction.Rollback();
+                            }
                         } 
                         var controll = _Unit.GetRepository<Role>().Delete(id);
                         if(!controll.IsSucceeded)
