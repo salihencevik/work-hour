@@ -15,6 +15,7 @@ import { CustomerNameFormatterComponent } from '../../shared/formatter/customerN
 import { TranslateService } from '@ngx-translate/core';
 import GridTraslator from './grid-translator';
 import { AreaTypeFormatterComponent } from '../../shared/formatter/areaTypeFormatter';
+import { ConditionTypeMapper } from './grid-filter';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -34,7 +35,7 @@ export class GridComponent implements OnInit {
   columnDefs: ColDef[];
   @Input() deleteButtonVisible = true;
   @Output() selectedChanged: EventEmitter<any> = new EventEmitter();
-  @Output() createNewItem = new EventEmitter(); 
+  @Output() createNewItem = new EventEmitter();
   @Output() call: EventEmitter<any> = new EventEmitter();
   @Input() enableRowDobuleClick = true;
   selected: any[] = [];
@@ -80,6 +81,7 @@ export class GridComponent implements OnInit {
   infiniteInitialRowCount;
   maxBlocksInCache;
   gridLocaleText = {};
+  conditionTypeMapper = new ConditionTypeMapper();
   constructor(
     private dialogService: DialogService,
     private rakamhttpService: WorkHourHttpService,
@@ -101,7 +103,7 @@ export class GridComponent implements OnInit {
     this.cacheOverflowSize = 0;
     this.maxConcurrentDatasourceRequests = 1;
     this.infiniteInitialRowCount = this.page.limit;
-    this.maxBlocksInCache = 1;     
+    this.maxBlocksInCache = 1;
   }
   private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
   ngOnInit(): void {
@@ -214,6 +216,11 @@ export class GridComponent implements OnInit {
           cellRenderer: column.cellRenderer,
           width: column.width != undefined ? column.width : 200,
           sort: column.sort != undefined ? column.sort : 'desc',
+          filter: "agNumberColumnFilter",
+          filterParams: {
+            filterOptions: this.conditionTypeMapper.getFilterCondition(PropertyType.Number),
+            suppressAndOrCondition: true
+          },
           cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
         });
       }
@@ -276,7 +283,6 @@ export class GridComponent implements OnInit {
       let that = this;
       var dataSource = {
         rowCount: null,
-
         getRows: function (params) {
           that.callbackApi = params;
           that.reloadAgGrid(params);
@@ -289,6 +295,7 @@ export class GridComponent implements OnInit {
   }
 
   reloadAgGrid(params: IGetRowsParams) {
+    debugger;
     this.page.offset = params.startRow / this.page.limit;
     if (params.sortModel && params.sortModel.length > 0) {
       this.page.orderDir = params.sortModel[0].sort;
@@ -297,12 +304,13 @@ export class GridComponent implements OnInit {
       this.page.orderBy = null;
       this.page.orderDir = null;
     }
-       
+
     //this.gridApi.columnController.columnDefs.find(x => x.field == "Id") 
     this.reloadTable();
   }
 
   reloadTable() {
+    debugger;
     this.clearRows();
     var params = new URLSearchParams();
     params.set('orderColumn', this.page.orderBy);
@@ -314,13 +322,13 @@ export class GridComponent implements OnInit {
       console.log(data);
       if (data.responseType == 3) {
         this.snackBarService.open(data.message);
-      } 
+      }
       else {
         this.selected = [];
         this.page.count = data.item.count;
         this.rows = data.item.items;
         this.callbackApi.successCallback(this.rows, this.page.count);
-      } 
+      }
     }, null);
   }
   createNew(item: any = null) {
@@ -428,7 +436,7 @@ export class GridComponent implements OnInit {
   }
   itemEdit(id: number) {
     var params = new URLSearchParams();
-    params.append('id', id.toString()); 
+    params.append('id', id.toString());
     var url = '/' + this.entityName + '/GetItem' + "/" + id;
     this.rakamhttpService.httpGet(url, params, null, (data) => {
       this.newItem = data.item;
@@ -436,10 +444,10 @@ export class GridComponent implements OnInit {
       this.changeDetectorRef.detectChanges();
 
       this.modeChange.emit(this.mode);
-    },null);
+    }, null);
 
   }
-  addItem(item) {   
+  addItem(item) {
     this.rows.push(item);
     this.page.count = this.rows.length;
     this.loadRows(this.rows);
