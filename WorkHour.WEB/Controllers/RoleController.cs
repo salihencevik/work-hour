@@ -61,7 +61,7 @@ namespace WorkHour.WEB.Controllers
         public ActionResult GetClaims()
         {
             return Execute(() =>
-            {
+            { 
                 var claim = _Unit.GetRepository<Claim>().GetAll().ToList();
                 var claimGroup = _Unit.GetRepository<ClaimGroup>().GetAll().ToList();
 
@@ -73,6 +73,35 @@ namespace WorkHour.WEB.Controllers
 
                 return r;
             });
+        }
+        public override ActionResult Delete([FromBody] int id)
+        {
+            return Execute(() =>
+            {
+                using (var transaction = _Unit.Context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var roleClaim = _Unit.GetRepository<RoleClaim>().GetAll(f => f.RoleId == id).ToList();
+                        foreach (var item in roleClaim)
+                        {
+                           var controlls = _Unit.GetRepository<RoleClaim>().Delete(item.Id);
+                            if (!controlls.IsSucceeded)
+                                transaction.Rollback();
+                        } 
+                        var controll = _Unit.GetRepository<Role>().Delete(id);
+                        if(!controll.IsSucceeded)
+                            transaction.Rollback();
+                        transaction.Commit();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception(ex.Message);
+                    }
+                } 
+            }); 
         }
         public override ActionResult SaveItem([FromBody] RoleModel model)
         {

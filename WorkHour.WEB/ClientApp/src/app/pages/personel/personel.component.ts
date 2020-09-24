@@ -29,7 +29,8 @@ export class PersonelComponent implements OnInit, AfterViewInit {
 
 
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this.roleService.getItems(); 
     this.columns = [
       { headerName: 'Id', field: 'id' },
       { headerName: 'Adı', field: 'name' },

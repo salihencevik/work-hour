@@ -367,13 +367,17 @@ export class GridComponent implements OnInit {
         if (res) {
           var body = row.id;
           this.httpClient.post('/' + this.entityName + '/Delete', body).subscribe((data) => {
-
-            var index = this.rows.findIndex(t => t.Id == row.Id);
-
+            debugger;
+            var index = this.rows.findIndex(t => t.id == row.id);
             if (index != -1) {
               this.rows.splice(index, 1);
-            }
-            this.gridApi.updateRowData({ remove: [this.getSelectedItem()] });
+              if (this.serverSidePaging) {
+                this.loadRows(this.rows);
+              }
+              else {
+                this.gridApi.updateRowData({ remove: [this.getSelectedItem()] });
+              }
+            } 
             this.selected[0] = this.rows[0];
 
           });
