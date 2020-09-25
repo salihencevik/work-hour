@@ -23,22 +23,22 @@ namespace WorkHour.WEB.Controllers
         {
             _unit = unit;
         }
-        [HttpGet] 
+        [HttpGet]
         [Route("Login/{username}/{password}")]
-        public IActionResult Login(string username,string password)
+        public IActionResult Login(string username, string password)
         {
 
             password = Encrypt.EncryptSHA1(password);
             var item = _unit.GetRepository<User>().Get(i => i.Username == username && i.Password == password && i.IsDeleted == false);
             if (item != null)
             {
-                var roles = _unit.GetRepository<UserRole>().GetAll(i => i.UserId == item.Id).Select(i=>i.RoleId).ToList();
-                var roleClaim = _unit.GetRepository<RoleClaim>().GetAll(i=>roles.Contains(i.RoleId)).Select(i=>i.ClaimId).Distinct().ToList();
+                var roles = _unit.GetRepository<UserRole>().GetAll(i => i.UserId == item.Id).Select(i => i.RoleId).ToList();
+                var roleClaim = _unit.GetRepository<RoleClaim>().GetAll(i => roles.Contains(i.RoleId)).Select(i => i.ClaimId).Distinct().ToList();
 
                 var claim = _unit.GetRepository<Claim>().GetAll().ToList();
                 var menu = _unit.GetRepository<Menu>().GetAll();
 
-               
+
                 var ClaimText = new List<string>();
                 var menuItem = new List<Menu>();
 
@@ -56,7 +56,7 @@ namespace WorkHour.WEB.Controllers
                     }
                 }
 
-                string baseToken = string.Format("User.{0}", item.Id); 
+                string baseToken = string.Format("User.{0}", item.Id);
                 var token = Encrypt.GetMD5Hash(baseToken);
 
                 var query = new LoginModel()
@@ -67,7 +67,8 @@ namespace WorkHour.WEB.Controllers
                     ClaimText = ClaimText,
                     LoginResponseType = LoginResponseTypes.Success,
                     MenuItem = menuItem,
-                    Token = token
+                    Token = token,
+                    Surname = item.Surname
                 };
 
                 SessionManager.LoginModel = query;
@@ -77,7 +78,7 @@ namespace WorkHour.WEB.Controllers
             else
             {
                 var query = new LoginModel()
-                { 
+                {
                     LoginResponseType = LoginResponseTypes.ErrorPasswordOrUsername
                 };
                 return Ok(query);
@@ -86,7 +87,7 @@ namespace WorkHour.WEB.Controllers
 
         [HttpGet]
         [Route("CheckLogin")]
-         public IActionResult CheckLogin()
+        public IActionResult CheckLogin()
         {
             if (SessionManager.LoginModel != null)
             {
@@ -104,8 +105,8 @@ namespace WorkHour.WEB.Controllers
                 };
                 return Ok(query);
             }
-         
-         
+
+
         }
     }
 }

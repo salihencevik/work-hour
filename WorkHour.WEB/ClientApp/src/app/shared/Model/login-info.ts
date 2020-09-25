@@ -3,5 +3,6 @@ export class LoginInfo {
   username: string;
   token: string;
   claims: string[];
-  menu: any[]; 
+  menu: any[];
+  displayName: string;
 }

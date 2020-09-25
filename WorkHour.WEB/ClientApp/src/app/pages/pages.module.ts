@@ -23,6 +23,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { WorkHourSelectComponent } from '../shared/components/work-hour-select/work-hour-select.component'; 
 import { DashboardComponent } from './dashboard.component';  
 import { RoleComponent } from './role/role.component';
+import { ProfileComponent } from './profile/profile.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -51,7 +52,8 @@ import { RoleComponent } from './role/role.component';
     ProjectComponent,
     WorkHourSelectComponent,
     DashboardComponent,
-    RoleComponent
+    RoleComponent,
+    ProfileComponent
   ],
   providers: [
     MatDatepickerModule, 
