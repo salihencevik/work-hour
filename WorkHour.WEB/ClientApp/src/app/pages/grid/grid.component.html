@@ -1,32 +1,31 @@
 
-  <div class="p-3 position-relative btn-div">
-    <div *ngFor="let item of toolbarItems" class="inline-block float-btn  mr-3">
-      <button *ngIf="checkClaim(item.claimText)" class="rkm-margin mat-raised-button float-btn {{item.css}}" mat-raised-button [disabled]="item.disabled" (click)="run(item.method, item.toolbarMethod)">
-        <!--<mat-icon>{{ item.icon }}</mat-icon>-->
-        {{ item.text | translate}}
-      </button>
-    </div>
-    <!--<div class="inline-block">
-      <button *ngIf="refreshListButtonVisible" mat-raised-button (click)="onFilterList()" class="rkm-margin refreshButton">{{'REFRESH' | translate}}</button>
-    </div>-->
-    <div class="inline-block ag-pagination">
-      <mat-select (selectionChange)="onPageCountChanged($event)" value={{page.limit.toString()}} id="page-size">
-        <mat-option value="10">10</mat-option>
-        <mat-option value="25">25</mat-option>
-        <mat-option value="50">50</mat-option>
-        <mat-option value="100">100</mat-option>
-        <mat-option value="250">250</mat-option>
-        <mat-option value="500">500</mat-option>
-        <mat-option value="750">750</mat-option>
-        <mat-option value="1000">1000</mat-option>
-      </mat-select>
-    </div>
+<div class="p-3 position-relative btn-div">
+  <div *ngFor="let item of toolbarItems" class="inline-block float-btn  mr-3">
+    <button *ngIf="checkClaim(item.claimText)" class="rkm-margin mat-raised-button float-btn {{item.css}}" mat-raised-button [disabled]="item.disabled" (click)="run(item.method, item.toolbarMethod)">
+      <!--<mat-icon>{{ item.icon }}</mat-icon>-->
+      {{ item.text | translate}}
+    </button>
   </div>
+  <!--<div class="inline-block">
+    <button *ngIf="refreshListButtonVisible" mat-raised-button (click)="onFilterList()" class="rkm-margin refreshButton">{{'REFRESH' | translate}}</button>
+  </div>-->
+  <div class="inline-block ag-pagination">
+    <mat-select (selectionChange)="onPageCountChanged($event)" value={{page.limit.toString()}} id="page-size">
+      <mat-option value="10">10</mat-option>
+      <mat-option value="25">25</mat-option>
+      <mat-option value="50">50</mat-option>
+      <mat-option value="100">100</mat-option>
+      <mat-option value="250">250</mat-option>
+      <mat-option value="500">500</mat-option>
+      <mat-option value="750">750</mat-option>
+      <mat-option value="1000">1000</mat-option>
+    </mat-select>
+  </div>
+</div>
 <ag-grid-angular style="width: 100%; height: 84vh;"
                  class="ag-theme-alpine"
                  [columnDefs]="columnDefs"
                  [defaultColDef]="defaultColDef"
-                 [rowBuffer]="0"
                  [rowSelection]="rowSelection"
                  [rowDeselection]="true"
                  [rowModelType]="rowModelType"
@@ -38,6 +37,7 @@
                  (selectionChanged)="onSelectionChanged($event)"
                  [frameworkComponents]="frameworkComponents"
                  (rowDoubleClicked)="rowDoubleClicked($event)"
+                 [localeText]="gridLocaleText"
                  [getRowStyle]="setRowStyle"
                  (gridReady)="onGridReady($event)">
 </ag-grid-angular>
