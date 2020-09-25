@@ -58,6 +58,7 @@ export class GridComponent implements OnInit {
   viewButton: any;
   editButton: any;
   createButton: any;
+  rowBuffer;
   dateFormat: string;
   @Input() multiRowSelection = false;
   longDateFormat: string;
