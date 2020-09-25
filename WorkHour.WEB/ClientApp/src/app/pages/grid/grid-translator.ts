@@ -46,8 +46,8 @@ export default class GridTraslator {
       endsWith: translate.instant("GRID-END-WITH"),
 
       // filter conditions
-      andCondition: 'daAND',
-      orCondition: 'daOR',
+      andCondition: translate.instant("GRID-AND"),
+      orCondition: translate.instant("GRID-OR"),
 
       // the header of the default group column
       group: 'laGroup',

@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import GridTraslator from './grid-translator';
 import { AreaTypeFormatterComponent } from '../../shared/formatter/areaTypeFormatter';
 import { CheckboxRenderer } from '../../shared/formatter/checkBoxRenderer';
+import { ConditionTypeMapper } from './grid-filter';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -35,7 +36,7 @@ export class GridComponent implements OnInit {
   columnDefs: ColDef[];
   @Input() deleteButtonVisible = true;
   @Output() selectedChanged: EventEmitter<any> = new EventEmitter();
-  @Output() createNewItem = new EventEmitter(); 
+  @Output() createNewItem = new EventEmitter();
   @Output() call: EventEmitter<any> = new EventEmitter();
   @Input() enableRowDobuleClick = true;
   @Input() refreshListButtonVisible = true;
@@ -56,7 +57,6 @@ export class GridComponent implements OnInit {
   copyButton: any;
   viewButton: any;
   editButton: any;
-  rowBuffer;
   createButton: any;
   dateFormat: string;
   @Input() multiRowSelection = false;
@@ -85,6 +85,7 @@ export class GridComponent implements OnInit {
   infiniteInitialRowCount;
   maxBlocksInCache;
   gridLocaleText = {};
+  conditionTypeMapper = new ConditionTypeMapper();
   constructor(
     private dialogService: DialogService,
     private rakamhttpService: WorkHourHttpService, 
@@ -109,7 +110,7 @@ export class GridComponent implements OnInit {
     this.cacheOverflowSize = 0;
     this.maxConcurrentDatasourceRequests = 1;
     this.infiniteInitialRowCount = this.page.limit;
-    this.maxBlocksInCache = 1;     
+    this.maxBlocksInCache = 1;
   }
   private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
   ngOnInit(): void { 
@@ -132,6 +133,8 @@ export class GridComponent implements OnInit {
     this.initToolbarItems();
 
     this.createColumns(this.columns);
+
+    this.setGridLocaleText();
   }
 
   setGridLocaleText() {
@@ -225,14 +228,14 @@ export class GridComponent implements OnInit {
       var column = columns[i];
       //propType verilmezse gridde filtre penceresi acilmaz
       this.propertyTypeList.set(column.prop, column.propType);
-      if (column.name == "Id") {
+      if (column.headerName == "Id") {
         this.columnDefs.push({
           headerName: column.headerName,
           field: column.field != undefined ? column.field : column.prop,
           cellRenderer: column.cellRenderer,
           width: column.width != undefined ? column.width : 200,
           sort: column.sort != undefined ? column.sort : 'desc',
-          cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
+          filter: "agNumberColumnFilter",
         });
       }
       else {
@@ -295,7 +298,6 @@ export class GridComponent implements OnInit {
       let that = this;
       var dataSource = {
         rowCount: null,
-
         getRows: function (params) {
           that.callbackApi = params;
           that.reloadAgGrid(params);
@@ -316,7 +318,7 @@ export class GridComponent implements OnInit {
       this.page.orderBy = null;
       this.page.orderDir = null;
     }
-       
+
     //this.gridApi.columnController.columnDefs.find(x => x.field == "Id") 
     this.reloadTable();
   }
@@ -333,13 +335,13 @@ export class GridComponent implements OnInit {
       console.log(data);
       if (data.responseType == 3) {
         this.snackBarService.open(data.message);
-      } 
+      }
       else {
         this.selected = [];
         this.page.count = data.item.count;
         this.rows = data.item.items;
         this.callbackApi.successCallback(this.rows, this.page.count);
-      } 
+      }
     }, null);
   }
   createNew(item: any = null) {
@@ -380,11 +382,11 @@ export class GridComponent implements OnInit {
     var row = this.selected[0];
     this.dialogService
       .confirm('EMİN MİSİNİZ', 'SİLMEK İSTİYORUM')
-      .subscribe(res => { 
+      .subscribe(res => {
         if (res) {
           var body = row.id;
           this.rakamhttpService.httpPost(this.entityName + '/Delete', body, null, (data) => {
-            var index = this.rows.findIndex(t => t.id == row.id); 
+            var index = this.rows.findIndex(t => t.id == row.id);
             if (index != -1) {
               this.rows.splice(index, 1);
 
@@ -412,10 +414,7 @@ export class GridComponent implements OnInit {
     return this.selected[0];
   }
 
-
-
-
-  onSelectionChanged() { 
+  onSelectionChanged() {
     var selectedRows = this.gridApi.getSelectedRows();
     this.selected = selectedRows;
     this.selectCallback();
@@ -452,7 +451,7 @@ export class GridComponent implements OnInit {
   }
   itemEdit(id: number) {
     var params = new URLSearchParams();
-    params.append('id', id.toString()); 
+    params.append('id', id.toString());
     var url = '/' + this.entityName + '/GetItem' + "/" + id;
     this.rakamhttpService.httpGet(url, params, null, (data) => {
       this.newItem = data.item;
@@ -460,18 +459,19 @@ export class GridComponent implements OnInit {
       this.changeDetectorRef.detectChanges();
 
       this.modeChange.emit(this.mode);
-    },null);
+    }, null);
 
   }
+
   onClick() {
-    this.gridApi.paginationGoToFirstPage(); 
+    this.gridApi.paginationGoToFirstPage();
   }
 
   onFilterList() {
     this.onClick();
   }
 
-  addItem(item) {   
+  addItem(item) {
     this.rows.push(item);
     this.page.count = this.rows.length;
     this.loadRows(this.rows);

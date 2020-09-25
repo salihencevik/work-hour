@@ -28,7 +28,6 @@ export class UserService {
     var params = new URLSearchParams();
     params.set('pageSize', '0');
     this.httpClient.httpGet(url, params, null, (data) => {
-      debugger;
       this.users = data.item.items;
       this.loaded = true;
     }, () => {

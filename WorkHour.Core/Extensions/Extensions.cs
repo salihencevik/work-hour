@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using WorkHour.Core.Helper;
@@ -65,6 +66,25 @@ namespace WorkHour.Core
         public static WorkHourDataSource<T> PagedList<T>(this IQueryable<T> items,PageQuery query)
         {
             WorkHourDataSource<T> source = new WorkHourDataSource<T>();
+
+            if (!string.IsNullOrEmpty(query.orderColumn))
+            {
+                var param = Expression.Parameter(typeof(T), "item");
+
+                var sortExpression = Expression.Lambda<Func<T, object>>
+                    (Expression.Convert(Expression.Property(param, query.orderColumn), typeof(object)), param);
+
+                switch (query.orderDir.ToLower())
+                {
+                    case "asc":
+                        items = items.AsQueryable<T>().OrderBy<T, object>(sortExpression);
+                        break;
+                    default:
+                        items = items.AsQueryable<T>().OrderByDescending<T, object>(sortExpression);
+                        break;
+
+                }
+            }
 
             source.Count = items.Count();
 
