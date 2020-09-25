@@ -1,4 +1,4 @@
-<app-grid [hidden]="mode != PageModes.List" [entityName]="'Shift'" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid>
+<app-grid [hidden]="mode != PageModes.List" [extraToolbarItems]="extraToolbarItems" [entityName]="'Shift'"  [multiRowSelection]="multiSelect" [createButtonVisible]="createButtonVisible" [deleteButtonVisible]="deleteButtonVisible" [rowDoubleClick]="doubleRowClick" [useSizeColumnsToFit]="false" [editButtonVisible]="editButtonVisible" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid>
 <div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
   <form #shiftForm="ngForm">
     <mat-card>

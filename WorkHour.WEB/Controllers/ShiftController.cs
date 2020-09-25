@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WorkHour.Core;
 using WorkHour.Core.Abstract;
+using WorkHour.Core.Helper;
 using WorkHour.Data;
 using WorkHour.Model;
 
@@ -25,17 +26,18 @@ namespace WorkHour.WEB.Controllers
         }
 
         protected override IQueryable<ShiftModel> GetSearchQuery()
-        { 
+        {
             var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
+                         where (Helper.AuthorityControl("Rapor.Admin") == false ? r.Id == SessionManager.LoginModel.Id : r.Id == r.Id)
                          select new ShiftModel()
                          {
                              Id = r.Id,
                              UserId = r.UserId,
                              WorkConfirmation = r.WorkConfirmation,
-                             Area = r.Area, 
+                             Area = r.Area,
                              Explanation = r.Explanation,
                              StartTimeText = r.StartTime.ToString(),
-                             FinishTimeText =r.FinishTime.ToString(),
+                             FinishTimeText = r.FinishTime.ToString(),
                              FinishDate = r.FinishDate,
                              StartDate = r.StartDate,
                              CreateDate = r.CreateDate,
@@ -71,13 +73,41 @@ namespace WorkHour.WEB.Controllers
                     oldItem.UpdateDate = DateTime.Now;
                     model.GetPropertyValues<Shift>(ref oldItem); 
                     var result = _Unit.GetRepository<Shift>().Update(oldItem);
-                    if (!result.IsSucceeded)
-                    {
-                        throw new Exception("Güncelleme işlemi başarısız.");
-
-                    }
+                    if (!result.IsSucceeded) {
+                        throw new Exception("Güncelleme işlemi başarısız.");   }
                     return model;
                 }
+            });
+        }
+        [HttpPost]  
+        [Route("Confirm")]
+        public ActionResult Confirm([FromBody]int Id)
+        {
+            return Execute(() =>
+            {
+                var oldItem = _Unit.GetRepository<Shift>().Get(f => f.Id == Id);
+                oldItem.WorkConfirmation = oldItem.WorkConfirmation == true ? false : true;
+                string warn = oldItem.WorkConfirmation == true ? "Mesai girişi onayı kaldırma işlemi başarısız." : "Mesai girişi onaylama başarısız.";
+                var result = _Unit.GetRepository<Shift>().Update(oldItem);
+                if (!result.IsSucceeded)
+                    throw new Exception(warn);
+                return Id;
+            });
+        }
+        [HttpPost]
+        [Route("AllConfirm")]
+        public ActionResult AllConfirm()
+        {
+            return Execute(() =>
+            {
+                var oldItem = _Unit.GetRepository<Shift>().GetAll(f => f.WorkConfirmation == false).ToList();
+                foreach (var item in oldItem)
+                {
+                    item.WorkConfirmation = true;
+                    var result = _Unit.GetRepository<Shift>().Update(item);
+                    if (!result.IsSucceeded)
+                        throw new Exception("Mesai girişi onaylama başarısız.");
+                } 
             });
         }
     }

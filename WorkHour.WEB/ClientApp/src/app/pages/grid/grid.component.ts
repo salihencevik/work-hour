@@ -15,6 +15,7 @@ import { CustomerNameFormatterComponent } from '../../shared/formatter/customerN
 import { TranslateService } from '@ngx-translate/core';
 import GridTraslator from './grid-translator';
 import { AreaTypeFormatterComponent } from '../../shared/formatter/areaTypeFormatter';
+import { CheckboxRenderer } from '../../shared/formatter/checkBoxRenderer';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -41,6 +42,8 @@ export class GridComponent implements OnInit {
   selected: any[] = [];
   @Input() serverSidePaging = true;
   @Input() customHeight: any;
+  @Input() extraToolbarItems: any[] = [];
+  @Input() rowDoubleClick: boolean = true;
   @Input() childView: boolean = false;
   @Output() modeChange = new EventEmitter();
   frameworkComponents
@@ -56,6 +59,7 @@ export class GridComponent implements OnInit {
   rowBuffer;
   createButton: any;
   dateFormat: string;
+  @Input() multiRowSelection = false;
   longDateFormat: string;
   callbackApi;
   public newItem: any;
@@ -83,8 +87,7 @@ export class GridComponent implements OnInit {
   gridLocaleText = {};
   constructor(
     private dialogService: DialogService,
-    private rakamhttpService: WorkHourHttpService,
-    private httpClient: HttpClient,
+    private rakamhttpService: WorkHourHttpService, 
     private changeDetectorRef: ChangeDetectorRef,
     private personelClaimService: PersonelClaimService,
     private snackBarService: SnackBarService,
@@ -96,7 +99,11 @@ export class GridComponent implements OnInit {
     };
     this.columnDefs = [];
     this.rowBuffer = 0;
-    this.rowSelection = "single";
+    if (true) {
+
+    } 
+    
+    
     this.rowModelType = "infinite";
     this.paginationPageSize = this.page.limit;
     this.cacheOverflowSize = 0;
@@ -105,7 +112,13 @@ export class GridComponent implements OnInit {
     this.maxBlocksInCache = 1;     
   }
   private propertyTypeList: Map<string, PropertyType> = new Map<string, PropertyType>();
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    if (!this.multiRowSelection) {
+      this.rowSelection = "single";
+    } else {
+      this.rowSelection = 'multiple';
+    }
+    console.log(this.multiRowSelection)
     if (!this.customHeight) {
       if (this.childView) {
         this.customHeight = "100%";
@@ -186,8 +199,12 @@ export class GridComponent implements OnInit {
         disabled: true
       };
       this.toolbarItems.push(this.deleteButton);
+    } 
+    if (this.extraToolbarItems != null) {
+      for (var i = 0; i < this.extraToolbarItems.length; i++) {
+        this.toolbarItems.push(this.extraToolbarItems[i]);
+      }
     }
-
     this.toolbarItems.sort((a, b) => {
       if (a.order > b.order) {
         return 1;
@@ -199,7 +216,7 @@ export class GridComponent implements OnInit {
     });
   }
 
-  createColumns(columns: any[]) {
+  createColumns(columns: any[]) { 
     if (!columns) {
       console.log("GridComponent => Not found columns");
       return;
@@ -221,6 +238,8 @@ export class GridComponent implements OnInit {
       else {
         this.columnDefs.push({
           headerName: column.headerName,
+          headerCheckboxSelection: column.headerCheckboxSelection != undefined ? column.headerCheckboxSelection : false,
+          checkboxSelection: column.checkboxSelection != undefined ? column.checkboxSelection : false,
           field: column.field != undefined ? column.field : column.prop,
           cellRenderer: column.cellRenderer,
           width: column.width != undefined ? column.width : 200,
@@ -245,9 +264,8 @@ export class GridComponent implements OnInit {
     }
     return null;
   }
-  run(name: string, toolbarMethod: boolean) {
-    if (!toolbarMethod) {
-
+  run(name: string, toolbarMethod: boolean) { 
+    if (!toolbarMethod) { 
       this.call.emit(name);
     }
     else {
@@ -262,10 +280,10 @@ export class GridComponent implements OnInit {
       userNameFormatterComponent: UsernameFormatterComponent,
       areaTypeFormatterComponent: AreaTypeFormatterComponent,
       checkFormatterComponent: CheckFormatterComponent,
-      customerNameFormatterComponent: CustomerNameFormatterComponent
+      customerNameFormatterComponent: CustomerNameFormatterComponent,
+      checkBoxRendererComponent: CheckboxRenderer
     }
-  }
-
+  } 
 
   onGridReady(params) {
     this.gridApi = params.api;
@@ -339,8 +357,7 @@ export class GridComponent implements OnInit {
     this.gridApi.deselectAll();
     this.checkButtonsDisable();
   }
-  onPageCountChanged(param) {
-    debugger;
+  onPageCountChanged(param) { 
     var val = Number(param.value);
     this.gridApi.gridOptionsWrapper.setProperty('cacheBlockSize', Number(val));
     this.gridApi.infiniteRowModel.resetCache();
@@ -398,7 +415,7 @@ export class GridComponent implements OnInit {
 
 
 
-  onSelectionChanged() {
+  onSelectionChanged() { 
     var selectedRows = this.gridApi.getSelectedRows();
     this.selected = selectedRows;
     this.selectCallback();
@@ -423,9 +440,11 @@ export class GridComponent implements OnInit {
   }
 
   rowDoubleClicked($event) {
-    if (this.personelClaimService.checkClaim(this.entityName + '.Update') && this.enableRowDobuleClick) {
-      this.edit();
-    }
+    if (this.rowDoubleClick) {
+      if (this.personelClaimService.checkClaim(this.entityName + '.Update') && this.enableRowDobuleClick) {
+        this.edit();
+      }
+    } 
   }
   edit() {
     var row = this.selected[0];
@@ -464,24 +483,5 @@ export class GridComponent implements OnInit {
     if (this.callbackApi) {
       this.callbackApi.successCallback(this.rows, this.rows.length);
     }
-  }
-  //delete(id: number) {
-  //  //if (id != undefined) {
-  //  //  Swal.fire({
-  //  //    title: 'Kayıt silinsin mi?!',
-  //  //    icon: 'warning',
-  //  //    showCancelButton: true,
-  //  //    confirmButtonText: 'Evet',
-  //  //    cancelButtonText: 'Hayır',
-  //  //    reverseButtons: true
-  //  //  }).then((willDelete) => {
-  //  //    if (willDelete.value) {
-  //  //      this.defaultService.delete(this.entityName, this.rowId).subscribe(data => {
-  //  //        var selectedData = this.gridApi.getSelectedRows();
-  //  //        var res = this.gridApi.updateRowData({ remove: selectedData });
-  //  //      })
-  //  //    }
-  //  //  })
-  //  //}
-  //} 
+  } 
 }

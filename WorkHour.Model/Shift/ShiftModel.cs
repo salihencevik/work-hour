@@ -24,4 +24,8 @@ namespace WorkHour.Model
         public int CreateUserId { get; set; }
         public DateTime CreateDate { get; set; }
     }
+    public class ReportModel
+    {
+        public List<int> ShiftConfirmArray { get; set; }
+    }
 }
