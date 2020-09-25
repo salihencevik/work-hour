@@ -21,7 +21,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { WorkHourSelectComponent } from '../shared/components/work-hour-select/work-hour-select.component'; 
-import { DashboardComponent } from './dashboard.component';
+import { DashboardComponent } from './dashboard.component';  
+import { RoleComponent } from './role/role.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -49,7 +50,8 @@ import { DashboardComponent } from './dashboard.component';
     CustomerComponent,
     ProjectComponent,
     WorkHourSelectComponent,
-    DashboardComponent
+    DashboardComponent,
+    RoleComponent
   ],
   providers: [
     MatDatepickerModule, 

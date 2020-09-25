@@ -27,7 +27,6 @@ export class RoleService {
     params.set('pageNumber', '0');
     params.set('pageSize', '0');
     this.httpClient.httpGet(url, params, null, (data) => {
-      console.log(data);
       this.roles = data.item.items;
       this.loaded = true;
     }, () => {

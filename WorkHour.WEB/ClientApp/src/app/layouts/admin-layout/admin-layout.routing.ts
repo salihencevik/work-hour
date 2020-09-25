@@ -4,6 +4,7 @@ import { ShiftComponent } from '../../pages/shift/shift.component';
 import { CustomerComponent } from '../../pages/customer/customer.component';
 import { ProjectComponent } from '../../pages/project/project.component';
 import { DashboardComponent } from '../../pages/dashboard.component';
+import { RoleComponent } from '../../pages/role/role.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -12,4 +13,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'Shift', component: ShiftComponent },
   { path: 'Customer', component: CustomerComponent },
   { path: 'Project', component: ProjectComponent },
+  { path: 'Role', component: RoleComponent },
 ];

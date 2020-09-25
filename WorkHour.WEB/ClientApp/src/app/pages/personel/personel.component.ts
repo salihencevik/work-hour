@@ -13,7 +13,7 @@ import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 })
 export class PersonelComponent implements OnInit, AfterViewInit {
   @ViewChild(GridComponent) grid: GridComponent;
-  constructor(private httpClient: HttpClient, private rakamHttpService: WorkHourHttpService, private snackBarService: SnackBarService, private roleService: RoleService) { }
+  constructor(private rakamHttpService: WorkHourHttpService, private snackBarService: SnackBarService, private roleService: RoleService) { }
   ngAfterViewInit(): void {
     this.grid.modeChange.subscribe((m) => {
       this.modeChange(m);
@@ -29,7 +29,8 @@ export class PersonelComponent implements OnInit, AfterViewInit {
 
 
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    this.roleService.getItems(); 
     this.columns = [
       { headerName: 'Id', field: 'id' },
       { headerName: 'Adı', field: 'name' },

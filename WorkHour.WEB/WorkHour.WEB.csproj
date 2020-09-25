@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\pages\grid\grid-filter.ts" />
     <None Remove="ClientApp\src\app\pages\grid\grid-translator.ts" />
     <None Remove="ClientApp\src\karma.conf.js" />
     <None Remove="ClientApp\src\polyfills.ts" />
@@ -42,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\pages\grid\grid-filter.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\pages\grid\grid-translator.ts" />
   </ItemGroup>
 

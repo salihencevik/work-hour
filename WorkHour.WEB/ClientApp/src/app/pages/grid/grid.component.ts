@@ -28,7 +28,7 @@ export class GridComponent implements OnInit {
   @Input() mode: PageMode;
   @Input() Authority: string;
   @Input() createButtonVisible = true;
-  @Input() useSizeColumnsToFit = false;
+  @Input() useSizeColumnsToFit = true;
   @Input() copyButtonVisible = false;
   @Input() viewButtonVisible = true;
   @Input() editButtonVisible = true;
@@ -38,6 +38,7 @@ export class GridComponent implements OnInit {
   @Output() createNewItem = new EventEmitter();
   @Output() call: EventEmitter<any> = new EventEmitter();
   @Input() enableRowDobuleClick = true;
+  @Input() refreshListButtonVisible = true;
   selected: any[] = [];
   @Input() serverSidePaging = true;
   @Input() customHeight: any;
@@ -370,20 +371,24 @@ export class GridComponent implements OnInit {
     var row = this.selected[0];
     this.dialogService
       .confirm('EMİN MİSİNİZ', 'SİLMEK İSTİYORUM')
-      .subscribe(res => {
+      .subscribe(res => { 
         if (res) {
           var body = row.id;
-          this.httpClient.post('/' + this.entityName + '/Delete', body).subscribe((data) => {
-
-            var index = this.rows.findIndex(t => t.Id == row.Id);
-
+          this.rakamhttpService.httpPost(this.entityName + '/Delete', body, null, (data) => {
+            var index = this.rows.findIndex(t => t.id == row.id); 
             if (index != -1) {
               this.rows.splice(index, 1);
-            }
-            this.gridApi.updateRowData({ remove: [this.getSelectedItem()] });
-            this.selected[0] = this.rows[0];
 
-          });
+              if (this.serverSidePaging) {
+                this.loadRows(this.rows);
+              }
+              else {
+                this.gridApi.updateRowData({ remove: [this.getSelectedItem()] });
+              }
+            }
+
+            this.selected[0] = this.rows[0];
+          }, null);
         }
 
 
@@ -447,7 +452,19 @@ export class GridComponent implements OnInit {
     }, null);
 
   }
+<<<<<<< HEAD
   addItem(item) {
+=======
+  onClick() {
+    this.gridApi.paginationGoToFirstPage(); 
+  }
+
+  onFilterList() {
+    this.onClick();
+  }
+
+  addItem(item) {   
+>>>>>>> 9470edc51e2ab536571a329282e8e323b56ccb8e
     this.rows.push(item);
     this.page.count = this.rows.length;
     this.loadRows(this.rows);

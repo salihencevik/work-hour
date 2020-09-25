@@ -4,9 +4,8 @@ using System.Text;
 
 namespace WorkHour.Data
 {
-    public class ClaimGroup
-    {
-        public int Id { get; set; }
+    public class ClaimGroup : BaseIdEntity
+    { 
         public string Code { get; set; }
         public string Name { get; set; }
     }
