@@ -36,7 +36,7 @@ namespace WorkHour.WEB.Controllers
                              WorkConfirmation = r.WorkConfirmation,
                              Area = r.Area,
                              Explanation = r.Explanation,
-                             StartTimeText = r.StartTime.ToString("hh:mm"),
+                             StartTimeText = r.StartTime.ToString(),
                              FinishTimeText = r.FinishTime.ToString(),
                              FinishDate = r.FinishDate,
                              StartDate = r.StartDate,
