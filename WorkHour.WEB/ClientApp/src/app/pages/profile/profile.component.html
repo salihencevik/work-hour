@@ -1,16 +1,74 @@
 <div class="row mr-3 p-4">
   <div class="col-12">
-    <h2>Profilim</h2>
+    <h2>Profilim - {{userDisplayName}} </h2>
     <hr />
   </div>
 </div>
 
-<div class="row mr-3 p-3">
-  <div class="col-6">
 
-
-  </div>
-  <div class="col-6">
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Panel">
+    <mat-card>
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+      <div class="container bootstrap snippets bootdey">
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-dark panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Toplam İş</p>
+                <i class="fa fa-users fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.totalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-danger panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Tamamlan İş</p>
+                <i class="fa fa-check fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.completedTotalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-primary panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Devam Eden İş Sayısı</p>
+                <i class="fa fa-pencil fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.doingTotalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-info panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Onay Bekleyen İş Sayısı</p>
+                <i class="fa fa-dollar fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.waitingTotalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Bilgilerimi Güncelle">
     <mat-card class="example-card">
       <form #profilForm="ngForm">
         <mat-card-header>
@@ -61,5 +119,6 @@
         </mat-card-actions>
       </form>
     </mat-card>
-  </div>
-</div>
+  </mat-tab>
+</mat-tab-group>
+

@@ -2,7 +2,14 @@ export enum AreaType {
   Ofis = 1,
   Ev = 2
 }
-
+export enum BusinessStatus {
+  Active = 1,
+  Completed = 2,
+  Waiting = 3,
+  Cancel = 4,
+  TobeTested = 5, 
+  PostTestCorrection = 6
+}
 
 export enum ConditionType {
   Equals = 1,

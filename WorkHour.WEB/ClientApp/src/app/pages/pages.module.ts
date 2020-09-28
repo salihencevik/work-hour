@@ -13,35 +13,39 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ShiftComponent } from './shift/shift.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CustomerComponent } from './customer/customer.component';
 import { ComponentsModule } from '../shared/components/components.module';
 import { ProjectComponent } from './project/project.component';
-import { TranslateModule } from '@ngx-translate/core'; 
-import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { WorkHourSelectComponent } from '../shared/components/work-hour-select/work-hour-select.component'; 
-import { DashboardComponent } from './dashboard.component';  
+import { WorkHourSelectComponent } from '../shared/components/work-hour-select/work-hour-select.component';
+import { DashboardComponent } from './dashboard.component';
 import { RoleComponent } from './role/role.component';
+import { ReportComponent } from './report/report.component';
+import { BusinessComponent } from './business/business.component';
 import { ProfileComponent } from './profile/profile.component';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    MatCardModule, 
+    MatCardModule,
     MatInputModule,
     MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule,
     MatDialogModule,
+    MatTabsModule,
     ReactiveFormsModule,
     MatNativeDateModule,
     MatButtonModule,
     AgGridModule.withComponents([]),
     ComponentsModule,
     TranslateModule,
-    MatDatepickerModule, 
+    MatDatepickerModule,
     NgxMaskModule.forRoot(),
   ],
   declarations: [
@@ -53,10 +57,12 @@ import { ProfileComponent } from './profile/profile.component';
     WorkHourSelectComponent,
     DashboardComponent,
     RoleComponent,
+    ReportComponent,
+    BusinessComponent,
     ProfileComponent
   ],
   providers: [
-    MatDatepickerModule, 
+    MatDatepickerModule,
     { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' }
   ]
 })

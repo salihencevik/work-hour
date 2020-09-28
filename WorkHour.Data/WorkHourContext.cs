@@ -12,7 +12,7 @@ namespace WorkHour.Data
         }
 
         public DbSet<Activity> Activity { get; set; }
-        public DbSet<BusinessList> BusinessList { get; set; }
+        public DbSet<Business> Business { get; set; }
         public DbSet<Claim> Claim { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Menu> Menu { get; set; }

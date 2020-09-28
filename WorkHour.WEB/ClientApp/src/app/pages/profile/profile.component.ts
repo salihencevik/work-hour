@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  userDisplayName;
 
   constructor(private loginService: LoginService, private workHourService: WorkHourHttpService, private http: HttpClient) { }
 
@@ -24,8 +25,17 @@ export class ProfileComponent implements OnInit {
     reNewPassword: null
   };
 
+  panelModel = {
+    totalWorkCount: 0,
+    completedTotalWorkCount: 0,
+    doingTotalWorkCount: 0,
+    waitingTotalWorkCount: 0
+  };
+
   ngOnInit(): void {
     this.edit();
+    this.userDisplayName = this.loginService.getCurrentUserFullName();
+    this.getCurrentUserPanel();
   }
 
   save() {
@@ -50,6 +60,18 @@ export class ProfileComponent implements OnInit {
 
     this.workHourService.httpGet(url, params, null, (data) => {
       this.profilModel = data.item;
+    }, null);
+  }
+
+  getCurrentUserPanel() {
+    var currenUserId = this.loginService.loginInfo.id;
+    var params = new URLSearchParams();
+    params.append('id', currenUserId.toString());
+
+    var url = '/User/GetUserByIdWorkCount' + "/" + currenUserId;
+
+    this.workHourService.httpGet(url, params, null, (data) => {
+      this.panelModel = data.item;
     }, null);
   }
 }

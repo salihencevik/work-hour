@@ -7,6 +7,7 @@ using WorkHour.Core.Abstract;
 using WorkHour.Core.Helper;
 using WorkHour.Data;
 using WorkHour.Model;
+using WorkHour.Model.User;
 
 namespace WorkHour.WEB.Controllers
 {
@@ -212,6 +213,24 @@ namespace WorkHour.WEB.Controllers
                 if (!result.IsSucceeded)
                     throw new Exception(result.Message);
 
+            });
+        }
+
+        [HttpGet("GetUserByIdWorkCount/{id}")]
+        public ActionResult GetUserByIdWorkCount(int id)
+        {
+            return Execute(() =>
+            {
+                var item = _Unit.GetRepository<Business>().GetAll(x => x.UserId == id);
+                var userPanelModel = new UserProfilePanelModel()
+                {
+                    TotalWorkCount = item.Count(),
+                    CompletedTotalWorkCount = item.Where(x => x.UserId == id && x.Status == 2).Count(),
+                    DoingTotalWorkCount = item.Where(x => x.UserId == id && x.Status == 1).Count(),
+                    WaitingTotalWorkCount = item.Where(x => x.UserId == id && x.Status == 3).Count(),
+                };
+
+                return userPanelModel;
             });
         }
     }
