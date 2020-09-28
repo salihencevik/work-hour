@@ -17,6 +17,8 @@ import GridTraslator from './grid-translator';
 import { AreaTypeFormatterComponent } from '../../shared/formatter/areaTypeFormatter';
 import { CheckboxRenderer } from '../../shared/formatter/checkBoxRenderer';
 import { ConditionTypeMapper } from './grid-filter';
+import { TimeFormatterComponent } from '../../shared/formatter/timeFormatter';
+import { BusinessStatusFormaterComponent } from '../../shared/formatter/businessStatusFormatter';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -100,10 +102,7 @@ export class GridComponent implements OnInit {
       filter: true
     };
     this.columnDefs = [];
-    this.rowBuffer = 0;
-    if (true) {
-
-    } 
+    this.rowBuffer = 0; 
     
     
     this.rowModelType = "infinite";
@@ -285,7 +284,9 @@ export class GridComponent implements OnInit {
       areaTypeFormatterComponent: AreaTypeFormatterComponent,
       checkFormatterComponent: CheckFormatterComponent,
       customerNameFormatterComponent: CustomerNameFormatterComponent,
-      checkBoxRendererComponent: CheckboxRenderer
+      checkBoxRendererComponent: CheckboxRenderer,
+      timeFormatterComponent: TimeFormatterComponent,
+      businessStatusFormatterComponent: BusinessStatusFormaterComponent
     }
   } 
 

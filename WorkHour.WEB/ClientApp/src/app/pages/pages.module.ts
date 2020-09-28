@@ -24,6 +24,7 @@ import { WorkHourSelectComponent } from '../shared/components/work-hour-select/w
 import { DashboardComponent } from './dashboard.component';  
 import { RoleComponent } from './role/role.component';
 import { ReportComponent } from './report/report.component';
+import { BusinessComponent } from './business/business.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -53,7 +54,8 @@ import { ReportComponent } from './report/report.component';
     WorkHourSelectComponent,
     DashboardComponent,
     RoleComponent,
-    ReportComponent
+    ReportComponent,
+    BusinessComponent
   ],
   providers: [
     MatDatepickerModule, 

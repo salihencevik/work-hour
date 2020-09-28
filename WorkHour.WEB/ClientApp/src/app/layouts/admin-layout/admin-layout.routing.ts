@@ -6,6 +6,7 @@ import { ProjectComponent } from '../../pages/project/project.component';
 import { DashboardComponent } from '../../pages/dashboard.component';
 import { RoleComponent } from '../../pages/role/role.component';
 import { ReportComponent } from '../../pages/report/report.component';
+import { BusinessComponent } from '../../pages/business/business.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -16,4 +17,5 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'Project', component: ProjectComponent },
   { path: 'Role', component: RoleComponent },
   { path: 'Report', component: ReportComponent },
+  { path: 'Business', component: BusinessComponent },
 ];

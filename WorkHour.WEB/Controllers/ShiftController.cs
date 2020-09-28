@@ -36,7 +36,7 @@ namespace WorkHour.WEB.Controllers
                              WorkConfirmation = r.WorkConfirmation,
                              Area = r.Area,
                              Explanation = r.Explanation,
-                             StartTimeText = r.StartTime.ToString(),
+                             StartTimeText = r.StartTime.ToString("hh:mm"),
                              FinishTimeText = r.FinishTime.ToString(),
                              FinishDate = r.FinishDate,
                              StartDate = r.StartDate,
@@ -45,7 +45,7 @@ namespace WorkHour.WEB.Controllers
                              UpdateDate = r.UpdateDate,
                              UpdateUserId = r.UpdateUserId
                          });
-            return query;
+               return query;
         }
         public override ActionResult SaveItem([FromBody] ShiftModel model)
         {
