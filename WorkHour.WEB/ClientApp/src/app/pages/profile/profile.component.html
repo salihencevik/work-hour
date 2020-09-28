@@ -1,0 +1,124 @@
+<div class="row mr-3 p-4">
+  <div class="col-12">
+    <h2>Profilim - {{userDisplayName}} </h2>
+    <hr />
+  </div>
+</div>
+
+
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Panel">
+    <mat-card>
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+      <div class="container bootstrap snippets bootdey">
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-dark panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Toplam İş</p>
+                <i class="fa fa-users fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.totalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-danger panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Tamamlan İş</p>
+                <i class="fa fa-check fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.completedTotalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-primary panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Devam Eden İş Sayısı</p>
+                <i class="fa fa-pencil fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.doingTotalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="panel panel-info panel-colorful">
+              <div class="panel-body text-center">
+                <p class="text-uppercase mar-btm text-sm">Onay Bekleyen İş Sayısı</p>
+                <i class="fa fa-dollar fa-5x"></i>
+                <hr>
+                <p class="h2 text-thin" style="color:white;">
+                  {{panelModel.waitingTotalWorkCount}}
+                </p>
+                <small><span class="text-semibold"></span></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Bilgilerimi Güncelle">
+    <mat-card class="example-card">
+      <form #profilForm="ngForm">
+        <mat-card-header>
+          <mat-card-title>Bilgilerimi Güncelle</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="tab-content">
+            <div class="container">
+              <mat-form-field class="fullwidth">
+                <input name="id" matInput placeholder="Id" disabled [(ngModel)]="profilModel.id">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="text" placeholder="Ad" maxLength="50" name="name" required [(ngModel)]="profilModel.name">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="text" placeholder="Soyad" maxLength="50" name="surname" required [(ngModel)]="profilModel.surname">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="text" placeholder="E-mail" maxLength="50" name="email" required [(ngModel)]="profilModel.email">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="text" placeholder="Kullanıcı Adı" maxLength="50" name="username" required [(ngModel)]="profilModel.username">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="password" placeholder="Eski Şifre" maxLength="50" name="password" disabled required [(ngModel)]="profilModel.password">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="password" placeholder="Yeni Şifre" maxLength="50" name="newPassword" required [(ngModel)]="profilModel.newPassword">
+              </mat-form-field>
+
+              <mat-form-field class="fullwidth">
+                <input matInput type="password" placeholder="Şifre Tekrar" maxLength="50" name="reNewPassword" required [(ngModel)]="profilModel.reNewPassword">
+              </mat-form-field>
+
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button type="submit" [disabled]="profilForm.invalid" mat-raised-button (click)="save()" class="mr-2 btnSave">
+            KAYDET
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
+

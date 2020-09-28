@@ -7,6 +7,7 @@ using WorkHour.Core.Abstract;
 using WorkHour.Core.Helper;
 using WorkHour.Data;
 using WorkHour.Model;
+using WorkHour.Model.User;
 
 namespace WorkHour.WEB.Controllers
 {
@@ -173,6 +174,64 @@ namespace WorkHour.WEB.Controllers
         private bool CheckUserName(User item)
         {
             return _Unit.GetRepository<User>().GetAll(f => f.Username == item.Username && f.Id != item.Id).Any();
+        }
+        [HttpGet("GetUserProfile/{id}")]
+        public ActionResult GetUserProfile(int id)
+        {
+            return Execute(() =>
+            {
+                var userResult = _Unit.GetRepository<User>().Get(f => f.Id == id);
+                var userModel = userResult.GetPropertyValues<UserModel>();
+                userModel.Password = string.Empty;
+                return userModel;
+            });
+        }
+
+        [HttpPost("UpdateCurrentUser")]
+        public ActionResult UpdateCurrentUser([FromBody] UpdateCurrentUserModel model)
+        {
+            return Execute(() =>
+            {
+                var oldItem = _Unit.GetRepository<User>().Get(x => x.Id == model.Id);
+                if (oldItem == null)
+                    throw new Exception("Kullanıcı bilgisi bulunamadı!");
+
+                oldItem.Username = model.Username;
+
+                bool query = CheckUserName(oldItem);
+                if (query)
+                    throw new Exception("Kullanıcı adı daha önce alınmış!");
+
+                if (model.NewPassword != model.ReNewPassword)
+                    throw new Exception("Girdiğiniz şifreler eşlemiyor");
+
+                var newPass = Encrypt.EncryptSHA1(model.NewPassword);
+                model.GetPropertyValues<User>(ref oldItem);
+                oldItem.Password = newPass;
+
+                var result = _Unit.GetRepository<User>().Update(oldItem);
+                if (!result.IsSucceeded)
+                    throw new Exception(result.Message);
+
+            });
+        }
+
+        [HttpGet("GetUserByIdWorkCount/{id}")]
+        public ActionResult GetUserByIdWorkCount(int id)
+        {
+            return Execute(() =>
+            {
+                var item = _Unit.GetRepository<Business>().GetAll(x => x.UserId == id);
+                var userPanelModel = new UserProfilePanelModel()
+                {
+                    TotalWorkCount = item.Count(),
+                    CompletedTotalWorkCount = item.Where(x => x.UserId == id && x.Status == 2).Count(),
+                    DoingTotalWorkCount = item.Where(x => x.UserId == id && x.Status == 1).Count(),
+                    WaitingTotalWorkCount = item.Where(x => x.UserId == id && x.Status == 3).Count(),
+                };
+
+                return userPanelModel;
+            });
         }
     }
 }

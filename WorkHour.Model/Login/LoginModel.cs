@@ -8,6 +8,7 @@ namespace WorkHour.Model
     public class LoginModel : BaseIdCreateUpdateEntity, BaseIdModel, IsDeletedEntity
     {
         public string Name { get; set; }
+        public string Surname { get; set; }
         public List<string> ClaimText { get; set; }
         public string UserName { get; set; }
         public LoginResponseTypes LoginResponseType { get; set; }

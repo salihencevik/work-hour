@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as CryptoJS from 'crypto-js'; 
+import * as CryptoJS from 'crypto-js';
 import { PersonelClaimService } from '../personel-claim/personel-claim.service';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -24,7 +24,7 @@ export class LoginService {
   returnUrl: string;
   Login(username: string, password: string) {
     let api = this.apiUrl + "Login" + "/" + username + "/" + password;
-    return this.httpClient.get(api).subscribe((x : any) => {
+    return this.httpClient.get(api).subscribe((x: any) => {
       if (x.loginResponseType == 1) {
         this.setLoginInfo(x);
         var url = this.returnUrl;
@@ -36,7 +36,7 @@ export class LoginService {
         this.menuService.setMenus(x.menus);
         this.router.navigateByUrl(url);
 
-      } 
+      }
     });
   }
 
@@ -57,6 +57,7 @@ export class LoginService {
       this.loginInfo.menu = data.menuItem;
       this.loginInfo.token = data.token;
       this.loginInfo.username = data.userName;
+      this.loginInfo.displayName = data.name + ' ' + data.surname;
     }
     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(this.loginInfo), 'secret key 123');
     localStorage.setItem('auth', ciphertext);
@@ -71,12 +72,12 @@ export class LoginService {
         console.log(x);
         if (x.loginResponseType == 4) {
           this.setLogout();
-        } 
+        }
       });
       var bytes = CryptoJS.AES.decrypt(str, 'secret key 123');
       this.loginInfo = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       this.personelClaimService.setClaims(this.loginInfo.claims);
-      this.menuService.setMenus(this.loginInfo.menu);   
+      this.menuService.setMenus(this.loginInfo.menu);
       return true
     }
     else {
@@ -126,6 +127,10 @@ export class LoginService {
       var bytes = CryptoJS.AES.decrypt(str, 'secret key 123');
       this.loginInfo = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     }
+  }
+
+  getCurrentUserFullName() {
+    return this.loginInfo.displayName;
   }
 
 } 
