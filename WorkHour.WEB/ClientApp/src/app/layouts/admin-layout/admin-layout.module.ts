@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from 'ngx-clipboard';
 import { AdminLayoutRoutes } from './admin-layout.routing';
@@ -20,11 +20,8 @@ import { MatInputModule } from '@angular/material/input';
     PagesModule,
     ClipboardModule,
     MatFormFieldModule,
-    MatInputModule
-  ],
-  declarations: [
-
-  ]
+    MatInputModule, 
+  ], 
 })
 
 export class AdminLayoutModule { }

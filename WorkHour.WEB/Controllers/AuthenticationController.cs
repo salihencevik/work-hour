@@ -59,7 +59,7 @@ namespace WorkHour.WEB.Controllers
                 string baseToken = string.Format("User.{0}", item.Id); 
                 var token = Encrypt.GetMD5Hash(baseToken);
 
-                var query = new LoginModel()
+                SessionManager.LoginModel = new LoginModel()
                 {
                     Name = item.Name,
                     UserName = item.Username,
@@ -69,9 +69,7 @@ namespace WorkHour.WEB.Controllers
                     MenuItem = menuItem,
                     Token = token
                 };
-
-                SessionManager.LoginModel = query;
-
+                var query = SessionManager.LoginModel;
                 return Ok(query);
             }
             else

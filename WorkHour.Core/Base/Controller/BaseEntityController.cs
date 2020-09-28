@@ -115,8 +115,7 @@ namespace WorkHour.Core
                     _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>());
                 }
             });
-        }
-
+        } 
 
         protected abstract IQueryable<TSearchModel> GetSearchQuery();
         protected abstract IQueryable<TModel> GetQuery();

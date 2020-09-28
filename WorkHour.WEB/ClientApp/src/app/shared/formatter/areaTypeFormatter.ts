@@ -21,10 +21,10 @@ export class AreaTypeFormatterComponent {
   }
 
   getAreaType(id: number) {
-    if (id = AreaType.Ev) {
+    if (id == AreaType.Ev) {
       return 'Ev'
     }
-    else if (id = AreaType.Ofis) {
+    else if (id == AreaType.Ofis) {
       return 'Ofis'
     }
     else {

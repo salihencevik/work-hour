@@ -1,4 +1,4 @@
-<app-grid [hidden]="mode != PageModes.List" [extraToolbarItems]="extraToolbarItems" [entityName]="'Shift'"  [multiRowSelection]="multiSelect" [createButtonVisible]="createButtonVisible" [deleteButtonVisible]="deleteButtonVisible" [rowDoubleClick]="doubleRowClick" [useSizeColumnsToFit]="false" [editButtonVisible]="editButtonVisible" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid>
+<app-grid [hidden]="mode != PageModes.List" [extraToolbarItems]="extraToolbarItems"  [entityName]="'Shift'"  [multiRowSelection]="multiSelect" [createButtonVisible]="createButtonVisible" [deleteButtonVisible]="deleteButtonVisible" [rowDoubleClick]="doubleRowClick" [useSizeColumnsToFit]="false" [editButtonVisible]="editButtonVisible" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid>
 <div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
   <form #shiftForm="ngForm">
     <mat-card>
@@ -8,11 +8,11 @@
             <mat-form-field class="fullwidth">
               <input name="id" matInput placeholder="Id" disabled [(ngModel)]="grid.newItem.id">
             </mat-form-field>
-            <work-hour-select [(ngModel)]="grid.newItem.userId" name="userId" [placeholder]="'Personel'" [options]="user" [required]="true" #userInput="ngModel"></work-hour-select>
+            <work-hour-select  *ngIf="checkClaim('Shift.Admin')" [(ngModel)]="grid.newItem.userId" name="userId" [placeholder]="'Personel'" [options]="user"  #userInput="ngModel"></work-hour-select>
             <div class="row">
               <div class="col-md-6">
                 <mat-form-field class="fullwidth">
-                  <input matInput [matDatepicker]="date" [(ngModel)]="grid.newItem.startDate" placeholder="Mesai Başlangıç Tarihi" name="startDate" required>
+                  <input matInput [matDatepicker]="date"   [(ngModel)]="grid.newItem.startDate" placeholder="Mesai Başlangıç Tarihi" name="startDate" required>
                   <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
                   <mat-datepicker #date></mat-datepicker>
                 </mat-form-field>

@@ -19,7 +19,7 @@ namespace WorkHour.Core
             }
             set
             {
-                _loginModel = _loginModel ?? value;
+                _loginModel =  value;
             }
         }
 

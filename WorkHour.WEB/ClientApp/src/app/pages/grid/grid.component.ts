@@ -49,6 +49,8 @@ export class GridComponent implements OnInit {
   @Input() rowDoubleClick: boolean = true;
   @Input() childView: boolean = false;
   @Output() modeChange = new EventEmitter();
+  @Output() copyItem = new EventEmitter();
+  isCopy: boolean = false;
   frameworkComponents
   defaultColDef;
   rowId: number;
@@ -119,7 +121,6 @@ export class GridComponent implements OnInit {
     } else {
       this.rowSelection = 'multiple';
     }
-    console.log(this.multiRowSelection)
     if (!this.customHeight) {
       if (this.childView) {
         this.customHeight = "100%";
@@ -167,7 +168,7 @@ export class GridComponent implements OnInit {
         toolbarMethod: true,
         claimText: this.entityName + '.View',
         css: 'viewButton',
-        order: 200,
+        order: 350,
         disableWhenNoSelection: true,
         disabled: true
       };
@@ -187,8 +188,7 @@ export class GridComponent implements OnInit {
         disabled: true
       };
       this.toolbarItems.push(this.editButton);
-    }
-
+    } 
     if (this.deleteButtonVisible) {
       this.deleteButton = {
         text: 'DELETE',
@@ -200,6 +200,20 @@ export class GridComponent implements OnInit {
         order: 300,
         disableWhenNoSelection: true,
         disabled: true
+      };
+      if (this.copyButtonVisible) {
+        this.copyButton = {
+          text: 'COPY',
+          icon: 'file_copy',
+          method: "copy",
+          toolbarMethod: true,
+          claimText: this.entityName + '.Copy',
+          css: 'copyButton',
+          order: 400,
+          disableWhenNoSelection: true,
+          disabled: true
+        };
+        this.toolbarItems.push(this.copyButton);
       };
       this.toolbarItems.push(this.deleteButton);
     } 
@@ -219,6 +233,10 @@ export class GridComponent implements OnInit {
     });
   }
 
+  copy() {
+    this.isCopy = true;
+    this.copyItem.emit();
+  } 
   createColumns(columns: any[]) { 
     if (!columns) {
       console.log("GridComponent => Not found columns");
@@ -253,6 +271,22 @@ export class GridComponent implements OnInit {
 
       }
     }
+  }
+  view() {
+    var row = this.selected[0];
+    this.itemView(row.id);
+  }
+  itemView(id: number) {
+    var params = new URLSearchParams();
+    params.append('id', id.toString());
+    var url = '/' + this.entityName + '/GetItem' + "/" + id;
+    this.rakamhttpService.httpGet(url, params, null, (data) => {
+      this.newItem = data.item;
+      this.mode = PageMode.View;
+      this.changeDetectorRef.detectChanges(); 
+      this.modeChange.emit(this.mode);
+    }, null);
+
   }
   getGridFilterTemplate(propType: PropertyType): any {
     switch (propType) {
@@ -333,8 +367,7 @@ export class GridComponent implements OnInit {
     params.set('pageNumber', this.page.offset.toString());
     params.set('pageSize', this.page.limit.toString());
     let url = "/" + this.entityName + "/" + "GetItems";
-    this.rakamhttpService.httpGet(url, params, null, (data) => {
-      console.log(data);
+    this.rakamhttpService.httpGet(url, params, null, (data) => { 
       if (data.responseType == 3) {
         this.snackBarService.open(data.message);
       }

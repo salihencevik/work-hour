@@ -28,7 +28,7 @@ namespace WorkHour.WEB.Controllers
         protected override IQueryable<ShiftModel> GetSearchQuery()
         {
             var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
-                         where (Helper.AuthorityControl("Rapor.Admin") == false ? r.Id == SessionManager.LoginModel.Id : r.Id == r.Id)
+                         where (Helper.AuthorityControl("Shift.Admin") == false ? r.UserId == SessionManager.LoginModel.Id : r.Id == r.Id)
                          select new ShiftModel()
                          {
                              Id = r.Id,
@@ -108,6 +108,21 @@ namespace WorkHour.WEB.Controllers
                     if (!result.IsSucceeded)
                         throw new Exception("Mesai girişi onaylama başarısız.");
                 } 
+            });
+        }
+        [HttpGet("GetCopyShift")]
+        public ActionResult GetCopyShift(int id)
+        {
+            return Execute(() =>
+            {
+                var oldItem = _Unit.GetRepository<Shift>().Get(f => f.Id == id);
+                var item = oldItem.GetPropertyValues<ShiftModel>();
+                item.Id = 0;
+                item.StartDate = DateTime.Today;
+                item.FinishDate = DateTime.Today;
+                item.StartTimeText = (oldItem.StartTime = TimeSpan.FromHours(8.50)).ToString();
+                item.FinishTimeText = (oldItem.FinishTime = TimeSpan.FromHours(17.50)).ToString();
+                return item;
             });
         }
     }

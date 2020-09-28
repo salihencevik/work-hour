@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'; import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { GridComponent } from './grid/grid.component';
@@ -58,7 +58,8 @@ import { BusinessComponent } from './business/business.component';
     BusinessComponent
   ],
   providers: [
-    MatDatepickerModule, 
+    MatDatepickerModule,
+    [DatePipe],
     { provide: MAT_DATE_LOCALE, useValue: 'tr-TR' }
   ]
 })

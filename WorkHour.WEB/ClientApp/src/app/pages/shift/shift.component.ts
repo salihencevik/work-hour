@@ -6,6 +6,9 @@ import { UserService } from '../../shared/service/user/user.service';
 import { AreaType } from '../../shared/enum/enums';
 import { DialogService } from '../../shared/service/dialog-service/dialog.service';
 import { URLSearchParams } from '@angular/http';
+import { PersonelClaimService } from '../../shared/service/personel-claim/personel-claim.service';
+import { DatePipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-shift',
   templateUrl: './shift.component.html',
@@ -13,14 +16,17 @@ import { URLSearchParams } from '@angular/http';
 })
 export class ShiftComponent implements OnInit, AfterViewInit {
   @ViewChild(GridComponent) grid: GridComponent;
-  constructor(private rakamHttpService: WorkHourHttpService, private userService: UserService, private dialogService: DialogService,
-  ) { }
-    ngAfterViewInit(): void { 
+  constructor(private rakamHttpService: WorkHourHttpService, private userService: UserService, private dialogService: DialogService, private personelClaimService: PersonelClaimService, private datePipe: DatePipe) { }
+  ngAfterViewInit(): void {
+    this.grid.modeChange.subscribe((m) => {
+      this.modeChange(m); 
+    });
     }
   PageModes = PageMode;
   mode = PageMode.List;
   columns: any[];
   columnDefs;
+  public now: Date = new Date();
   @Input() createButtonVisible: boolean = true;
   @Input() editButtonVisible: boolean = true;
   @Input() extraToolbarItems: any[] = [];
@@ -28,13 +34,13 @@ export class ShiftComponent implements OnInit, AfterViewInit {
   @Input() doubleRowClick: boolean = true;
   @Input() multiSelect: boolean = false;
   user = [];
-  area = [];
+  area = []; 
   ngOnInit(): void {
+    this.userService.getItems();
     this.area = [
       { id: AreaType.Ofis, name: "Ofis" },
       { id: AreaType.Ev, name: "Ev" },
-    ];
-    this.user = this.userService.getItems();
+    ]; 
     this.columns = [ 
       { headerName: 'Id', field: 'id' },
       { headerName: 'Personel Adı', field: 'userId', cellRenderer: 'userNameFormatterComponent' },
@@ -52,17 +58,25 @@ export class ShiftComponent implements OnInit, AfterViewInit {
     ];
     if (this.multiSelect) {
       this.columns.splice(0, 0, { headerName: "Onaylandı mı?", field: 'workConfirmation', cellRenderer: 'checkBoxRendererComponent' })
-    }
-    this.columnDefs = [
-
-    ]
+    } 
   }
   backToList() {
     this.mode = PageMode.List;
   }
-  checkedChange(event) {
-    debugger
+
+
+  modeChange(m) {
+    this.user = this.userService.getItems();
+    if (m == PageMode.Create) {  
+      this.grid.newItem.startDate = this.datePipe.transform(this.now, "yyyy-MM-dd"); 
+      this.grid.newItem.finishDate = this.datePipe.transform(this.now, "yyyy-MM-dd");
+      this.grid.newItem.startTimeText = "08:30";
+      this.grid.newItem.finishTimeText = "17:30";
+      this.grid.newItem.area = AreaType.Ofis;
+    }
   }
+
+
   save() {
     debugger;
     var body = this.grid.newItem;
@@ -74,12 +88,9 @@ export class ShiftComponent implements OnInit, AfterViewInit {
       debugger;
       if (data.item != null) {
         if (this.mode == PageMode.Create) {
-          this.grid.addItem(data.item);
-          this.mode = PageMode.List; 
+          this.grid.reloadTable(); 
         }
-        else {
-          this.mode = PageMode.List; 
-        }
+        this.mode = PageMode.List; 
       }
     }, null);
   }
@@ -93,6 +104,9 @@ export class ShiftComponent implements OnInit, AfterViewInit {
           }, null);
         }
       });
+  }
+  checkClaim(claimText) { 
+    return this.personelClaimService.checkClaim(claimText); 
   }
   run(name: string) {
     if (this[name]) {
