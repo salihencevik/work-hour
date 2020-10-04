@@ -5,6 +5,7 @@ import { LoginService } from '../login/login.service';
 import { URLSearchParams, ResponseContentType } from '@angular/http';  
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,7 @@ export class WorkHourHttpService {
     actionButtonLabel = 'x';
     action = true;
  
-
+  @BlockUI() blockUI: NgBlockUI;
   constructor(private http: Http, private loginService: LoginService, private snackBar: SnackBarService) { 
     }
 
@@ -41,7 +42,7 @@ export class WorkHourHttpService {
                 }
                 else if (data.responseType == 2) {
                   this.loginService.setLogout();
-                }
+                } 
                 else if (data.responseType == 3 || data.type == 4) {
 
                   this.snackBar.open(data.message);
@@ -55,7 +56,8 @@ export class WorkHourHttpService {
 
 
 
-    httpPost(url: string, body: any, headers: Headers, successFunc: Function, errorFunc: Function, successMessage = true) {
+  httpPost(url: string, body: any, headers: Headers, successFunc: Function, errorFunc: Function, successMessage = true) {
+    debugger;
         if (headers == null) {
             headers = new Headers();
         }
@@ -65,12 +67,14 @@ export class WorkHourHttpService {
             headers.append('Auth_UserId', context.UserId.toString());
             headers.append('Auth_Token', context.Token.toString());
             headers.append('Content-Type', 'application/json');
-        } 
+      }
+      this.blockUI.start('Loading...');
         this.http
           .post(url, body, { headers: headers })
           .map(response => response.json())
             .subscribe(
               (data: any) => {
+                this.blockUI.stop();
                 if (data.responseType == 1) {
                     if (successFunc != null) {
                       successFunc(data);
@@ -90,8 +94,9 @@ export class WorkHourHttpService {
                     }
                 }
             },
-            error => {
-                console.log(error)
+              error => {
+              this.blockUI.stop();
+              console.log(error);
             });
     }
 

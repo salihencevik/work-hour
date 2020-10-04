@@ -11,10 +11,11 @@ using WorkHour.Data;
 
 namespace WorkHour.Core
 {
-    public abstract class BaseEntityController<TEntity, TModel, TSearchModel, TContext> : BaseController
+    public abstract class BaseEntityController<TEntity, TModel, TSearchModel, TExportModel, TContext> : BaseController
             where TEntity : BaseIdEntity, new()
             where TModel : BaseIdModel, new()
             where TSearchModel : BaseIdModel, new()
+         where TExportModel : BaseIdModel, new()
         //where TService : EfGenericRepository<TEntity>
     {
         protected IUnitofWork _Unit;
@@ -115,9 +116,22 @@ namespace WorkHour.Core
                     _Unit.GetRepository<TEntity>().Update(model.GetPropertyValues<TEntity>());
                 }
             });
-        } 
-
+        }
+        [HttpGet]
+        [Route("Export")]
+        public virtual ActionResult ExportExcel(PageQuery pageQuery, string parameters)
+        {
+            return Execute(() =>
+            {
+                var query = GetExportQuery();
+                pageQuery.pageNumber = 1;
+                pageQuery.pageSize = 0;
+                var source = query.PagedList(pageQuery);
+                return SearchItemsLoaded(source);
+            });
+        }
         protected abstract IQueryable<TSearchModel> GetSearchQuery();
-        protected abstract IQueryable<TModel> GetQuery();
+        protected abstract IQueryable<TModel> GetQuery(); 
+        protected abstract IQueryable<TExportModel> GetExportQuery();
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core'; 
-import { PageMode } from '../../shared/Model/PageMode';
+import { PageMode, PropertyType } from '../../shared/Model/PageMode';
 import { GridComponent } from '../grid/grid.component';
 import { WorkHourHttpService } from '../../shared/service/http/workHourHttp';
 import { UserService } from '../../shared/service/user/user.service';
@@ -42,19 +42,19 @@ export class ShiftComponent implements OnInit, AfterViewInit {
       { id: AreaType.Ev, name: "Ev" },
     ]; 
     this.columns = [ 
-      { headerName: 'Id', field: 'id' },
-      { headerName: 'Personel Adı', field: 'userId', cellRenderer: 'userNameFormatterComponent' },
-      { headerName: 'Mesai Başlangıç Tarihi', field: 'startDate', cellRenderer: 'longDateFormatterComponent' },
-      { headerName: 'Mesai Başlangıç Saati', field: 'startTimeText'},
-      { headerName: 'Mesai Bitiş Tarihi', field: 'finishDate', cellRenderer: 'longDateFormatterComponent' },
-      { headerName: 'Mesai Bitiş Saati', field: 'finishTimeText' },
-      { headerName: 'Çalışma Yeri', field: 'area', cellRenderer: 'areaTypeFormatterComponent' },
+      { headerName: 'Id', field: 'id',  },
+      { headerName: 'Personel Adı', field: 'userId', cellRenderer: 'userNameFormatterComponent', propType: PropertyType.Selection},
+      { headerName: 'Mesai Başlangıç Tarihi', field: 'startDate', cellRenderer: 'longDateFormatterComponent', propType: PropertyType.Date },
+      { headerName: 'Mesai Başlangıç Saati', field: 'startTimeText', propType: PropertyType.Text},
+      { headerName: 'Mesai Bitiş Tarihi', field: 'finishDate', cellRenderer: 'longDateFormatterComponent', propType: PropertyType.Date },
+      { headerName: 'Mesai Bitiş Saati', field: 'finishTimeText', propType: PropertyType.Text},
+      { headerName: 'Çalışma Yeri', field: 'area', cellRenderer: 'areaTypeFormatterComponent', propType: PropertyType.Selection },
       { headerName: 'Açıklama', field: 'explanation' },
-      { headerName: "Onaylandı mı?", field: 'workConfirmation', cellRenderer: 'checkFormatterComponent' },
-      { headerName: 'Oluşturan Kullanıcı', field: 'createUserId', cellRenderer: 'userNameFormatterComponent' },
-      { headerName: 'Oluşturulma Tarihi', field: 'createDate', cellRenderer: 'longDateFormatterComponent' },
-      { headerName: 'Güncelleyen Kullanıcı', field: 'updateUserId', cellRenderer: 'userNameFormatterComponent' },
-      { headerName: 'Güncellenme Tarihi', field: 'updateDate', cellRenderer: 'longDateFormatterComponent' }
+      { headerName: "Onaylandı mı?", field: 'workConfirmation', cellRenderer: 'checkFormatterComponent', propType: PropertyType.Boolean },
+      { headerName: 'Oluşturan Kullanıcı', field: 'createUserId', cellRenderer: 'userNameFormatterComponent', propType: PropertyType.Selection },
+      { headerName: 'Oluşturulma Tarihi', field: 'createDate', cellRenderer: 'longDateFormatterComponent', propType: PropertyType.Date},
+      { headerName: 'Güncelleyen Kullanıcı', field: 'updateUserId', cellRenderer: 'userNameFormatterComponent', propType: PropertyType.Selection },
+      { headerName: 'Güncellenme Tarihi', field: 'updateDate', cellRenderer: 'longDateFormatterComponent', propType: PropertyType.Date }
     ];
     if (this.multiSelect) {
       this.columns.splice(0, 0, { headerName: "Onaylandı mı?", field: 'workConfirmation', cellRenderer: 'checkBoxRendererComponent' })

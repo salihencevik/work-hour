@@ -14,8 +14,18 @@ namespace WorkHour.WEB.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]")]
-    public class ShiftController : BaseEntityController<Shift, ShiftModel, ShiftModel, IUnitofWork>
+    public class ShiftController : BaseEntityController<Shift, ShiftModel, ShiftModel,ShiftExportModel, IUnitofWork>
     {
+        protected override IQueryable<ShiftExportModel> GetExportQuery()
+        {
+            var query = (from r in _Unit.GetRepository<Shift>().GetAll().Where(f => f.IsDeleted == false)
+                         where (Helper.AuthorityControl("Shift.Admin") == false ? r.UserId == SessionManager.LoginModel.Id : r.Id == r.Id)
+                         select new ShiftExportModel()
+                         {
+                             Id = r.Id
+                         });
+            return query;
+        }
         public ShiftController(IUnitofWork unit) : base(unit)
         {
 
@@ -110,21 +120,8 @@ namespace WorkHour.WEB.Controllers
                 } 
             });
         }
-        [HttpGet("GetCopyShift")]
-        public ActionResult GetCopyShift(int id)
-        {
-            return Execute(() =>
-            {
-                var oldItem = _Unit.GetRepository<Shift>().Get(f => f.Id == id);
-                var item = oldItem.GetPropertyValues<ShiftModel>();
-                item.Id = 0;
-                item.StartDate = DateTime.Today;
-                item.FinishDate = DateTime.Today;
-                item.StartTimeText = (oldItem.StartTime = TimeSpan.FromHours(8.50)).ToString();
-                item.FinishTimeText = (oldItem.FinishTime = TimeSpan.FromHours(17.50)).ToString();
-                return item;
-            });
-        }
+
+       
     }
    
 }

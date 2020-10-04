@@ -1,5 +1,5 @@
 <app-grid [hidden]="mode != PageModes.List" [extraToolbarItems]="extraToolbarItems"  [entityName]="'Shift'"  [multiRowSelection]="multiSelect" [createButtonVisible]="createButtonVisible" [deleteButtonVisible]="deleteButtonVisible" [rowDoubleClick]="doubleRowClick" [useSizeColumnsToFit]="false" [editButtonVisible]="editButtonVisible" [(columns)]="columns" [(mode)]="mode" [Authority]="'Shift.Show'" (call)="run($event)"></app-grid>
-<div *ngIf="mode == PageModes.Create || mode == PageModes.Update" fxFill>
+<div *ngIf="mode == PageModes.Create || mode == PageModes.Update || mode == PageModes.View" fxFill>
   <form #shiftForm="ngForm">
     <mat-card>
       <mat-card-content>
@@ -47,7 +47,7 @@
                   </mat-form-field>
                 </div>
             </div>
-            <button type="submit" [disabled]="!shiftForm.valid" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
+            <button type="submit" [hidden]="mode == PageModes.View" [disabled]="!shiftForm.valid || mode == PageModes.View" mat-raised-button (click)="save()" class="mr-2 btnSave"><mat-icon>save</mat-icon> Save</button>
             <button type="button" mat-raised-button (click)="backToList()" class="mr-2 btnDelete"> <mat-icon>cancel</mat-icon> Cancel</button>
           </div>
         </div>

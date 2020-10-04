@@ -6,12 +6,14 @@ import { LongDateFormatterComponent } from './formatter/longDateFormatter';
 import { UsernameFormatterComponent } from './formatter/usernameFormatter';
 import { AreaTypeFormatterComponent } from './formatter/areaTypeFormatter';
 import { CheckFormatterComponent } from './formatter/checkFormatter';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
+    BlockUIModule.forRoot()
   ],
   declarations: [
     LongDateFormatterComponent,

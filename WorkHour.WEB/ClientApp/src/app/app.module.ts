@@ -19,7 +19,7 @@ import { SharedModule } from './shared/shared.module';
 import { Http, HttpModule } from '@angular/http';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { BlockUIModule } from 'ng-block-ui';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -30,6 +30,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     HttpClientModule,
     SharedModule,
+    BlockUIModule,
     HttpModule,
     ComponentsModule,
     NgbModule,

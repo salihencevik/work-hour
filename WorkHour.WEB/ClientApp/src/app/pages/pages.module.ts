@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { HttpClientModule } from '@angular/common/http'; import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +28,7 @@ import { RoleComponent } from './role/role.component';
 import { ReportComponent } from './report/report.component';
 import { BusinessComponent } from './business/business.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BlockUIModule } from 'ng-block-ui';
 @NgModule({
   imports: [
     CommonModule,
@@ -36,17 +38,18 @@ import { ProfileComponent } from './profile/profile.component';
     MatInputModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MatSelectModule,
+    MatSelectModule, 
     MatDialogModule,
     MatTabsModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatButtonModule,
+    MatButtonModule,  
     AgGridModule.withComponents([]),
     ComponentsModule,
     TranslateModule,
     MatDatepickerModule,
     NgxMaskModule.forRoot(),
+    BlockUIModule
   ],
   declarations: [
     PersonelComponent,

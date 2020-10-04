@@ -19,6 +19,8 @@ import { CheckboxRenderer } from '../../shared/formatter/checkBoxRenderer';
 import { ConditionTypeMapper } from './grid-filter';
 import { TimeFormatterComponent } from '../../shared/formatter/timeFormatter';
 import { BusinessStatusFormaterComponent } from '../../shared/formatter/businessStatusFormatter';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -35,6 +37,7 @@ export class GridComponent implements OnInit {
   @Input() copyButtonVisible = false;
   @Input() viewButtonVisible = true;
   @Input() editButtonVisible = true;
+  @Input() exportButtonVisible = true;
   columnDefs: ColDef[];
   @Input() deleteButtonVisible = true;
   @Output() selectedChanged: EventEmitter<any> = new EventEmitter();
@@ -61,6 +64,7 @@ export class GridComponent implements OnInit {
   copyButton: any;
   viewButton: any;
   editButton: any;
+  exportButton: any;
   createButton: any;
   rowBuffer;
   dateFormat: string;
@@ -201,22 +205,36 @@ export class GridComponent implements OnInit {
         disableWhenNoSelection: true,
         disabled: true
       };
-      if (this.copyButtonVisible) {
-        this.copyButton = {
-          text: 'COPY',
-          icon: 'file_copy',
-          method: "copy",
-          toolbarMethod: true,
-          claimText: this.entityName + '.Copy',
-          css: 'copyButton',
-          order: 400,
-          disableWhenNoSelection: true,
-          disabled: true
-        };
-        this.toolbarItems.push(this.copyButton);
+      this.toolbarItems.push(this.deleteButton); 
+    }
+    if (this.copyButtonVisible) {
+      this.copyButton = {
+        text: 'COPY',
+        icon: 'file_copy',
+        method: "copy",
+        toolbarMethod: true,
+        claimText: this.entityName + '.Copy',
+        css: 'copyButton',
+        order: 400,
+        disableWhenNoSelection: true,
+        disabled: true
       };
-      this.toolbarItems.push(this.deleteButton);
-    } 
+      this.toolbarItems.push(this.copyButton);
+    };
+    if (this.exportButtonVisible) {
+      this.exportButton = {
+        text: 'EXPORT',
+        icon: 'file_copy',
+        method: "exportExcel",
+        toolbarMethod: true,
+        claimText: this.entityName + '.ExportToExcel',
+        css: 'copyButton',
+        order: 500,
+        disableWhenNoSelection: false,
+        disabled: false
+      };
+      this.toolbarItems.push(this.exportButton);
+    }; 
     if (this.extraToolbarItems != null) {
       for (var i = 0; i < this.extraToolbarItems.length; i++) {
         this.toolbarItems.push(this.extraToolbarItems[i]);
@@ -232,7 +250,29 @@ export class GridComponent implements OnInit {
       return 0;
     });
   }
+  fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  fileExtension = '.xlsx';
+  exportExcel() { 
+    var params = new URLSearchParams();
+    params.set('orderColumn', this.page.orderBy);
+    params.set('orderDir', this.page.orderDir);
+    params.set('pageNumber', this.page.offset.toString());
+    params.set('pageSize', this.page.limit.toString());  
 
+    this.rakamhttpService.httpGet(this.entityName + '/GetItems', params, null, (data) => {
+      debugger;
+      var filename = this.entityName + ".xlsx";
+      var filetype = "application/ms-excel";
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data.item.items);
+      const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+      const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      this.saveExcelFile(excelBuffer, filename); 
+    }, null);
+  }
+  private saveExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: this.fileType });
+    FileSaver.saveAs(data, fileName + this.fileExtension);
+  }
   copy() {
     this.isCopy = true;
     this.copyItem.emit();
@@ -265,6 +305,7 @@ export class GridComponent implements OnInit {
           cellRenderer: column.cellRenderer,
           width: column.width != undefined ? column.width : 200,
           sort: column.sort != undefined ? column.sort : '',
+          filter: column.propType != undefined ? this.getGridFilterTemplate(column.propType) : false,
           cellRendererParams: column.cellRendererParams != undefined ? column.cellRendererParams : null,
           cellClass: column.cellClass != undefined ? column.cellClass : 'stringType'
         });
@@ -294,7 +335,14 @@ export class GridComponent implements OnInit {
         return "agNumberColumnFilter";
       }
       case PropertyType.Text: {
-        return true;
+        return "agTextColumnFilter";
+      }
+      case PropertyType.Boolean:
+      case PropertyType.Selection: {
+        return "agSetColumnFilter";
+      }
+      case PropertyType.Date: {
+        return "agDateColumnFilter";
       }
       default:
         break;

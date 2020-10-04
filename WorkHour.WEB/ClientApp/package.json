@@ -33,13 +33,17 @@
     "clipboard": "2.0.4",
     "core-js": "3.6.4",
     "crypto-js": "^4.0.0",
+    "file-saver": "^2.0.2",
     "jsonwebtoken": "^8.5.1",
+    "ng-block-ui": "^1.0.6",
+    "ngx-bootstrap": "^6.1.0",
     "ngx-clipboard": "13.0.0",
     "ngx-mask": "^7.9.10",
     "ngx-toastr": "12.0.0",
     "nouislider": "13.1.1",
     "rxjs": "6.5.4",
     "rxjs-compat": "^6.5.5",
+    "xlsx": "^0.16.7",
     "zone.js": "0.10.2"
   },
   "devDependencies": {
